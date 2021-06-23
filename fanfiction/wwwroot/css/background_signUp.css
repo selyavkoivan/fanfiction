@@ -1,0 +1,39 @@
+﻿.backBlock {
+    display: inline-block;
+    border-radius: 20px;
+    background:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuuDfIc8UC6EnJn3c0tBtZ9I1ZSjAg5w3f5A&usqp=CAU) top;
+}
+.light-theme .backBlur {
+    border-radius: 18px; 
+    background-color: rgba(255,255,255,.9); 
+    backdrop-filter: blur(3px);
+}
+.dark-theme .backBlur {
+    border-radius: 18px;
+    background-color: rgba(0,0,0,.95);
+    backdrop-filter: blur(5px);
+}
+/* Светлая тема */
+.light-theme {
+    color: #333333;
+    background-color: #eae9f2;
+}
+
+.light-theme .page-footer {
+    background-color: #6653d9;
+    color: #ffffff;
+}
+
+
+
+
+/* Тёмная тема */
+.dark-theme {
+    color: #f2f2f2;
+    background-color: #17161a;
+}
+
+.dark-theme .page-footer {
+    background-color: #0a0910;
+    color: #f2f2f2;
+}
