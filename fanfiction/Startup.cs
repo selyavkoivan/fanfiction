@@ -40,6 +40,9 @@ namespace fanfiction
                 opts.Password.RequireDigit = false;
                 opts.Stores.MaxLengthForKeys = 3;
             }).AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
 
             services.ConfigureApplicationCookie(options => options.LoginPath = "/Home");
             services.AddControllersWithViews();

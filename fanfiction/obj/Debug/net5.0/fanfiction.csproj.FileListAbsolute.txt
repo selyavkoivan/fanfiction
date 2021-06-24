@@ -83,3 +83,7 @@ C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\H
 C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Home\SignIn.cshtml.g.cs
 C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Home\SignUp.cshtml.g.cs
 C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Shared\_LayoutAccount.cshtml.g.cs
+C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\MailKit.dll
+C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\MimeKit.dll
+C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Home\DisplayEmail.cshtml.g.cs

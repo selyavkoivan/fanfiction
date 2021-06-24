@@ -14,13 +14,9 @@ namespace fanfiction.Models.User
         [Required]
         public bool Status { get; set; }
 
-        [Key]
-        public int UserId { get; set; }
-
         [Required]
         public DateTime RegistrationDate { get; set; }
         public DateTime? AuthDate { get; set; }
-
         public User(IUser user)
         {
             this.UserName = user.name;
@@ -30,7 +26,7 @@ namespace fanfiction.Models.User
         }
         public User()
         {
-
+           
         }
     }
 }

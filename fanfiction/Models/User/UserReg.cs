@@ -15,6 +15,7 @@ namespace fanfiction.Models.User
         public string Password { get; set; }
         
         public string PasswordConfirm { get; set; }
+        public  string lang { get; set; }
 
         public bool CheckPasswords()
         {

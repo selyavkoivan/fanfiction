@@ -17,7 +17,8 @@ namespace fanfiction.Models.User
         }
         public static string checkLogin(User user)
         {
-            if (user == null) return "account is delete";
+            if (user == null) return "account is not found";
+            if (user.EmailConfirmed == false) return "email is not confirmed";
             if (user.Status) return "account is blocked";
             return string.Empty;
         }

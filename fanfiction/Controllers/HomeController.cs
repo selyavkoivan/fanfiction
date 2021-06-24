@@ -10,6 +10,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using fanfiction.Models.User;
+using System.Threading.Tasks;
+using EmailApp;
+using Microsoft.AspNetCore.Mvc;
+
+
 
 namespace fanfiction.Controllers
 {
@@ -109,27 +114,65 @@ namespace fanfiction.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignUp(UserReg userReg)
         {
-            string msg = await Task.Run(() => Checker.checkRegistrarion(_userManager, userReg));
+            var msg = await Task.Run(() => Checker.checkRegistrarion(_userManager, userReg));
             if (msg == string.Empty)
             {
-                User user = new User(userReg);
+                var user = new User(userReg);
                 var result = await _userManager.CreateAsync(user, userReg.Password);
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, false);
-                    
-                    return RedirectToAction("SignIn");
+
+                    SendEmail(user, userReg.lang);
+
+
+                    return View("DisplayEmail");
                 }
-                else
-                    foreach (var i in result.Errors)
-                        msg += i.Description;
+                
+                  foreach (var i in result.Errors) msg += i.Description;
             }
 
-            TempData["SignInError"] = msg;
+            TempData["SignUpError"] = msg;
             return View();
         }
+
+        public async void SendEmail(User user, string lang)
+        {
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var callbackUrl = Url.Action(
+                "ConfirmEmail",
+                "Home",
+                new {userId = user.Id, code = code},
+                protocol: HttpContext.Request.Scheme);
+            var text = EmailService.GetEmailText(lang, callbackUrl); 
+            await EmailService.SendEmailAsync(user.Email, text[0], text[1]);
+        }
+        
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return View("Error");
+            }
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return View("Error");
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, code);
+            if(result.Succeeded) return RedirectToAction("SignIn", "Home");
+            return View("Error");
+        }
+ 
+        /* [HttpGet]
+       public IActionResult Login(string returnUrl = null)
+        {
+            return View(new LoginViewModel { ReturnUrl = returnUrl });
+        }*/
 
 
 
@@ -139,7 +182,7 @@ namespace fanfiction.Controllers
         public async Task<IActionResult> SignIn(UserLog userLog)
         {
             var user = await _userManager.FindByEmailAsync(userLog.Email);
-            string msg = await Task.Run(() => Checker.checkLogin(user));
+            var msg = await Task.Run(() => Checker.checkLogin(user));
             if (msg == string.Empty)
             {
                 var result = await _signInManager.PasswordSignInAsync(user.UserName, userLog.Password, false, false);
@@ -147,18 +190,21 @@ namespace fanfiction.Controllers
                 {
                     if (!string.IsNullOrEmpty(userLog.ReturnUrl) && Url.IsLocalUrl(userLog.ReturnUrl))
                         return Redirect(userLog.ReturnUrl);
-                    else
-                    {
-                        user.AuthDate = userLog.GetDate();
-                        await _userManager.UpdateAsync(user);
-                        return RedirectToAction("Account");
-                    }
+                    user.AuthDate = userLog.GetDate();
+                    await _userManager.UpdateAsync(user);
+                    return RedirectToAction("Account");
                 }
-                else msg = "Invalid password";
+                msg = "Invalid password";
             }
 
             TempData["SignInError"] = msg;
             return View(userLog);
         }
+        
+        
+
+        
+       
+        
     }
 }

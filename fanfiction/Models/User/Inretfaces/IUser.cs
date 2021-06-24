@@ -10,5 +10,6 @@ namespace fanfiction.Models.User.Inretfaces
         public string Email { get; set; }
         public string Datetime { get; set; }
         public DateTime GetDate();
+     //   public bool EmailConfirmed { get; set; }
     }
 }

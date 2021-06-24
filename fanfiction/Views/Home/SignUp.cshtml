@@ -1,9 +1,6 @@
 ﻿
 <meta charset="utf-8" />
 
-<link rel="stylesheet" href="~/css/background_signUp.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 @using fanfiction.Models.User
 @model UserReg
@@ -23,6 +20,7 @@
             <input asp-for="Password" key="Password" class="lang mt-3 " type="password" size="30" id="password" name="password" maxlength="40" placeholder="Password" required><br>
             <input asp-for="PasswordConfirm" key="Repeat-Password"  class="lang mt-3 " type="password" size="30" required placeholder="Repeate password"><br>
             <input asp-for="Datetime" id="date" type="hidden">
+            <input asp-for="lang" id="lang" type="hidden">
             <button onclick="SetDate()" key="Sign-Up" name="submit" class="lang btn mt-3 btn-dark justify-content-end ">Sign up</button>
 
         </div>
@@ -54,5 +52,6 @@
     function SetDate() {
         let date = new Date().toLocaleString();
         $('#date').val(date);
+        $('#lang').val(localStorage.getItem("lang"))
     }
 </script>

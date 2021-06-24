@@ -1,7 +1,4 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
+﻿
 <meta charset="utf-8" />
 
 @using fanfiction.Models.User
@@ -15,7 +12,7 @@
     <div class="text-center">
         <div class="mt-5 backBlock">
             <div class="p-5  backBlur" />
-            <h2 class="lang" key="Sign-In">Sign In</h2>
+            <h2 class="lang" key="Sign-In"></h2>
             <input asp-for="Email" class="mt-4 lang" key="Email" type="email" size="30" name="email" maxlength="40" placeholder="email" required><br>
             <input asp-for="Password" class="mt-3 lang" key="Password" type="password" size="30" name="password" maxlength="40" placeholder="password" required><br>
             <input asp-for="Datetime" id="date" type="hidden">
