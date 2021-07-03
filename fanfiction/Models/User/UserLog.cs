@@ -19,6 +19,7 @@ namespace fanfiction.Models.User
         public string ReturnUrl { get; set; }
 
         public string Datetime { get; set; }
+        public string lang;
 
         public DateTime GetDate() { return Convert.ToDateTime(Datetime); }
     }

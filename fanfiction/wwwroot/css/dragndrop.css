@@ -1,0 +1,39 @@
+﻿
+.light-theme #files-label {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 2px;
+    border-color: #222226;
+    border-style: dashed;
+    border-radius: 10px;
+}
+.dark-theme #files-label {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 2px;
+    border-color: #f2f2f2;
+    border-style: dashed;
+    border-radius: 10px;
+}
+.hidden{
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+
+
+
+#files-field {
+    display: none;
+}
+
+
+
+

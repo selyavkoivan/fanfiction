@@ -1,0 +1,204 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+<!DOCTYPE html>
+
+
+@using fanfiction.Models.User
+@model ApplicationUser 
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="~/css/dragndrop.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+                    
+<div class="left">
+  
+    <p>Some text.</p>
+  </div>
+
+
+<div class="right" style="position: fixed">
+    @if (TempData["email-is-confirmed"] != null)
+    {
+        <title> @TempData["email-is-confirmed"]</title>
+    }
+    <div class="profile-area m-3">
+        <div id="avatar-area" style="display: inline-block; text-align: center">
+            @if (Model.AvatarUrl == null)
+            {
+                <img class="avatar" style="display: inline-block; " src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Anonymous_emblem.svg/1200px-Anonymous_emblem.svg.png" alt="avatar"/>
+            }
+            else
+            {
+                <img class="avatar" style="display: inline-block; " src="@Model.AvatarUrl" alt="avatar"/>
+            }
+            <br>
+            <button onclick="showArea()" id="edit-photo" key="Upload" class="mt-3 p-1 bi bi-capslock lang"></button>
+
+        </div>
+
+
+
+        <div class="ml-3 p-0" style="display: inline-block; width: 70% ; vertical-align: top ">
+            <form id="editable-form">
+                <table class="profile-table" id="profile-data-area" style="width: 100%">
+                    <tr class="p-0 m-0"><td class="lang" key="Name"></td>
+                        <td>
+
+
+
+                            <p class="m-0 p-0" style="border-width: 0; display: inline-block" href="#" id="username" data-type="text" data-placeholder="Required" data-placement="right" data-title="Enter username">@Model.UserName</p>
+
+                        </td></tr>
+                    <tr class="p-1"><td class="lang" key="Email"></td>
+                        <td>
+
+                            <p class="m-0 p-0" style="border-width: 0; display: inline-block" href="#" id="Email" data-type="text" data-placeholder="Required" data-placement="right" data-title="Enter email">@Model.Email</p>
+
+
+                        </td></tr>
+                </table>
+            </form>
+            <link rel="stylesheet" href="~/css/site.css"/>
+            <form class="hidden" id="drag-n-drop-avatar" action="/Ajax/UploadImages" method="post" onsubmit="return submitFilesForm(this);">
+                @Html.AntiForgeryToken() <!-- Prevent Cross Site Request Forgery -->
+                <input type="file" name="files" id="files-field" accept="image/*" onchange="submitFilesForm(this.form);" multiple/>
+                <label style="width: 100%; height: 100px; vertical-align: bottom" for="files-field" id="files-label"
+                       ondragover="stopDefault(event);dragOver(this,  getDropData());"
+                       ondragenter="stopDefault(event);dragOver(this, getDropData());"
+                       ondragleave="stopDefault(event);dragLeave(this);"
+                       ondrop="stopDefault(event);dragLeave(this);addFilesAndSubmit(event);"
+                       class="lang" key="Drag-n-drop"></label>
+            </form>
+            <div style="text-align: left;"><div id="files-progress"></div></div>
+            <div class="modal-page" id="uploaded-files"></div>
+            <body>
+                @if (TempData["edit-error"] != null)
+                {
+            <div class="mt-3 alert alert-danger alert-dismissible" style="width: 100%">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                @TempData["edit-error"].ToString()
+            </div>}
+            </body>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="~/js/dragndrop.js"></script>
+<script src="~/js/clickToEdit.js">
+</script>
+<script>
+function  getDropData()
+{
+    if (localStorage.key('lang') === "en") return langArr.en.Drop
+    else  if (localStorage.key('lang') === "ru") return langArr.ru.Drop
+    else return langArr.ru.Drop
+    }
+(function($) {
+
+    $(function() {
+        if ($('#editable-form').length) {
+            $.fn.editable.defaults.mode = 'inline';
+
+            $.fn.editableform.buttons =
+                '<button type="submit"  class="btn edit-btn btn-sm editable-submit">' +
+                '<i class="fa fa-fw fa-check"></i>' + '</button>' +
+                '<button type="button" class="edit-btn btn  btn-sm editable-cancel">' +
+                '<i class="fa fa-fw fa-times"></i>' + '</button>';
+
+
+
+            $('#username').editable({
+                validate: function(value) {
+
+                    if ($.trim(value) === '')
+                    {
+                        
+                        return ' ';
+                    }
+                    else
+                    {
+                        UpdateName($.trim(value))
+                       
+                    }
+                }
+            });
+ $('#Email').editable({
+                validate: function(value) {
+                   
+                    if ($.trim(value) === '')
+                    {
+                           
+                        return ' ';
+                    }
+                    else
+                    {
+                        
+                        UpdateEmail($.trim(value))
+                       
+                    }
+                }
+            });
+
+        }
+    });
+})(jQuery);
+
+
+
+
+
+
+function UpdateName(value) {
+     
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("UpdateName", "Profile")',
+        data: { 'newName': value,
+         'lang': localStorage.getItem("lang")} ,
+        success: function (data) {
+
+            window.location.reload()
+        },
+        error: function (data) {
+
+          window.location.reload()
+        }
+    });
+
+}
+function UpdateEmail(value) {
+ 
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("UpdateEmail", "Profile")',
+        data: { 'email': value,
+        'lang': localStorage.getItem("lang")
+        },
+        success: function (data) {
+
+            window.location.reload()
+        },
+        error: function (data) {
+
+            window.location.reload()
+        }
+    });
+
+}
+
+</script>
+

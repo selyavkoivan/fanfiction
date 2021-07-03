@@ -32,7 +32,7 @@ namespace EmailApp
 
         }
 
-        public static string[] GetEmailText(string lang, string callbackUrl)
+        public static string[] GetEmailConfirmText(string lang, string callbackUrl)
         {
             var email = new string[2];
             switch (lang)
@@ -46,6 +46,24 @@ namespace EmailApp
                 email[0] = "Confirm your account";
                 email[1] = $"Confirm your account by clicking on the link: <a href='{callbackUrl}'>link</a><br>Thank you for choosing us <3";
                 break;
+            }
+            return email;
+        }
+        
+        public static string[] GetEmailChangeText(string lang, string callbackUrl)
+        {
+            var email = new string[2];
+            switch (lang)
+            {
+                
+                case "ru":
+                    email[0] = "Изменение вашей почты";
+                    email[1] = $"Для изменения вашей почты перейдите по ссылке: <a href='{callbackUrl}'>ссылка</a><br>Благодарим вас за выбор <3";
+                    break;
+                case "en":
+                    email[0] = "changing your email";
+                    email[1] = $"CZhange your email by clicking on the link: <a href='{callbackUrl}'>link</a><br>Thank you for choosing us <3";
+                    break;
             }
             return email;
         }

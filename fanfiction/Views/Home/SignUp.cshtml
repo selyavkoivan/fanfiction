@@ -9,22 +9,18 @@
 
 
     <div class="text-center">
+        <p class="lang adapt" key="Sign-Up"></p>
 
-        <div class="mt-5 backBlock">
-            <div class="p-5 backBlur" />
-
-            <h2 class="lang" key="Sign-Up">Sign Up</h2>
-
-            <input asp-for="name" key="Name" class="lang mt-4 " type="text" size="30" name="name" maxlength="40" placeholder="Name" required><br>
-            <input asp-for="Email" key="Email" class="lang mt-3 " type="email" size="30" name="email" maxlength="40" placeholder="email" required><br>
-            <input asp-for="Password" key="Password" class="lang mt-3 " type="password" size="30" id="password" name="password" maxlength="40" placeholder="Password" required><br>
-            <input asp-for="PasswordConfirm" key="Repeat-Password"  class="lang mt-3 " type="password" size="30" required placeholder="Repeate password"><br>
+            <input asp-for="name" key="Name" class="lang mt-4 adapt" type="text" size="30" name="name" maxlength="40"  required><br>
+            <input asp-for="Email" key="Email" class="lang mt-3 adapt" type="email" size="30" name="email" maxlength="40" p required><br>
+            <input asp-for="Password" key="Password" class="lang mt-3 adapt" type="password" size="30" id="password" name="password" maxlength="40" required><br>
+            <input asp-for="PasswordConfirm" key="Repeat-Password"  class="lang mt-3 adapt" type="password" size="30" required ><br>
             <input asp-for="Datetime" id="date" type="hidden">
             <input asp-for="lang" id="lang" type="hidden">
-            <button onclick="SetDate()" key="Sign-Up" name="submit" class="lang btn mt-3 btn-dark justify-content-end ">Sign up</button>
+            <button onclick="SetDate()" key="Sign-Up" name="submit" class="lang btn mt-3 btn-dark adapt"></button>
 
         </div>
-    </div>
+ 
 </form>
 @if (TempData["SignUpError"] != null)
 {
@@ -33,25 +29,3 @@
     @TempData["SignUpError"].ToString()
 </div>
 }
-<script src='lib/jquery/dist/jquery.js'></script>
-<script src="js/lang/layout.js"></script>
-<script src="js/theme.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        window.setTimeout(function () {
-            $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
-                $(this).remove();
-            });
-        }, 5000);
-
-    });
-
-</script>
-<script>
-    function SetDate() {
-        let date = new Date().toLocaleString();
-        $('#date').val(date);
-        $('#lang').val(localStorage.getItem("lang"))
-    }
-</script>

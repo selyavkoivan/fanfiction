@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using fanfiction.Models;
 using fanfiction.Models.User;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace fanfiction
 {
@@ -29,10 +30,23 @@ namespace fanfiction
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                })
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/account/facebook-login"; // Must be lowercase
+                })
+                .AddFacebook(options =>
+                {
+                    options.AppId = "899465907578786";
+                    options.AppSecret = "5ba2de0b7760105c7e1e0a632b0b7b32";
+                });
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<User, IdentityRole>(opts => {
+            services.AddIdentity<ApplicationUser, IdentityRole>(opts => {
                 opts.Password.RequiredLength = 1;  
                 opts.Password.RequireNonAlphanumeric = false;  
                 opts.Password.RequireLowercase = false; 
@@ -40,9 +54,9 @@ namespace fanfiction
                 opts.Password.RequireDigit = false;
                 opts.Stores.MaxLengthForKeys = 3;
             }).AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
+                .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
 
             services.ConfigureApplicationCookie(options => options.LoginPath = "/Home");
             services.AddControllersWithViews();
@@ -64,17 +78,14 @@ namespace fanfiction
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=SignUp}/{id?}");
+                    pattern: "{controller=Home}/{action=SignIn}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

@@ -79,7 +79,6 @@ C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\runtimes\win-
 C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\fanfiction.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Home\Account.cshtml.g.cs
 C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Home\SignIn.cshtml.g.cs
 C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Home\SignUp.cshtml.g.cs
 C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Shared\_LayoutAccount.cshtml.g.cs
@@ -87,3 +86,9 @@ C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\MailKit.dll
 C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\MimeKit.dll
 C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\BouncyCastle.Crypto.dll
 C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Home\DisplayEmail.cshtml.g.cs
+C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.Facebook.dll
+C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Fanfiction\Fanfiction.cshtml.g.cs
+C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Profile\Profile.cshtml.g.cs
+C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\WebConfig.config
+C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\CloudinaryDotNet.dll
+C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\Microsoft.Extensions.WebEncoders.dll
