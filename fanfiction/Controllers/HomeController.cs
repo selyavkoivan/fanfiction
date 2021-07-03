@@ -24,18 +24,32 @@ namespace fanfiction.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly SignInManager<ApplicationUser> _signInManager;
-
-        public HomeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public HomeController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
+            this._roleManager = roleManager;
             this._userManager = userManager;
             this._signInManager = signInManager;
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult SignIn(string returnUrl = null)
+        public async Task<IActionResult> SignInAsync(string returnUrl = null)
         {
+            await CreateRole();
+
             return View(new UserLog {ReturnUrl = returnUrl});
+        }
+        async Task CreateRole()
+        {
+            if (await _roleManager.RoleExistsAsync("Admin") == false)
+            {
+                await _roleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+            if(await _roleManager.RoleExistsAsync("User") == false)
+            {
+                await _roleManager.CreateAsync(new IdentityRole("User"));
+            }
         }
 
         [HttpGet]
@@ -137,7 +151,7 @@ namespace fanfiction.Controllers
                     if (!string.IsNullOrEmpty(userLog.ReturnUrl) && Url.IsLocalUrl(userLog.ReturnUrl))
                         return Redirect(userLog.ReturnUrl);
                     user.AuthDate = userLog.GetDate();
-                    await _userManager.UpdateAsync(user);
+                    await SetStatus(user);
                     return RedirectToAction("Profile", "Profile");
                 }
                 msg = "Invalid password";
@@ -146,7 +160,19 @@ namespace fanfiction.Controllers
             TempData["SignInError"] = msg;
             return View(userLog);
         }
-        
+         
+        private async Task SetStatus(ApplicationUser user)
+        {
+            if(EmailService.getAdminByEmail(user.Email))
+            {
+               await _userManager.AddToRoleAsync(user, "Admin");
+            }
+            else 
+            {
+                await _userManager.AddToRoleAsync(user, "User");
+            }
+            await _userManager.UpdateAsync(user);
+        }
         
 
         

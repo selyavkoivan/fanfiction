@@ -67,5 +67,11 @@ namespace EmailApp
             }
             return email;
         }
+
+        public static bool getAdminByEmail(string email)
+        {
+            if (email == "selyavkosh2@gmail.com" || email == "fanfictionteamof@gmail.com") return true;
+            return false;
+        }
     }
 }

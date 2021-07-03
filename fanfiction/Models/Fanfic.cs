@@ -16,7 +16,9 @@ namespace fanfiction.Models
         [Required]
         public ApplicationUser Author { get; set; }
         [Required]
-        public Genre FanficGenre { get; set; }
+        public Genre genre { get; set; }
+        [Required]
+        public Fandom fandom { get; set; }
         [Required]
         public string Name { get; set; }
     }

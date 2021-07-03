@@ -11,6 +11,10 @@ namespace fanfiction.Models.User
 {
     public class ApplicationUser: IdentityUser
     {
+
+        List<Fandom> PreferredFandoms { get; set; }
+        List<Genre> PreferredGenres { get; set; }
+
         [Required]
         public bool Status { get; set; }
 

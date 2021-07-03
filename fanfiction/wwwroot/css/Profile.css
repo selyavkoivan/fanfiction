@@ -1,18 +1,13 @@
 ﻿
 
-.left {
-    height: 100%;
-    width: 30%;
-    position: fixed;
-    background-color: #252525;
-    left: 0;
-    
-}
-.right {
+
+.area {
     height: 100%;
     width: 70%;
-    position: fixed;
+    position: absolute;
     right: 0;
+    left: 0;
+    margin: auto;
 }
 
 
