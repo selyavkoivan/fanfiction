@@ -13,6 +13,7 @@ using fanfiction.Models.User;
 using System.Threading.Tasks;
 using EmailApp;
 using fanfiction.Data;
+using fanfiction.Models.Settings;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
@@ -72,7 +73,7 @@ namespace fanfiction.Controllers
             return Ok();
         }
 
-        public async Task SendEmail(string email, string lang)
+        private async Task SendEmail(string email, string lang)
         {
             
             var user = await _userManager.GetUserAsync(User);
@@ -114,7 +115,7 @@ namespace fanfiction.Controllers
         
         public IActionResult Settings()
         {
-            return View();
+            return View(new Settings(Request.Cookies["lang"], Request.Cookies["theme"]));
            
         }
     }

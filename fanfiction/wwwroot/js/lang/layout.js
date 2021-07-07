@@ -17,8 +17,9 @@
             "Settings"                  : "Настройки",
             "Profile"                   : "Личный кабинет",
             "Change-theme"              : "Изменить тему",
-            "Dark"                      : "темная",
-            "Light"                     : "светлая",
+            "Change-lang"               : "Изменить язык",
+            "dark-theme"                : "темная",
+            "light-theme"               : "светлая",
             "Add-fanfiction"            : "Добавить фанфик",
             "Fanfiction"                : "Фанфики",
             "Add-fandom"                : "Добавить фандом",
@@ -38,6 +39,8 @@
             "Genre"                     : "Жанр",
             "Lang"                      : "Язык",
             "Fanfic-adding"             : "Добавление фанфика",
+            "ru"                        : "русский",
+            "en"                        : "английский // english",
     },
     "en": {
             "Sign-In"                   : "Sign In",
@@ -57,8 +60,9 @@
             "Settings"                  : "Settings",
             "Profile"                   : "Profile",
             "Change-theme"              : "Change theme",
-            "Dark"                      : "dark",
-            "Light"                     : "light",
+            "Change-lang"               : "Change language",
+            "dark-theme"                : "dark",
+            "light-theme"               : "light",
             "Add-fanfiction"            : "Add fanfic",
             "Fanfiction"                : "Fanfiction",
             "Add-fandom"                : "Add fandom",
@@ -78,6 +82,8 @@
             "Genre"                     : "Genre",
             "Lang"                      : "Language",
             "Fanfic-adding"             : "Adding fanfic",
+            "ru"                        : "russian // русский",
+            "en"                        : "english",
     }
 }
 

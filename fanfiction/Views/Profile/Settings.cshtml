@@ -1,28 +1,73 @@
-﻿@{
+﻿@using Org.BouncyCastle.Asn1.Ocsp
+@{
     Layout = "~/Views/Shared/_LayoutAccount.cshtml";
 }
+@model fanfiction.Models.Settings.Settings
 <body>
 <div class="area" style="text-align: center;">
     
 	<h2 class="lang mt-5 text-center" key="Settings"></h2>
 	<p style="text-align: center; margin: 0 0 15px 0;">	
-		<h3 class="mt-5 lang" key="Change-theme"></h3>
-		<label class="checkbox-purple">
-			<input onclick="changeTheme(this.value)"  type="checkbox" id="theme-changer"  class="checkbox-purple-switch" data-label-on="light" data-label-off="dark">
-		
-		</label>
+	<h3 class="mt-5 lang" key="Change-theme"></h3>
+	<div style="width: 30%; margin: auto;">
+  
+		<select id="fandom-select" name="select-theme">
+			@foreach (var it in Model.availableThemes)
+			{
+				if (it == Model.theme)
+				{
+					<option selected class="lang" key="@it"></option>
+				}
+				else
+				{
+					<option class="lang" key="@it"></option>	
+				}
+			}
+            
+		</select>
+
+		<h3 class="mt-5 lang" key="Change-lang"></h3>
+
+      
+		<select id="fandom-select" name="select-lang">
+			@foreach (var it in Model.availableLang)
+			{
+				if (it == Model.lang)
+				{
+					<option selected class="lang" key="@it"></option>
+				}
+				else
+				{
+					<option class="lang" key="@it"></option>
+				}
+			
+			}
+                
+		</select>
+		<button onclick="setSettings()"  type="submit" key="Confirm" style="display: inline-block" class="mt-5 lang" id="description-text"></button>
 	</div>
+</div>
+
 </body>
-<script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
 <script>
-$(window).keyup(function(e){
-	var target = $('.checkbox-purple input:focus');
-	if (e.keyCode == 9 && $(target).length){
-		$(target).parent().addClass('focused');
-	}
-});
- 
-$('.checkbox-purple input').focusout(function(){
-	$(this).parent().removeClass('focused');
-});
+
+function setSettings()
+{
+	let langValue = getLangValue()
+	let themeValue = getThemeValue()
+	document.cookie = "lang=" + langValue
+	document.cookie = "theme=" + themeValue
+	window.location.reload()
+}
+function getLangValue()
+{
+	let langIndex = document.getElementsByName('select-lang')[0].options.selectedIndex
+	return document.getElementsByName('select-lang')[0].options[langIndex].getAttribute('key')
+}
+function getThemeValue()
+{
+	let langIndex = document.getElementsByName('select-theme')[0].options.selectedIndex
+	return document.getElementsByName('select-theme')[0].options[langIndex].getAttribute('key')
+}
+
 </script>

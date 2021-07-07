@@ -9,7 +9,7 @@ let themeButton = document.querySelector('.theme-button');
 themeButton.onclick = function () {
     themeArr.forEach(theme => {
         
-        if(page.classList.toggle(theme) === true) localStorage.setItem("theme", theme)
+        if(page.classList.toggle(theme) === true)  document.cookie = "theme=" + theme
         else page.classList.remove(theme)
         
     })
@@ -24,12 +24,13 @@ function changeThemeOnLoad() {
 
 function setTheme()
 {
-    if (localStorage.getItem("theme") !== null) {
+    if (readCookie('theme') !== null) {
         themeArr.forEach(theme => { page.classList.remove(theme); })
-        page.classList.add(localStorage.getItem("theme"))
+        page.classList.add(readCookie('theme'))
     }
     else {
         localStorage.setItem("theme", "light-theme")
+        document.cookie = "theme=light-theme"
         page.classList.add('light-theme')
     }
 }

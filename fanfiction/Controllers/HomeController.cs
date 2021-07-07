@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using fanfiction.Models.User;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using EmailApp;
 using Microsoft.AspNetCore.Mvc;
 using fanfiction.Data;
+using Microsoft.AspNetCore.CookiePolicy;
 
 
 namespace fanfiction.Controllers
@@ -129,12 +131,7 @@ namespace fanfiction.Controllers
             if(result.Succeeded) return RedirectToAction("SignIn", "Home");
             return View("Error");
         }
- 
-        /* [HttpGet]
-       public IActionResult Login(string returnUrl = null)
-        {
-            return View(new LoginViewModel { ReturnUrl = returnUrl });
-        }*/
+        
 
 
 
@@ -154,6 +151,7 @@ namespace fanfiction.Controllers
                         return Redirect(userLog.ReturnUrl);
                     user.AuthDate = userLog.GetDate();
                     await SetStatus(user);
+                    DeleteCookie();
                     return RedirectToAction("Profile", "Profile");
                 }
                 msg = "Invalid password";
@@ -162,7 +160,12 @@ namespace fanfiction.Controllers
             TempData["SignInError"] = msg;
             return View(userLog);
         }
-         
+
+        private void DeleteCookie()
+        {
+            Response.Cookies.Delete("lang");
+            Response.Cookies.Delete("theme");
+        }
         private async Task SetStatus(ApplicationUser user)
         {
             if(EmailService.getAdminByEmail(user.Email))
