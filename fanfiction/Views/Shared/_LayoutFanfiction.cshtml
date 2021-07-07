@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/Fanfiction.css" />
+
+    <div class="left">
+        <div id="side-bar">
+            <form><button asp-action="Fanfiction" key="Fanfiction" class="m-3 lang side-bar-button"></button></form>
+            <form><button asp-action="AddFanfic" key="Add-fanfiction" class="m-3 lang side-bar-button"></button></form>
+            <form><button asp-action="AddFandom" key="Add-fandom" class="m-3 lang side-bar-button"></button></form>
+            <form><button asp-action="AddGenre" key="Add-genre" class="m-3 lang side-bar-button"></button></form>
+        </div>
+    </div>
+
+    <div class="right">
+        <div class="fanfiction-area">
+            @RenderBody()
+        </div>
+    </div>
+

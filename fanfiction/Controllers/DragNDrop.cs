@@ -22,6 +22,7 @@ namespace fanfiction.Controllers
         public AjaxController(IWebHostEnvironment env, UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
         {
+            
             this.env = env;
             this._userManager = userManager;
             this._signInManager = signInManager;

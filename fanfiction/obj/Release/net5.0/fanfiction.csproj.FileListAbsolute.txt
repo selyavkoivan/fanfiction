@@ -92,3 +92,6 @@ C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Release\net5.0\Razor\Views
 C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Release\net5.0\WebConfig.config
 C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Release\net5.0\CloudinaryDotNet.dll
 C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Release\net5.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Release\net5.0\Razor\Views\Fanfiction\AddFandom.cshtml.g.cs
+C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Release\net5.0\Razor\Views\Profile\Settings.cshtml.g.cs
+C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Release\net5.0\Razor\Views\Shared\_LayoutFanfiction.cshtml.g.cs

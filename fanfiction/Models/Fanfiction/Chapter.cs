@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace fanfiction.Models
+namespace fanfiction.Models.Fanfiction
 {
     public class Chapter
     {

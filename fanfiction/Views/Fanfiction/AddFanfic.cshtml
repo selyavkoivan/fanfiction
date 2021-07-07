@@ -1,0 +1,87 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutFanfiction.cshtml";
+}
+
+@model fanfiction.Models.Fanfiction.AddFanfic
+<body >
+
+<form method="post" asp-controller="Fanfiction" asp-action="AddFanfic">
+    <h2 style="text-align: center" class="mb-3 lang" key="Fanfic-adding"></h2>
+    <div style="width: 30%; display: inline-block;  vertical-align: top">
+        <h3 class="lang" key="Fandom"></h3>
+        <select id="fandom-select" asp-for="fandomName" required>
+            @foreach (var fandom in Model.fandoms)
+            {
+
+                <option>
+                    @if (Model.SystemLang == "ru")
+                    {
+                        @fandom.RuName
+                    }
+                    else
+                    {
+                        @fandom.EnName
+                    }
+                </option>
+            }
+
+        </select>
+    </div>
+      <div style="width: 30%; display: inline-block; margin-left: 9%; margin-right: 9%;   vertical-align: top">
+            <h3 class="lang" key="Genre"></h3>
+            <select id="fandom-select" asp-for="genreName" required>
+                @foreach (var genre in Model.genres)
+                {
+    
+                    <option>
+                        @if (Model.SystemLang == "ru")
+                        {
+                            @genre.RuName
+                        }
+                        else
+                        {
+                            @genre.EnName
+                        }
+                    </option>
+                }
+    
+            </select>
+        </div>
+    <div style="width: 20%; display: inline-block;  vertical-align: top">
+        <h3 class="lang" key="Lang"></h3>
+        <select id="fandom-select" asp-for="lang" required>
+            @if (Model.SystemLang == "ru")
+            {
+                <option>Русский</option>
+                <option>Английский</option>
+            }
+            else
+            {
+                <option>English</option>
+                <option>Russian</option>
+            }
+            
+        </select>
+    </div>
+    <h4 class="lang mt-3" key="Category-Name"></h4>
+    <input asp-for="name" key="Fanfic-Name" id="name-text" class="lang" type="text" maxlength="50" required>
+    @if (TempData["Fanfic-name"] != null)
+    {
+
+        <div id="alert" class="alert alert-danger alert-dismissible m-0 mt-1" style="width: 100%">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p class="lang m-0">@TempData["Fanfic-name"]</p>
+        </div>
+
+    }
+
+
+    <div style="text-align: right">
+        <button key="Back" style="display: inline-block" class="m-3 lang fanfiction-button"></button>
+
+        <button  type="submit" key="Confirm" style="display: inline-block" class="m-3 lang fanfiction-button"></button>
+
+    </div>
+</form>
+</body>
+

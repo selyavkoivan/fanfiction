@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+<body>
+<div class="area" style="text-align: center;">
+    
+	<h2 class="lang mt-5 text-center" key="Settings"></h2>
+	<p style="text-align: center; margin: 0 0 15px 0;">	
+		<h3 class="mt-5 lang" key="Change-theme"></h3>
+		<label class="checkbox-purple">
+			<input onclick="changeTheme(this.value)"  type="checkbox" id="theme-changer"  class="checkbox-purple-switch" data-label-on="light" data-label-off="dark">
+		
+		</label>
+	</div>
+</body>
+<script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
+<script>
+$(window).keyup(function(e){
+	var target = $('.checkbox-purple input:focus');
+	if (e.keyCode == 9 && $(target).length){
+		$(target).parent().addClass('focused');
+	}
+});
+ 
+$('.checkbox-purple input').focusout(function(){
+	$(this).parent().removeClass('focused');
+});
+</script>

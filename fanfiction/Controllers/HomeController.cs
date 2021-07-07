@@ -13,7 +13,7 @@ using fanfiction.Models.User;
 using System.Threading.Tasks;
 using EmailApp;
 using Microsoft.AspNetCore.Mvc;
-
+using fanfiction.Data;
 
 
 namespace fanfiction.Controllers
@@ -25,8 +25,10 @@ namespace fanfiction.Controllers
 
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public HomeController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private ApplicationDbContext _context;
+        public HomeController(ApplicationDbContext context,RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
+            this._context = context;
             this._roleManager = roleManager;
             this._userManager = userManager;
             this._signInManager = signInManager;
@@ -91,7 +93,7 @@ namespace fanfiction.Controllers
                     return View("DisplayEmail");
                 }
                 
-                  foreach (var i in result.Errors) msg += i.Description;
+                foreach (var i in result.Errors) msg += i.Description;
             }
 
             TempData["SignUpError"] = msg;

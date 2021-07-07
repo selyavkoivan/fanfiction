@@ -1,6 +1,32 @@
 ﻿@{
-    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+    Layout = "~/Views/Shared/_LayoutFanfiction.cshtml";
+}
+@using fanfiction.Models.Fanfiction
+@model List<Fanfic> 
+
+ @if (TempData["Adding-success"] != null)
+        {
+       
+            <div id="alert" class="alert alert-success alert-dismissible m-0 mt-1" style="width: 100%">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p class="lang m-0">@TempData["Adding-success"]</p>
+            </div>
+       
+        }
+<h2>Фанфики</h2>
+@if (Model != null)
+{
+@foreach (var it in Model)
+{
+    <div> @it.Name </div>
+}
+}
+else
+{
+    <p>Список фанфиков пуст</p>
 }
 
-<!DOCTYPE html>
-<h3 class="lang" key="fanfiction-null"></h3>
+
+
+<script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
+

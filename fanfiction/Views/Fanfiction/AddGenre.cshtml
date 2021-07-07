@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutFanfiction.cshtml";
+}
+
+@model fanfiction.Models.Fanfiction.Genre
+<div >
+  <form method="post" asp-controller="Fanfiction" asp-action="AddGenre">
+        <h2 style="text-align: center" class="mb-3 lang" key="Genre-adding"></h2> 
+    
+    
+    <div style="width: 49%; display: inline-block; padding-right: 10px; vertical-align: top">
+    
+
+        <h3 class="lang" key="Ru-version"></h3>
+                <h4 class="lang" key="Category-Name"></h4>
+        <input asp-for="RuName" key="Fandom-Name" id="name-text"  class="lang" type="text" maxlength="50" required>
+        @if (TempData["Genre-name-ru"] != null)
+        {
+
+            <div id="alert" class="alert alert-danger alert-dismissible m-0 mt-1" style="width: 100%">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                 <p class="lang m-0" key="Genre-taken"></p>    
+            </div>
+
+        }
+         <h4 class="mt-1 mb-1 lang" key="Description"></h4>
+        <textarea asp-for="RuDescription" id="description-text" style="resize: none" maxlength="1000" rows="14" ></textarea>
+    </div>
+    <div style="width: 49%; display: inline-block; padding-left: 10px; vertical-align: top">
+        <h3 class="lang" key="En-version"></h3>
+        <h4 class="lang" key="Category-Name"></h4>
+        <input asp-for="EnName"  key="Genre-Name" id="name-text" class="lang  adapt" type="text" maxlength="50" required>
+         
+        @if (TempData["Genre-name-en"] != null)
+        {
+       
+            <div id="alert" class="alert alert-danger alert-dismissible m-0 mt-1" style="width: 100%">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p class="lang m-0" key="Genre-taken"></p>
+            </div>
+       
+        }
+        <h4 class="mt-1 mb-1 lang" key="Description"></h4>
+        <textarea asp-for="EnDescription" id="description-text" style="resize: none" maxlength="1000" rows="14"></textarea>
+    </div>
+    <div style="text-align: right">
+        <button key="Back" style="display: inline-block" class="m-3 lang fanfiction-button"></button>
+        
+            <button type="submit" key="Confirm" style="display: inline-block" class="m-3 lang fanfiction-button"></button>
+    
+    </div>
+</form>
+    </div>
+
+

@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
-<script src='lib/jquery/dist/jquery.js'></script>
+<script src='~/lib/jquery/dist/jquery.js'></script>
 
 <meta charset="utf-8"/>
-    <meta name="viewpoint" content="width=device-width" />
+
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="~/css/Profile.css" />
 <link rel="stylesheet" href="~/css/site.css" />
@@ -25,22 +25,50 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-                   
+   <script>
+   /* When the user clicks on the button, 
+   toggle between hiding and showing the dropdown content */
+   function myFunction() {
+       document.getElementById("myDropdown").classList.toggle("show");
+   }
+   
+   // Close the dropdown if the user clicks outside of it
+   window.onclick = function(event) {
+     if (!event.target.matches('.dropbtn')) {
+   
+       let dropdowns = document.getElementsByClassName("dropdown-content");
+      
+       for (let i = 0; i < dropdowns.length; i++) {
+        if (dropdowns[i].classList.contains('show')) {
+               dropdowns[i].classList.remove('show');
+       }
+     }
+   }
+     }
+   </script>                
 
 <body onload="changeThemeOnLoad()" class="page light-theme">
 <header>
     
-    <nav class=" row  navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+    <div class="container navbar-collapse justify-content-start collapse d-sm-inline-flex">
+    
+                    <ul class="navbar-nav" style="margin-left: 20%">
+                        <li>
+                            <a class="adapt text nav-link lang" key="Home" asp-controller="Fanfiction" asp-action="Fanfiction"></a>
+                        </li>
+                    </ul>
+                </div>
         <div class="container navbar-collapse justify-content-end collapse d-sm-inline-flex">
 
-                <ul class="navbar-nav">
+                <ul class="navbar-nav" style="margin-right: 20%">
                     <li>
-                        <div class="dropdown container">
+                        <div class="dropdown ">
                             <a onclick="myFunction()" style="font-size: 1.5em"  class=" dropbtn fas fa-bars"></a>
                             <div id="myDropdown" class="dropdown-content">
-                                <a asp-action="Profile" asp-controller="Profile" >Profile</a>
-                                <a href="#">Settings</a>
-                                <a href="#">Sign Out</a>z
+                                <a class="lang" asp-action="Profile" asp-controller="Profile" key="Profile" ></a>
+                                <a class="lang" asp-action="Settings" asp-controller="Profile" key="Settings"></a>
+                                <a class="lang"  asp-action="Logout" asp-controller="Home" key="Sign-out" ></a>
                             </div>
                        
                         </div>
@@ -55,27 +83,7 @@
 @RenderBody()
 
 </body>
-<script>
-/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-
-    let dropdowns = document.getElementsByClassName("dropdown-content");
-   
-    for (let i = 0; i < dropdowns.length; i++) {
-     if (dropdowns[i].classList.contains('show')) {
-            dropdowns[i].classList.remove('show');
-    }
-  }
-}
-  }
-</script>
 <script src='~/lib/jquery/dist/jquery.js'></script>
 <script src="~/js/lang/layout.js"></script>
 <script src="~/js/theme.js"></script>

@@ -49,44 +49,61 @@ html {
 
 
 .dark-theme {
-  color: #f2f2f2;
+  color: #eae9f2;
   background-color: #222226;
 }
 
 
-
+.dark-theme a,
 .dark-theme.text
 {
-  background-color: #0a0910;
   color: #f2f2f2;;
 }
+.light-theme a,
 .light-theme.text
 {
-  background-color: #f2f2f2;
   color: #0a0910;
 }
 
 
 
+.light-theme.table_col {
 
+  border-collapse: collapse;
+  color: #eae9f2;
 
-.table_col {
+}
+
+.dark-theme.table_col {
 
   border-collapse: collapse;
   color: #222226;
 
 }
-.table_col th {
+.dark-theme.table_col th {
   color: #eae9f2;
   border-bottom: 2px solid #eae9f2;
   border-right: 20px solid #222226;
   border-left: 20px solid #222226;
   padding: 8px 10px;
 }
+.light-theme.table_col th {
+  color: #eae9f2;
+  border-bottom: 2px solid #222226;
+  border-right: 20px solid #eae9f2;
+  border-left: 20px solid #eae9f2;
+  padding: 8px 10px;
+}
 
 
+.light-theme.table_col td {
+  color: #222226;
+  border-right: 20px solid #eae9f2;
+  border-left: 20px solid #eae9f2;
+  padding: 12px 10px;
 
-.table_col td {
+}
+.dark-theme.table_col td {
   color: #eae9f2;
   border-right: 20px solid #222226;
   border-left: 20px solid #222226;
@@ -96,5 +113,168 @@ html {
 thead th
 {
   position: sticky;
-  top: 0px;
+  top: 0;
+}
+
+
+
+
+.checkbox-purple {
+  display: inline-block;
+  height: 28px;
+  line-height: 28px;
+  margin-right: 10px;
+  position: relative;
+  vertical-align: middle;
+  font-size: 14px;
+  user-select: none;
+}
+.checkbox-purple .checkbox-purple-switch {
+  display: inline-block;
+  height: 28px;
+  width: 90px;
+  box-sizing: border-box;
+  position: relative;
+  border-radius: 2px;
+  background: #6b3b76;
+  transition: background-color 0.3s cubic-bezier(0, 1, 0.5, 1);
+}
+.checkbox-purple .checkbox-purple-switch:before {
+  content: attr(data-label-on);
+  display: inline-block;
+  box-sizing: border-box;
+  width: 45px;
+  padding: 0 12px;
+  position: absolute;
+  top: 0;
+  left: 45px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #6b3b76;
+  font-size: 10px;
+  line-height: 28px;
+}
+.checkbox-purple .checkbox-purple-switch:after {
+  content: attr(data-label-off);
+  display: inline-block;
+  box-sizing: border-box;
+  width: 44px;
+  border-radius: 1px;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  z-index: 5;
+  text-transform: uppercase;
+  text-align: center;
+  background: white;
+  line-height: 26px;
+  font-size: 10px;
+  color: #777;
+  transition: transform 0.3s cubic-bezier(0, 1, 0.5, 1);
+}
+.checkbox-purple input[type="checkbox"] {
+  display: block;
+  width: 0;
+  height: 0;
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.checkbox-purple input[type="checkbox"]:checked + .checkbox-purple-switch {
+
+}
+.checkbox-purple input[type="checkbox"]:checked + .checkbox-purple-switch:before {
+  content: attr(data-label-off);
+  left: 0;
+}
+.checkbox-purple input[type="checkbox"]:checked + .checkbox-purple-switch:after {
+  content: attr(data-label-on);
+
+  transform: translate3d(44px, 0, 0);
+}
+
+/* Hover */
+.checkbox-purple input[type="checkbox"]:not(:disabled) + .checkbox-purple-switch:hover {
+  cursor: pointer;
+}
+.checkbox-purple input[type="checkbox"]:not(:disabled) + .checkbox-purple-switch:hover:after {
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Disabled */
+.checkbox-purple input[type=checkbox]:disabled + .checkbox-purple-switch {
+  opacity: 0.6;
+  filter: grayscale(50%);
+}
+
+/* Focus */
+.checkbox-purple.focused .checkbox-purple-switch:after {
+  box-shadow: inset 0px 0px 4px #ff5623;
+}
+.split {
+  
+}
+
+/* Control the left side */
+.left {
+  left: 0;
+  padding: 20px;
+  height: auto;
+  margin-left: 10%;
+  width: 20%;
+  position: fixed;
+  overflow-x: hidden;
+
+}
+
+/* Control the right side */
+.right {
+  padding: 20px;
+  right: 0;
+  height: auto;
+  width: 70%;
+  position: fixed;
+  overflow-x: hidden;
+}
+.body {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+.light-theme #fandom-select,
+.light-theme #name-text
+{
+  width: 100%;
+  border: 2px dashed #222226;
+  border-radius: 5px;
+  background: #eae9f2;
+  color: #222226;
+}
+.dark-theme #fandom-select,
+.dark-theme #name-text
+{
+  width: 100%;
+  border: 2px dashed #eae9f2;
+  border-radius: 5px;
+  background: #222226;
+  color: #eae9f2;
+}
+.light-theme #description-text
+{
+  width: 100%;
+  border: 2px dashed #222226;
+  border-radius: 5px;
+  background: #eae9f2;
+  color: #222226;
+}
+.dark-theme #description-text
+{
+  width: 100%;
+  border: 2px dashed #eae9f2;
+  border-radius: 5px;
+  background: #222226;
+  color: #eae9f2;
 }

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using fanfiction.Models.Fanfiction;
 using fanfiction.Models.User.Inretfaces;
 
 namespace fanfiction.Models.User
@@ -12,9 +13,11 @@ namespace fanfiction.Models.User
     public class ApplicationUser: IdentityUser
     {
 
-        List<Fandom> PreferredFandoms { get; set; }
-        List<Genre> PreferredGenres { get; set; }
+        public List<Fandom> PreferredFandoms { get; set; }
+        public List<Genre> PreferredGenres { get; set; }
 
+
+        public List<Fanfic> UserFanfiction { get; set; }
         [Required]
         public bool Status { get; set; }
 
@@ -32,6 +35,9 @@ namespace fanfiction.Models.User
 
         public ApplicationUser()
         {
+            UserFanfiction = new List<Fanfic>();
+            PreferredFandoms = new List<Fandom>();
+            PreferredGenres = new List<Genre>();
         }
     }
   

@@ -23,9 +23,10 @@ namespace fanfiction.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly SignInManager<ApplicationUser> _signInManager;
-
-        public ProfileController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private ApplicationDbContext _context;
+        public ProfileController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
+            this._context = context;
             this._userManager = userManager;
             this._signInManager = signInManager;
         }
@@ -108,6 +109,12 @@ namespace fanfiction.Controllers
             var result = await _userManager.ChangeEmailAsync(user, email, token);
             if(result.Succeeded) return RedirectToAction("SignIn", "Home");
             return View("Error");
+           
+        }
+        
+        public IActionResult Settings()
+        {
+            return View();
            
         }
     }

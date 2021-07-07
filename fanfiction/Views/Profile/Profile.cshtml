@@ -15,10 +15,7 @@
 
 
 <div class="area">
-    @if (TempData["email-is-confirmed"] != null)
-    {
-        <title> @TempData["email-is-confirmed"]</title>
-    }
+
     <div class="profile-area m-3">
         <div id="avatar-area" style="display: inline-block; text-align: center">
             @if (Model.AvatarUrl == null)
@@ -78,16 +75,26 @@
                 </div>}
             </body>
         </div>
-       
-            <table class="table_col" style="margin: auto; width: 90%;">
+       @if (@Model.UserFanfiction != null)
+       {
+       @foreach (var it in Model.UserFanfiction)
+       {
+           <div> @it.Name </div>
+       }
+       }
+       else
+       {
+           <p>Список фанфиков пуст</p>
+       }
+            <table class="table_col mt-5" style="margin: auto; width: 90%;">
                 <thead style="text-align: center">
                  <td colspan="4"><h2>Список фанфиков</h2></td>
                 </thead>
                 <tr>
                     <th>Название</th>
+                    <th>Фандом</th>
+                    <th>Жанр</th>
                     <th>Количество глав</th>
-                    <th>Рейтинг</th>
-                    <th>Children</th>
                 </tr>
                 <tr>
                     <td>Scary Movie</td>
@@ -95,24 +102,7 @@
                     <td>The Punisher</td>
                     <td>Wall-E</td>
                 </tr>
-                <tr>
-                    <td>Epic Movie</td>
-                    <td>Star Wars</td>
-                    <td>Bad Boys</td>
-                    <td>Madagascar</td>
-                </tr>
-                <tr>
-                    <td>Spartan</td>
-                    <td>LOTR</td>
-                    <td>Die Hard</td>
-                    <td>Finding Nemo</td>
-                </tr>
-                <tr>
-                    <td>Dr. Dolittle</td>
-                    <td>The Mummy</td>
-                    <td>300</td>
-                    <td>A Bug's Life</td>
-                </tr>
+               
             </table>
         
     </div>
@@ -217,7 +207,7 @@ function UpdateName(value) {
 
 }
 function UpdateEmail(value) {
- 
+    
     $.ajax({
         type: "POST",
         url: '@Url.Action("UpdateEmail", "Profile")',
