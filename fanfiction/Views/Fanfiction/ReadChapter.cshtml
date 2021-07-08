@@ -123,10 +123,10 @@ function setLike(chapterId)
              url: '@Url.Action("SetLike", "Fanfiction")',
              data: { 'chapterId': chapterId} ,
              success: function (data) {
-                location.reload()
+              
              },
              error: function (data) {
-             location.reload()
+
              }
          });   
 }

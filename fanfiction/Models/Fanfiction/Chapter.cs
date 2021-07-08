@@ -56,6 +56,7 @@ namespace fanfiction.Models.Fanfiction
             if (count == chapter.ChapterNumber) isLast = true;
             else isLast = false;
             var likes = context.Likes.Where(l => l.chapterId == chapter.ChapterId).ToList();
+            this.count = likes.Count;
             if (likes.Count(l => l.userId == userId) == 0) isLiked = false;
             else isLiked = true;
         }

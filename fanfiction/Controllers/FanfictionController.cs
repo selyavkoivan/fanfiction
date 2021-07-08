@@ -177,18 +177,18 @@ namespace fanfiction.Controllers
                 ));
         }
       
-
+        
         [HttpPost]
         public async Task<IActionResult> SetLike(int chapterId)
         {
             
            var like = new Like {chapter = await _context.Chapters.FindAsync(chapterId),user = await _userManager.GetUserAsync(User)};
-           await _context.Likes.AddAsync(like); 
-           TempData["ff"] = _context.Likes.ToList().Count;
-           //await _context.SaveChangesAsync();
-           
-            return Ok();
+          
+           await _context.Likes.AddAsync(like);
+           await _context.SaveChangesAsync();
+           return Ok();
         }
+        
         [HttpPost]
         public async Task<IActionResult> DeleteLike(int chapterId)
         {
