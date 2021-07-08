@@ -104,6 +104,7 @@ namespace fanfiction.Controllers
 
         public async void SendEmail(ApplicationUser user, string lang)
         {
+           
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.Action(
                 "ConfirmEmail",
@@ -151,7 +152,7 @@ namespace fanfiction.Controllers
                         return Redirect(userLog.ReturnUrl);
                     user.AuthDate = userLog.GetDate();
                     await SetStatus(user);
-                    DeleteCookie();
+                   
                     return RedirectToAction("Profile", "Profile");
                 }
                 msg = "Invalid password";

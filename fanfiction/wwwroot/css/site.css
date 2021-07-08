@@ -234,7 +234,6 @@ thead th
   height: auto;
   width: 70%;
   position: fixed;
-  overflow-x: hidden;
 }
 .body {
   height: 100%;
@@ -279,3 +278,81 @@ thead th
   color: #eae9f2;
 }
 
+.light-theme #description-text
+{
+  width: 100%;
+  border: 2px dashed #222226;
+  border-radius: 5px;
+  background: #eae9f2;
+  color: #222226;
+}
+.dark-theme #description-text
+{
+  width: 100%;
+  border: 2px dashed #eae9f2;
+  border-radius: 5px;
+  background: #222226;
+  color: #eae9f2;
+}
+.light-theme .fake_textarea
+{
+  margin: auto;
+  width: 100%;
+  border: 2px dashed #222226;
+  border-radius: 5px;
+  background: #eae9f2;
+  color: #222226;
+}
+.dark-theme .fake_textarea
+{
+  margin: auto;
+  width: 100%;
+  border: 2px dashed #eae9f2;
+  border-radius: 5px;
+  background: #222226;
+  color: #eae9f2;
+}
+
+.light-theme .border-dashed
+{
+  white-space: pre;
+  padding: 15px;
+  border: 2px dashed #222226;
+  border-radius: 5px;
+  background: #eae9f2;
+  color: #222226;
+}
+.dark-theme .border-dashed
+{
+  
+  padding: 15px;
+  border: 2px dashed #eae9f2;
+  border-radius: 5px;
+  background: #222226;
+  color: #eae9f2;
+}
+/* Control the left side */
+.left-navigator {
+  
+  left: 0;
+  padding: 20px;
+  height: auto;
+  margin-left: 20%;
+  width: 30%;
+  position: fixed;
+  overflow-x: hidden;
+
+}
+
+/* Control the right side */
+.right-navigator {
+  
+  padding: 20px;
+  text-align: right;
+  right: 0;
+  margin-right: 20%;
+  height: auto;
+  width: 30%;
+  position: fixed;
+  overflow-x: hidden;
+}

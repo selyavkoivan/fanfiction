@@ -41,6 +41,13 @@
             "Fanfic-adding"             : "Добавление фанфика",
             "ru"                        : "русский",
             "en"                        : "английский // english",
+            "Chapter-count"             : "Количество глав",
+            "Chapter-list"              : "Список глав",
+            "Fanfiction-list"           : "Список фанфиков",
+            "Chapter-number"            : "Номер главы: ",
+            "Body"                      : "Текст главы",
+            "Image"                     : "Добавить картинку",
+            "Fanfic-non-exists"         : "Список фанфиков пуст",
     },
     "en": {
             "Sign-In"                   : "Sign In",
@@ -84,6 +91,13 @@
             "Fanfic-adding"             : "Adding fanfic",
             "ru"                        : "russian // русский",
             "en"                        : "english",
+            "Chapter-count"             : "Count of chapter",
+            "Chapter-list"              : "List of chapter",
+            "Fanfiction-list"           : "List of fanfiction",
+            "Chapter-number"            : "Chapter number: ",
+            "Body"                      : "Chapter text",
+            "Image"                     : "Add Image",
+            "Fanfic-non-exists"         : "List of fanfic is empty",
     }
 }
 

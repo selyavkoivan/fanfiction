@@ -21,3 +21,4 @@ function colouring(activeArea, inactiveArea) {
     }
   
 }
+

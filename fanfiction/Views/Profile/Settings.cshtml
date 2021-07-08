@@ -55,8 +55,8 @@ function setSettings()
 {
 	let langValue = getLangValue()
 	let themeValue = getThemeValue()
-	document.cookie = "lang=" + langValue
-	document.cookie = "theme=" + themeValue
+	document.cookie = "lang=" + langValue+"; path=/"
+	document.cookie = "theme=" + themeValue+ "; path=/"
 	window.location.reload()
 }
 function getLangValue()

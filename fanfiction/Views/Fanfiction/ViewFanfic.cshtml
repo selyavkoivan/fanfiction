@@ -1,0 +1,77 @@
+﻿@{
+    Layout = Model.isMine ? "~/Views/Shared/_LayoutAccount.cshtml" : "~/Views/Shared/_LayoutFanfiction.cshtml";
+}
+@model fanfiction.Models.Fanfiction.FanficModel
+
+<div class="area" >
+    <table class="profile-table" id="profile-data-area" style="margin: auto; width: 50%" >
+        <tr>
+            <th class="p-2 lang" key="Category-Name"></th>
+            <td>@Model.fanfic.Name</td>                
+        </tr>
+        <tr>
+            <th class="p-2 lang" key="Fandom"></th>
+            @if (Model.lang == "ru")
+            {
+                <td>@Model.fanfic.fandom.RuName</td>    
+            }
+            else
+            {
+                <td>@Model.fanfic.fandom.EnName</td>                
+            }
+        </tr>
+        <tr>
+            <th class="p-2 lang" key="Genre"></th>
+            @if (Model.lang == "ru")
+            {
+                <td>@Model.fanfic.genre.RuName</td>    
+            }
+            else
+            {
+                <td>@Model.fanfic.genre.EnName</td>
+            }              
+        </tr>
+        <tr>
+            <th class="p-2 lang" key="Lang"></th>
+            <td class="lang" key="@Model.fanfic.Lang"></td>                
+        </tr>
+    </table>
+    
+    <table class="table_col mt-5" style="margin: auto; width: 90%;">
+        <thead style="text-align: center">
+        <td colspan="4"><h2 class="lang" key="Chapter-list"></h2></td>
+        </thead>
+        <tr>
+            <th class="p-2">№</th>
+            <th colspan="3" class="p-2 lang" key="Category-Name"></th>
+        </tr>
+        @foreach (var c in Model.fanfic.Chapters)
+        {
+            <tr>
+                <td>@c.ChapterNumber</td>
+                <td colspan="3">
+                    @Html.ActionLink(
+                        c.Title, 
+                        "ReadChapter",
+                        "Fanfiction",
+                        new {fanficId = c.FanficId, chapterNumber = c.ChapterNumber})
+                                                                     
+                </td>
+            </tr>
+        }   
+        @if (Model.isMine)
+        {
+            <tr>
+
+                <th colspan="4" class="p-2">
+                    @Html.ActionLink(
+                        Model.lang == "ru" ? "Добавить главу" : "Add chapter",
+                        "AddChapter",
+                        "Fanfiction",
+                        new {fanficId = Model.fanfic.FanficId, chapterNumber = Model.fanfic.Chapters.Count + 1})
+
+                </th>
+            </tr>
+        }
+    </table>
+</div>

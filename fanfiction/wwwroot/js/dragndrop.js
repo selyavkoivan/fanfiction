@@ -50,9 +50,10 @@ function submitFilesForm(form) {
                 for (var i = 0; i < images.length; i++) {
                     var img = document.createElement("img");
                     img.src = images[i];
+                   
                     document.getElementById("uploaded-files").appendChild(img);
                 }
-                location.reload()
+               // location.reload()
             }
             else if(x.status == 500) {
                 alert(x.responseText); // do something with the server error
@@ -64,6 +65,7 @@ function submitFilesForm(form) {
     };
     x.open(form.method, form.action, true);
     x.send(fd);
+    
     return false; // do not forget this
 }
 

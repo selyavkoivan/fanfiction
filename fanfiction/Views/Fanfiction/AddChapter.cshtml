@@ -1,0 +1,53 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/Fanfiction.css" />
+@model fanfiction.Models.Fanfiction.Chapter
+
+ <form method="post" asp-action="AddChapter" asp-controller="Fanfiction">
+<div style="width: 60%; margin: auto">
+   
+ 
+  <input asp-for="FanficId" value="@Model.FanficId" hidden />
+  <input asp-for="ChapterNumber" value="@Model.ChapterNumber" hidden/>
+  <table>
+    
+    <tr>
+      <th>
+        <h4 class="lang" key="Chapter-number"></h4></th>
+      <th>
+        <h4>@Model.ChapterNumber</h4></th>
+    </tr>
+  </table>
+  <h2 class="lang" key="Category-Name"></h2>
+  <textarea asp-for="Title" rows="2" required maxlength="250" class="mt-3 mb-3 fake_textarea" id='fake_textarea-title' aria-required="true" contenteditable></textarea>
+  <h2 class="lang" key="Body"></h2>
+  <textarea asp-for="Text" rows="15" required  maxlength="100000" class="mt-3 mb-3 fake_textarea" id='fake_textarea-body' aria-required="true" contenteditable></textarea>
+  <button  type="submit" class="fanfiction-button mb-5 PostField lang" key="Confirm" style="margin-left: auto"></button>
+</div>
+</form>
+    
+
+<script>
+var textarea = document.querySelector('textarea');
+
+textarea.addEventListener('keyup', function(){
+  if(this.scrollTop > 0){
+    alert(this.scrollHeight)
+    this.style.height = this.scrollHeight + "px";
+  }
+});
+$(document).ready(function() {
+  $('#jBold').click(function() {
+    document.execCommand('bold');
+  });
+});
+$(document).ready(function() {
+  $('#it').click(function() {
+    document.execCommand('italic');
+  });
+});
+
+
+</script>

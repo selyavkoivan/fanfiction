@@ -1,0 +1,156 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+@model fanfiction.Models.Fanfiction.ChapterRead
+<h2>@TempData["ff"]</h2>
+<input hidden value="@Model.chapter.ChapterId" id="Id">
+<div style="margin: 20px auto;text-align: center; vertical-align: center">
+    <table style="margin: 0 auto; padding: 0">
+        @if (Model.lang == "ru")
+        {
+            <tr>
+                <th>
+                    <h6>@Model.fanfic.fandom.RuName</h6></th>
+                <th>
+                    <h6>@Model.fanfic.genre.RuName</h6></th>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <th>
+                    <h6>@Model.fanfic.fandom.EnName</h6></th>
+                <th>
+                    <h6>@Model.fanfic.genre.EnName</h6></th>
+            </tr>
+        }
+        <tr>
+        <th colspan="2">
+            <h3>
+                @Html.ActionLink(
+                    Model.fanfic.Name,
+                    "ViewFanfic",
+                    "Fanfiction",
+                    new {fanficId = Model.fanfic.FanficId})
+            </h3>
+            </th>
+        <tr>
+            <th>
+                <h4 class="lang" key="Chapter-number"></h4></th>
+            <th>
+                <h4>@Model.chapter.ChapterNumber</h4></th>
+        </tr>
+    </table>
+    <div class="border-dashed" style="width: 60%; margin: auto">
+        <h3 style="white-space: pre; padding: 0; margin: 0 auto">@Model.chapter.Title</h3>
+    </div>
+</div> 
+<div style="text-align: center; width: 60%; margin: 0 auto;">
+        @if (Model.chapter.ChapterNumber != 1)
+        {
+            <div class="mb-1 pb-1" style="margin-right: 20%; display: inline-block; font-size: 1.5em">
+                @Html.ActionLink("<<",
+                    "ReadChapter",
+                    "Fanfiction",
+                    new {fanficId = Model.chapter.FanficId, chapterNumber = Model.chapter.ChapterNumber - 1},
+                    new {@class = "fanfiction-button"})
+            </div>
+        }
+ 
+
+        <a style="display: inline-block;" class="mt-1" onclick="change()">
+            @if (Model.isLiked)
+            {
+                <p id="like" class="red bi bi-heart-fill"> @Model.count</p>
+            }
+            else
+            {
+                <p id="like" class="bi bi-heart-fill"> @Model.count</p>
+            }
+        </a>
+                                
+
+        <input asp-for="isLiked" hidden id="isLiked" value="@(Model.isLiked ? 1 : 0)"/>
+  
+        
+            @if (!Model.isLast)
+            {
+                <div class=" mb-1 pb-1" style="margin-left:20%;  display: inline-block; font-size: 1.5em">
+                    @Html.ActionLink(">>",
+                        "ReadChapter",
+                        "Fanfiction",
+                        new {fanficId = Model.chapter.FanficId, chapterNumber = Model.chapter.ChapterNumber + 1},
+                        new {@class = "fanfiction-button"})
+                </div>
+            }
+
+    </div>
+<div  class="border-dashed" style="width: 60%;  margin: 0 auto">
+    <p style="white-space: pre-wrap">@Model.chapter.Text</p>
+</div>
+
+<script>
+function change()
+{
+    
+    document.getElementById('like').classList.toggle('red')
+if(document.getElementById('isLiked').value === '0') 
+{
+	
+	$('#isLiked').val(1)
+  let val = (Number(document.getElementById("like").innerHTML) + 1);
+  document.getElementById("like").innerHTML = "  " + val.toString();
+  setLike(document.getElementById('Id').value)
+}
+else
+{
+    
+	
+	$('#isLiked').val(0)
+  let val = (Number(document.getElementById("like").innerHTML) - 1);
+   document.getElementById("like").innerHTML ="  " + val.toString();
+   deleteLike(document.getElementById('Id').value)
+}
+
+    
+}
+
+function setLike(chapterId)
+{
+      $.ajax({
+             type: "POST",
+             url: '@Url.Action("SetLike", "Fanfiction")',
+             data: { 'chapterId': chapterId} ,
+             success: function (data) {
+                location.reload()
+             },
+             error: function (data) {
+             location.reload()
+             }
+         });   
+}
+function deleteLike(chapterId)
+{
+      $.ajax({
+             type: "POST",
+             url: '@Url.Action("DeleteLike", "Fanfiction")',
+             data: { 'chapterId': chapterId} ,
+             success: function (data) {
+                location.reload()
+             },
+             error: function (data) {
+             location.reload()
+             }
+         });   
+}
+    
+</script>
+<style>
+    .red
+    {
+    color: red;
+    }
+
+
+</style>

@@ -1,21 +1,21 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+
+
 using System.Threading.Tasks;
-using fanfiction.Models;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+
 using fanfiction.Models.User;
-using System.Threading.Tasks;
+
 using EmailApp;
 using fanfiction.Data;
+using fanfiction.Models.Fanfiction;
 using fanfiction.Models.Settings;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
+
 
 namespace fanfiction.Controllers
 {
@@ -24,7 +24,7 @@ namespace fanfiction.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         public ProfileController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             this._context = context;
@@ -37,9 +37,16 @@ namespace fanfiction.Controllers
         public async Task<ActionResult<IEnumerable<ApplicationUser>>> Profile()
         {
             if (await LogoutUser()) return RedirectToAction("SignIn", "Home");
-            return View(await _userManager.GetUserAsync(User));
+            return View( await GetUser());
+
         }
-        
+
+        private async Task<ProfileUser> GetUser()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var fanfics = await _context.GetMyFanfiction(user.Id);
+            return new ProfileUser(user,  Request.Cookies["lang"], fanfics);
+        }
 
         public async Task<bool> LogoutUser()
         {
@@ -54,6 +61,7 @@ namespace fanfiction.Controllers
         [HttpPost]
         public async Task<ActionResult> UpdateName(string newName, string lang)
         {
+            
             if(await _userManager.FindByNameAsync(newName) != null) TempData["edit-error"] = Errors.getUsernameTaken(lang, newName);
             else
             {
@@ -61,6 +69,7 @@ namespace fanfiction.Controllers
                 user.UserName = newName;
                 await _userManager.UpdateAsync(user);   
             }
+
             return Ok();
         }
     
@@ -118,5 +127,6 @@ namespace fanfiction.Controllers
             return View(new Settings(Request.Cookies["lang"], Request.Cookies["theme"]));
            
         }
+     
     }
 }

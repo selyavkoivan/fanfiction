@@ -9,7 +9,7 @@ let themeButton = document.querySelector('.theme-button');
 themeButton.onclick = function () {
     themeArr.forEach(theme => {
         
-        if(page.classList.toggle(theme) === true)  document.cookie = "theme=" + theme
+        if(page.classList.toggle(theme) === true)  document.cookie = "theme=" + theme + "; path=/"
         else page.classList.remove(theme)
         
     })
@@ -30,7 +30,7 @@ function setTheme()
     }
     else {
         localStorage.setItem("theme", "light-theme")
-        document.cookie = "theme=light-theme"
+        document.cookie = "theme=light-theme; path=/"
         page.classList.add('light-theme')
     }
 }
@@ -38,7 +38,7 @@ function setTheme()
 function setLanguage()
 {
     if (readCookie('lang') == null) {
-       document.cookie = "lang=ru"
+       document.cookie = "lang=ru; path=/"
         localStorage.setItem("lang", "ru")
       
     }
@@ -48,7 +48,7 @@ function setLanguage()
 $(function() {
     $('.translate').click(function() {
         const lang = $(this).attr('id')
-        document.cookie = "lang=" + lang;
+        document.cookie = "lang=" + lang + "; path=/"
         localStorage.setItem("lang", lang)
         textTranslation(lang)
     });

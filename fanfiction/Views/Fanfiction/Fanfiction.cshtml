@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_LayoutFanfiction.cshtml";
 }
 @using fanfiction.Models.Fanfiction
-@model List<Fanfic> 
+@model FanfictionModel 
 
  @if (TempData["Adding-success"] != null)
         {
@@ -13,17 +13,48 @@
             </div>
        
         }
-<h2>Фанфики</h2>
+<h2 class="lang" key="Fanfiction"></h2>
 @if (Model != null)
 {
-@foreach (var it in Model)
-{
-    <div> @it.Name </div>
-}
+    <table class="table_col mt-5" style="margin: auto; width: 90%;">
+        <thead style="text-align: center">
+        <td colspan="4"><h2 class="lang" key="Fanfiction-list"></h2></td>
+        </thead>
+        <tr>
+            <th class="p-2 lang" key="Category-Name"></th>
+            <th class="p-2 lang" key="Fandom"></th>
+            <th class="p-2 lang" key="Genre"></th>
+            <th class="p-2 lang" key="Lang"></th>
+            <th class="p-2 lang" key="Chapter-count"></th>
+        </tr>
+        @foreach (var f in Model.fanfic)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink($"{f.Name}", "ViewFanfic", "Fanfiction", new {fanficId = f.FanficId})
+                </td>
+                @if (Model.lang == "ru")
+                {
+                    <td>@f.fandom.RuName</td>
+                    <td>@f.genre.RuName</td>
+                }
+                else
+                {
+                    
+                    <td>@f.fandom.EnName</td>
+                    <td>@f.genre.EnName</td>
+                }
+                <td>@f.Lang</td>
+                <td>@f.Chapters.Count</td>
+                
+               
+            </tr>
+        }      
+    </table>
 }
 else
 {
-    <p>Список фанфиков пуст</p>
+    <p class="lang" key="Fanfic-non-exists"></p>
 }
 
 

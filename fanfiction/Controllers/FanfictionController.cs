@@ -39,7 +39,7 @@ namespace fanfiction.Controllers
         public async Task<ActionResult<IEnumerable<ApplicationUser>>> Fanfiction()
         {
             if (await LogoutUser()) return RedirectToAction("SignIn", "Home");
-            return View(await _context.Fanfics.ToListAsync());
+            return View(new FanfictionModel(_context, Request.Cookies["lang"]));
         }
         public async Task<ActionResult<IEnumerable<ApplicationUser>>> AddFandom()
         {
@@ -144,16 +144,60 @@ namespace fanfiction.Controllers
         [HttpPost]
         public async Task<ActionResult> AddFanfic(AddFanfic fanfic)
         {
-  
+         
             if (!await CheckFanfic(fanfic.name)) return View(new AddFanfic(await _userManager.GetUserAsync(User), await _context.Fandoms.ToListAsync(),
                 await _context.Genres.ToListAsync(), Request.Cookies["lang"]));
-            var f = new Fanfic(fanfic, _context, fanfic.lang);
-           
-            await _context.Fanfics.AddAsync(new Fanfic(fanfic, _context, fanfic.lang));
+
+            await _context.Fanfics.AddAsync(new Fanfic(fanfic, _context,  Request.Cookies["lang"], await _userManager.GetUserAsync(User)));
             await _context.SaveChangesAsync();
             TempData["Adding-success"] = FanfictionErrors.getFanficSuccess(Request.Cookies["lang"]);
             return RedirectToAction("Fanfiction", "Fanfiction");
         }
+        public async Task<IActionResult> ViewFanfic(int fanficId)
+        {
+            return View(new FanficModel(await _context.GetFanficAsync(fanficId), Request.Cookies["lang"], (await _userManager.GetUserAsync(User)).Id));
+        }
+     
+        public IActionResult AddChapter(int fanficId, int chapterNumber)
+        {
+            return View(new Chapter(fanficId, chapterNumber));
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddChapter(Chapter chapter)
+        {
+            await _context.Chapters.AddAsync(chapter);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("ViewFanfic", "Fanfiction", new {fanficId = chapter.FanficId});
+        }
+        public async Task<IActionResult> ReadChapter(int fanficId, int chapterNumber)
+        {
+            return View(new ChapterRead(fanficId, chapterNumber, _context, 
+                (await _userManager.GetUserAsync(User)).Id,
+                Request.Cookies["lang"]
+                ));
+        }
+      
 
+        [HttpPost]
+        public async Task<IActionResult> SetLike(int chapterId)
+        {
+            
+           var like = new Like {chapter = await _context.Chapters.FindAsync(chapterId),user = await _userManager.GetUserAsync(User)};
+           await _context.Likes.AddAsync(like); 
+           TempData["ff"] = _context.Likes.ToList().Count;
+           //await _context.SaveChangesAsync();
+           
+            return Ok();
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteLike(int chapterId)
+        {
+            TempData["ff"] = chapterId;
+            var userId = (await _userManager.GetUserAsync(User)).Id;
+            var like = await _context.Likes.FirstAsync(l => l.chapterId == chapterId && l.userId == userId);
+            _context.Likes.Remove(like);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

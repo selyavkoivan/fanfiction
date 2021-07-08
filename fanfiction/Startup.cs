@@ -15,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using fanfiction.Models;
 using fanfiction.Models.User;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace fanfiction
 {
@@ -57,7 +59,7 @@ namespace fanfiction
             services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
-
+          
             services.ConfigureApplicationCookie(options => options.LoginPath = "/Home");
             services.AddControllersWithViews();
             services.AddRazorPages();

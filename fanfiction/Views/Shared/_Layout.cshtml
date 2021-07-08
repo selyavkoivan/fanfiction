@@ -58,7 +58,7 @@
     function SetDate() {
         let date = new Date().toLocaleString();
         $('#date').val(date);
-        $('#lang').val(localStorage.getItem("lang"))
+        $('#lang').val(readCookie('lang'))
     }
 </script>
     

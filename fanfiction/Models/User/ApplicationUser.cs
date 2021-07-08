@@ -12,11 +12,11 @@ namespace fanfiction.Models.User
 {
     public class ApplicationUser: IdentityUser
     {
-
+        
         public List<Fandom> PreferredFandoms { get; set; }
         public List<Genre> PreferredGenres { get; set; }
 
-
+        public List<Like> likes { get; set; }
         public List<Fanfic> UserFanfiction { get; set; }
         [Required]
         public bool Status { get; set; }
@@ -38,6 +38,21 @@ namespace fanfiction.Models.User
             UserFanfiction = new List<Fanfic>();
             PreferredFandoms = new List<Fandom>();
             PreferredGenres = new List<Genre>();
+            likes = new List<Like>();
+        }
+    }
+    
+    public class ProfileUser
+    {
+        public ApplicationUser user;
+        public string lang;
+        public List<Fanfic> fanfiction;
+
+        public ProfileUser(ApplicationUser user, string lang, List<Fanfic> fanfiction)
+        {
+            this.user = user;
+            this.lang = lang;
+            this.fanfiction = fanfiction;
         }
     }
   

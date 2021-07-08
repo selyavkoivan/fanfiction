@@ -22,10 +22,11 @@ namespace fanfiction.Models.Fanfiction
         public List<Fandom> fandoms { get; }
         public List<Genre> genres { get; }
         public string SystemLang { get; }
+        public string[] availableLangs { get; }
         
         public AddFanfic(ApplicationUser user, List<Fandom> fandoms, List<Genre> genres, string lang)
         {
-            
+            availableLangs = avaliebleSettings.GetLangs();
             Author = user;
             this.fandoms = fandoms;
             this.genres = genres;
@@ -36,6 +37,7 @@ namespace fanfiction.Models.Fanfiction
           Author = new ApplicationUser();
             fandoms = new List<Fandom>();
             genres = new List<Genre>();
+            availableLangs = avaliebleSettings.GetLangs();
         }
     }
     
