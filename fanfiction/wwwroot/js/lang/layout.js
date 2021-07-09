@@ -56,6 +56,9 @@
             "Send"                      : "Отправить",
             "Comments"                  : "Комментарии",
             "Add-comment"               : "Напишите свое мнение об этом",
+            "Set-rate"                  : "Поставь оценку",
+            "Your-rate"                 : "Твоя оценка",
+            "Average-rate"              : "Средняя оценка",
     },
     "en": {
             "Sign-In"                   : "Sign In",
@@ -114,6 +117,9 @@
             "Send"                      : "Send",
             "Comments"                  : "Comments",
             "Add-comment"               : "Write your opinion here",
+            "Set-rate"                  : "set your rate",
+            "Your-rate"                 : "your rate",
+            "Average-rate"              : "average rate",
     }
 }
 

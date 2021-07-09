@@ -60,8 +60,10 @@ namespace fanfiction.Models.Fanfiction
 
     public class FanficModel
     {
+        public Rate urRate  {get; set;}
+        public RateModel rateModel {get;}
         public Comment urComment {get; set;}
-        public List<Comment> Comments {get;set;}
+        public List<Comment> Comments {get;}
         public bool isMine;
         public Fanfic fanfic { get; set; }
         public string lang { get; }
@@ -71,8 +73,9 @@ namespace fanfiction.Models.Fanfiction
             fanfic = new Fanfic();
         }
 
-        public FanficModel(Fanfic fanfic, string lang, string Id, List<Comment> comments)
+        public FanficModel(Fanfic fanfic, string lang, string Id, List<Comment> comments, List<Rate> rates)
         {
+            rateModel = new RateModel(rates, Id);
             urComment = new Comment();
             this.Comments = comments;
             this.fanfic = fanfic;
@@ -83,8 +86,8 @@ namespace fanfiction.Models.Fanfiction
     }
     public class FanfictionModel
     {
-      
-        public List<Fanfic> fanfic { get; set; }
+        
+        public List<Fanfic> fanfic { get; }
         public string lang { get; }
 
         public FanfictionModel()

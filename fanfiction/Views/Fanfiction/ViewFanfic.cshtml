@@ -3,11 +3,66 @@
 }
 @model fanfiction.Models.Fanfiction.FanficModel
 
-<div class="area" >
-    <table class="profile-table data-table" id="profile-data-area" >
+<div class="area">
+    <div style="text-align: center">
+        <p class="m-0 lang" key="Average-rate"></p>
+        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @((Model.rateModel.average) * 100)%, black 0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+
+        <p style="display: inline-block; background: linear-gradient(to right, #FFD700  @((Model.rateModel.average - 1) * 100)%, black 0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+
+        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @((Model.rateModel.average - 2) * 100)%, black 0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+
+        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @((Model.rateModel.average - 3) * 100)%, black 0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+
+        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @((Model.rateModel.average - 4) * 100)%, black 0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+      
+        @if(Model.rateModel.myRate != null)
+        {
+            <p class="m-0 lang" key="Your-rate"></p>
+            @for(int i = 0; i < 5; i++)
+            {
+                if (Model.rateModel.myRate.rate > i)
+                {
+                    <p style="display: inline-block; color: #FFD700 " class="bi bi-star-fill"></p>
+                }
+                else
+                {
+                    <p style="display: inline-block; color: black " class="bi bi-star-fill"></p>
+                }
+            }
+        }
+        else
+        {
+            <p class="m-0 lang" key="Set-rate"></p>
+            @for(int i = 0; i < 5; i++)
+            {
+                @Html.ActionLink(
+                    string.Empty,
+                    "SetRate",
+                    "Fanfiction",
+                    new
+                    {
+                        rateValue = i + 1   ,
+                        fanficId = Model.fanfic.FanficId
+                    },
+                    new { @class = "m-1 bi bi-star-fill rate-black" })  
+            }
+        }
+    </div>
+    <table class="profile-table data-table" id="profile-data-area">
         <tr>
             <th class="p-2 lang" key="Category-Name"></th>
-            <td>@Model.fanfic.Name</td>                
+            <td>@Model.fanfic.Name</td>
         </tr>
         <tr>
             <th class="p-2 lang" key="Fandom"></th>
@@ -17,9 +72,9 @@
                          Model.fanfic.fandom.RuName,
                          "ReadFandom",
                          "Fanfiction",
-                         new {fandomId = Model.fanfic.fandom.FandomId })
+                         new {fandomId = Model.fanfic.fandom.FandomId})
                 </td>
-           
+
             }
             else
             {
@@ -27,8 +82,8 @@
                          Model.fanfic.fandom.EnName,
                          "ReadFandom",
                          "Fanfiction",
-                         new {fandomId = Model.fanfic.fandom.FandomId })
-                </td>               
+                         new {fandomId = Model.fanfic.fandom.FandomId})
+                </td>
             }
         </tr>
         <tr>
@@ -39,8 +94,8 @@
                          Model.fanfic.genre.RuName,
                          "ReadGenre",
                          "Fanfiction",
-                         new {genreId = Model.fanfic.genre.GenreId })
-                </td> 
+                         new {genreId = Model.fanfic.genre.GenreId})
+                </td>
             }
             else
             {
@@ -48,24 +103,25 @@
                          Model.fanfic.genre.EnName,
                          "ReadGenre",
                          "Fanfiction",
-                         new {genreId = Model.fanfic.genre.GenreId })
-                </td> 
-            }              
+                         new {genreId = Model.fanfic.genre.GenreId})
+                </td>
+            }
         </tr>
         <tr>
             <th class="p-2 lang" key="Lang"></th>
-            <td class="lang" key="@Model.fanfic.Lang"></td>                
+            <td class="lang" key="@Model.fanfic.Lang"></td>
         </tr>
     </table>
     <h4 class="mt-2 lang" key="Description"></h4>
-     <div class="border-dashed" style="text-align: left; width: 100%;  margin: 0 auto">
+    <div class="border-dashed" style="text-align: left; width: 100%;  margin: 0 auto">
         <p style="white-space: pre-wrap">@Model.fanfic.Description</p>
-      
-    
-        </div>
+
+
+    </div>
     <table class="table_col mt-5" style="margin: auto; width: 90%;">
         <thead style="text-align: center">
-        <td colspan="4"><h2 class="lang" key="Chapter-list"></h2></td>
+        <td colspan="4">
+            <h2 class="lang" key="Chapter-list"></h2></td>
         </thead>
         <tr>
             <th class="p-2">№</th>
@@ -77,14 +133,14 @@
                 <td>@c.ChapterNumber</td>
                 <td colspan="3">
                     @Html.ActionLink(
-                        c.Title, 
+                        c.Title,
                         "ReadChapter",
                         "Fanfiction",
                         new {fanficId = c.FanficId, chapterNumber = c.ChapterNumber})
-                                                                     
+
                 </td>
             </tr>
-        }   
+        }
         @if (Model.isMine)
         {
             <tr>
@@ -102,34 +158,34 @@
     </table>
     <h5 class="mt-2 lang" key="Comments"></h5>
     <form asp-action="AddComment" asp-controller="Fanfiction" method="POST">
-        <input asp-for="urComment.fanficId" value="@Model.fanfic.FanficId" hidden />
+        <input asp-for="urComment.fanficId" value="@Model.fanfic.FanficId" hidden/>
         <textarea asp-for="urComment.Text" id="description-text" style="resize: none" maxlength="1000" rows="5"></textarea>
         <button type="submit" class="lang border-dashed mb-3" key="Send"></button>
     </form>
-    @foreach(var c in Model.Comments)
+    @foreach (var c in Model.Comments)
     {
         <table style="width: 100%; table-layout: fixed">
             <tr class="border-dashed">
-    
-            <th class="clip p-2 m-2" style="width: 150px; vertical-align: top">@c.Author.UserName
-                @if(c.Author.AvatarUrl != null)
-                {
-                    <p style="text-align: center"><img src="@c.Author.AvatarUrl" alt="" class="round"></p>
-                }
-                else
-                {
-                    <p style="text-align: center">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Anonymous_emblem.svg/1200px-Anonymous_emblem.svg.png" alt="" class="round">
-                    </p>
-                }
-            </th>
+
+                <th class="clip p-2 m-2" style="width: 150px; vertical-align: top">@c.Author.UserName
+                    @if (c.Author.AvatarUrl != null)
+                    {
+                        <p style="text-align: center"><img src="@c.Author.AvatarUrl" alt="" class="round"></p>
+                    }
+                    else
+                    {
+                        <p style="text-align: center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Anonymous_emblem.svg/1200px-Anonymous_emblem.svg.png" alt="" class="round">
+                        </p>
+                    }
+                </th>
                 <td class="border-dashed" style="white-space: pre-wrap">@c.Text</td>
-   
-   
+
+
             </tr>
             <tr>
-                
- 
+
+
         </table>
     }
     <br><br><br><br>
@@ -140,5 +196,15 @@
 {
 margin: auto; 
 width: 50%; 
+}
+.rate-gold
+{
+display: inline-block; 
+color: #FFD700 
+}
+.rate-black
+{
+display: inline-block; 
+color: #FFD700 
 }
 </style>

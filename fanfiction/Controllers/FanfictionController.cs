@@ -217,7 +217,8 @@ namespace fanfiction.Controllers
                 await _context.GetFanficAsync(fanficId), 
                 Request.Cookies["lang"], 
                 (await _userManager.GetUserAsync(User)).Id,
-                await _context.GetCommentsAsync(fanficId)
+                await _context.GetCommentsAsync(fanficId),
+                await _context.Rates.Where(r => r.fanficId == fanficId).ToListAsync()
             ));
         }
      
@@ -297,5 +298,13 @@ namespace fanfiction.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("ViewFanfic", "Fanfiction", new{fanficId = comment.urComment.fanficId}) ;
         }
+        public async Task<IActionResult> SetRate(short rateValue, int fanficId)
+        {
+            var myRate = new Rate {Author = await _userManager.GetUserAsync(User), fanficId = fanficId, rate = rateValue};
+            await _context.Rates.AddAsync(myRate);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("ViewFanfic", "Fanfiction", new{fanficId = fanficId}) ;
+        }
+        
     }
 }
