@@ -3,7 +3,7 @@
 }
 @using fanfiction.Models.Fanfiction
 @model FanfictionModel 
-
+ <div class="fanfiction-area">
  @if (TempData["Adding-success"] != null)
         {
        
@@ -35,14 +35,34 @@
                 </td>
                 @if (Model.lang == "ru")
                 {
-                    <td>@f.fandom.RuName</td>
-                    <td>@f.genre.RuName</td>
+                    <td> @Html.ActionLink(
+                            f.fandom.RuName,
+                            "ReadFandom",
+                            "Fanfiction",
+                            new {fandomId = f.fandom.FandomId })
+                    </td>
+                    <td>@Html.ActionLink(
+                            f.genre.RuName, 
+                            "ReadGenre", 
+                            "Fanfiction",
+                            new {genreId = f.genre.GenreId })
+                    </td>
                 }
                 else
                 {
                     
-                    <td>@f.fandom.EnName</td>
-                    <td>@f.genre.EnName</td>
+                    <td> @Html.ActionLink(
+                             f.fandom.EnName,
+                             "ReadFandom",
+                             "Fanfiction",
+                             new {fandomId = f.fandom.FandomId })
+                    </td>
+                    <td>@Html.ActionLink(
+                            f.genre.EnName,
+                            "ReadGenre",
+                            "Fanfiction",
+                            new {genreId = f.genre.GenreId })
+                    </td>
                 }
                 <td>@f.Lang</td>
                 <td>@f.Chapters.Count</td>
@@ -57,7 +77,7 @@ else
     <p class="lang" key="Fanfic-non-exists"></p>
 }
 
-
+</div>
 
 <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
 

@@ -3,7 +3,6 @@
 }
 
 @model fanfiction.Models.Fanfiction.ChapterRead
-<h2>@TempData["ff"]</h2>
 <input hidden value="@Model.chapter.ChapterId" id="Id">
 <div style="margin: 20px auto;text-align: center; vertical-align: center">
     <table style="margin: 0 auto; padding: 0">
@@ -11,18 +10,38 @@
         {
             <tr>
                 <th>
-                    <h6>@Model.fanfic.fandom.RuName</h6></th>
+                    <h6>
+                        @Html.ActionLink(
+                            Model.fanfic.fandom.RuName,
+                            "ReadFandom",
+                            "Fanfiction", 
+                            new {fandomId = Model.fanfic.fandom.FandomId})
+                    </h6></th>
                 <th>
-                    <h6>@Model.fanfic.genre.RuName</h6></th>
+                    <h6>@Html.ActionLink(
+                            Model.fanfic.genre.RuName,
+                            "ReadGenre",
+                            "Fanfiction",
+                            new {genreId = Model.fanfic.genre.GenreId})</h6></th>
             </tr>
         }
         else
         {
             <tr>
                 <th>
-                    <h6>@Model.fanfic.fandom.EnName</h6></th>
+                    <h6> @Html.ActionLink(
+                             Model.fanfic.fandom.EnName,
+                             "ReadFandom",
+                             "Fanfiction", 
+                             new {fandomId = Model.fanfic.fandom.FandomId})</h6></th>
                 <th>
-                    <h6>@Model.fanfic.genre.EnName</h6></th>
+                    <h6>
+                         @Html.ActionLink(
+                             Model.fanfic.genre.EnName,
+                             "ReadGenre",
+                             "Fanfiction",
+                             new {genreId = Model.fanfic.genre.GenreId})
+                    </h6></th>
             </tr>
         }
         <tr>
@@ -137,10 +156,10 @@ function deleteLike(chapterId)
              url: '@Url.Action("DeleteLike", "Fanfiction")',
              data: { 'chapterId': chapterId} ,
              success: function (data) {
-                location.reload()
+      
              },
              error: function (data) {
-             location.reload()
+    
              }
          });   
 }

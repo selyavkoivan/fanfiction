@@ -48,6 +48,8 @@
             "Body"                      : "Текст главы",
             "Image"                     : "Добавить картинку",
             "Fanfic-non-exists"         : "Список фанфиков пуст",
+            "Fandoms"                   : "Фандомы",
+            "Genres"                    : "Жанры",
     },
     "en": {
             "Sign-In"                   : "Sign In",
@@ -98,6 +100,8 @@
             "Body"                      : "Chapter text",
             "Image"                     : "Add Image",
             "Fanfic-non-exists"         : "List of fanfic is empty",
+            "Fandoms"                   : "Fandoms",
+            "Genres"                    : "Genres",
     }
 }
 

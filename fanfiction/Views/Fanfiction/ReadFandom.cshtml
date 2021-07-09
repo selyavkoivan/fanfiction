@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutFanfiction.cshtml";
+}
+
+@model fanfiction.Models.Fanfiction.FandomModel
+<div style="text-align: center; vertical-align: center">
+    <h4 class="lang" key="Fandom"></h4>
+    <h4 class="lang mt-2" key="Category-Name"></h4>
+    <div class="border-dashed" style="width: 80%; margin: 0 auto">
+        @if (Model.lang == "ru")
+        {
+
+            <h3 style="white-space: pre; padding: 0; margin: 0 auto">@Model.fandom.RuName</h3>
+
+        }
+        else
+        {
+
+            <h3 style="white-space: pre; padding: 0; margin: 0 auto">@Model.fandom.EnName</h3>
+
+        }
+    </div>
+    <h4 class="lang mt-2" key="Description"></h4>
+</div>
+    
+<div class="border-dashed" style="width: 80%;  margin: 0 auto">
+    @if(Model.lang == "ru")
+    {
+        <p>@Model.fandom.RuDescription</p>
+    }
+    else
+    {
+        <p>@Model.fandom.EnDescription</p>
+    }
+ 
+</div>

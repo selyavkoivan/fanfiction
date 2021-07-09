@@ -192,12 +192,39 @@ namespace fanfiction.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteLike(int chapterId)
         {
-            TempData["ff"] = chapterId;
             var userId = (await _userManager.GetUserAsync(User)).Id;
             var like = await _context.Likes.FirstAsync(l => l.chapterId == chapterId && l.userId == userId);
             _context.Likes.Remove(like);
             await _context.SaveChangesAsync();
             return Ok();
+        }
+
+        public async Task<ActionResult<IEnumerable<ApplicationUser>>> ViewGenres()
+        {
+            if (await LogoutUser()) return RedirectToAction("SignIn", "Home");
+            return View(new GenresModel
+            {
+                genres = await _context.Genres.ToListAsync(),
+                lang = Request.Cookies["lang"]
+            });
+        }
+
+        public async Task<ActionResult<IEnumerable<ApplicationUser>>> ViewFandoms()
+        {
+            if (await LogoutUser()) return RedirectToAction("SignIn", "Home");
+            return View(new FandomsModel
+            {
+                fandoms = await _context.Fandoms.ToListAsync(),
+                lang = Request.Cookies["lang"]
+            });
+        }
+        public async Task<IActionResult> ReadGenre(int genreId)
+        {
+            return View(new GenreModel {genre = await _context.Genres.FindAsync(genreId), lang = Request.Cookies["lang"]});
+        }
+        public async Task<IActionResult> ReadFandom(int fandomId)
+        {
+            return View(new FandomModel {fandom = await _context.Fandoms.FindAsync(fandomId), lang = Request.Cookies["lang"]});
         }
     }
 }

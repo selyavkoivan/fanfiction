@@ -21,4 +21,16 @@ namespace fanfiction.Models.Fanfiction
         [MaxLength(1000)]
         public string EnDescription { get; set; }
     }
+    public class GenreModel
+    {
+        public Genre genre;
+        public string lang;
+        
+    }
+    public class GenresModel
+    {
+        public List<Genre> genres;
+        public string lang;
+        
+    }
 }

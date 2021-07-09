@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" href="~/css/Fanfiction.css" />
 @model fanfiction.Models.Fanfiction.Chapter
-
+ <div class="fanfiction-area">
  <form method="post" asp-action="AddChapter" asp-controller="Fanfiction">
 <div style="width: 60%; margin: auto">
    
@@ -27,7 +27,7 @@
   <button  type="submit" class="fanfiction-button mb-5 PostField lang" key="Confirm" style="margin-left: auto"></button>
 </div>
 </form>
-    
+    </div>
 
 <script>
 var textarea = document.querySelector('textarea');

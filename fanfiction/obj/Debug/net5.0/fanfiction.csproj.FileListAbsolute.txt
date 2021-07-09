@@ -108,3 +108,7 @@ C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\Microsoft.Ent
 C:\Users\User\RiderProjects\fanfiction\fanfiction\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
 C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Fanfiction\AddChapter.cshtml.g.cs
 C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Fanfiction\ReadChapter.cshtml.g.cs
+C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Fanfiction\ReadGenre.cshtml.g.cs
+C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Fanfiction\ViewGenres.cshtml.g.cs
+C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Fanfiction\ReadFandom.cshtml.g.cs
+C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Fanfiction\ViewFandoms.cshtml.g.cs

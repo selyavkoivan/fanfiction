@@ -4,7 +4,7 @@
 @model fanfiction.Models.Fanfiction.FanficModel
 
 <div class="area" >
-    <table class="profile-table" id="profile-data-area" style="margin: auto; width: 50%" >
+    <table class="profile-table data-table" id="profile-data-area" >
         <tr>
             <th class="p-2 lang" key="Category-Name"></th>
             <td>@Model.fanfic.Name</td>                
@@ -13,22 +13,43 @@
             <th class="p-2 lang" key="Fandom"></th>
             @if (Model.lang == "ru")
             {
-                <td>@Model.fanfic.fandom.RuName</td>    
+                <td> @Html.ActionLink(
+                         Model.fanfic.fandom.RuName,
+                         "ReadFandom",
+                         "Fanfiction",
+                         new {fandomId = Model.fanfic.fandom.FandomId })
+                </td>
+           
             }
             else
             {
-                <td>@Model.fanfic.fandom.EnName</td>                
+                 <td> @Html.ActionLink(
+                                         Model.fanfic.fandom.EnName,
+                                         "ReadFandom",
+                                         "Fanfiction",
+                                         new {fandomId = Model.fanfic.fandom.FandomId })
+                                </td>               
             }
         </tr>
         <tr>
             <th class="p-2 lang" key="Genre"></th>
             @if (Model.lang == "ru")
             {
-                <td>@Model.fanfic.genre.RuName</td>    
+                <td> @Html.ActionLink(
+                         Model.fanfic.genre.RuName,
+                         "ReadGenre",
+                         "Fanfiction",
+                         new {genreId = Model.fanfic.genre.GenreId })
+                </td> 
             }
             else
             {
-                <td>@Model.fanfic.genre.EnName</td>
+                <td> @Html.ActionLink(
+                         Model.fanfic.genre.EnName,
+                         "ReadGenre",
+                         "Fanfiction",
+                         new {genreId = Model.fanfic.genre.GenreId })
+                </td> 
             }              
         </tr>
         <tr>
@@ -75,3 +96,28 @@
         }
     </table>
 </div>
+@if(!Model.isMine)
+{
+<style>
+.area
+{
+width: 100%;
+margin: 0;
+}
+.data-table
+{
+margin-left: 10%; 
+width: 50%; 
+}
+</style> 
+    }
+else
+{
+<style>
+.data-table
+{
+margin: auto; 
+width: 50%; 
+}
+</style>
+}

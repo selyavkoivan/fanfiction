@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using fanfiction.Models.User.Inretfaces;
 
@@ -18,5 +19,16 @@ namespace fanfiction.Models.Fanfiction
         public string EnName { get; set; }
         [MaxLength(1000)]
         public string EnDescription { get; set; }
+    }
+    public class FandomModel
+    {
+        public Fandom fandom;
+        public string lang;
+    }
+    public class FandomsModel
+    {
+        public List<Fandom> fandoms;
+        public string lang;
+
     }
 }

@@ -356,3 +356,9 @@ thead th
   position: fixed;
   overflow-x: hidden;
 }
+.clip {
+  width: 50%;
+  white-space: nowrap;
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
