@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = Model.isMine ? "~/Views/Shared/_LayoutAccount.cshtml" : "~/Views/Shared/_LayoutFanfiction.cshtml";
+    Layout =  "~/Views/Shared/_LayoutAccount.cshtml";
 }
 @model fanfiction.Models.Fanfiction.FanficModel
 
@@ -23,12 +23,12 @@
             }
             else
             {
-                 <td> @Html.ActionLink(
-                                         Model.fanfic.fandom.EnName,
-                                         "ReadFandom",
-                                         "Fanfiction",
-                                         new {fandomId = Model.fanfic.fandom.FandomId })
-                                </td>               
+                <td> @Html.ActionLink(
+                         Model.fanfic.fandom.EnName,
+                         "ReadFandom",
+                         "Fanfiction",
+                         new {fandomId = Model.fanfic.fandom.FandomId })
+                </td>               
             }
         </tr>
         <tr>
@@ -57,7 +57,12 @@
             <td class="lang" key="@Model.fanfic.Lang"></td>                
         </tr>
     </table>
+    <h4 class="mt-2 lang" key="Description"></h4>
+     <div class="border-dashed" style="text-align: left; width: 100%;  margin: 0 auto">
+        <p style="white-space: pre-wrap">@Model.fanfic.Description</p>
+      
     
+        </div>
     <table class="table_col mt-5" style="margin: auto; width: 90%;">
         <thead style="text-align: center">
         <td colspan="4"><h2 class="lang" key="Chapter-list"></h2></td>
@@ -95,24 +100,41 @@
             </tr>
         }
     </table>
-</div>
-@if(!Model.isMine)
-{
-<style>
-.area
-{
-width: 100%;
-margin: 0;
-}
-.data-table
-{
-margin-left: 10%; 
-width: 50%; 
-}
-</style> 
+    <h5 class="mt-2 lang" key="Comments"></h5>
+    <form asp-action="AddComment" asp-controller="Fanfiction" method="POST">
+        <input asp-for="urComment.fanficId" value="@Model.fanfic.FanficId" hidden />
+        <textarea asp-for="urComment.Text" id="description-text" style="resize: none" maxlength="1000" rows="5"></textarea>
+        <button type="submit" class="lang border-dashed mb-3" key="Send"></button>
+    </form>
+    @foreach(var c in Model.Comments)
+    {
+        <table style="width: 100%; table-layout: fixed">
+            <tr class="border-dashed">
+    
+            <th class="clip p-2 m-2" style="width: 150px; vertical-align: top">@c.Author.UserName
+                @if(c.Author.AvatarUrl != null)
+                {
+                    <p style="text-align: center"><img src="@c.Author.AvatarUrl" alt="" class="round"></p>
+                }
+                else
+                {
+                    <p style="text-align: center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Anonymous_emblem.svg/1200px-Anonymous_emblem.svg.png" alt="" class="round">
+                    </p>
+                }
+            </th>
+                <td class="border-dashed" style="white-space: pre-wrap">@c.Text</td>
+   
+   
+            </tr>
+            <tr>
+                
+ 
+        </table>
     }
-else
-{
+    <br><br><br><br>
+</div>
+
 <style>
 .data-table
 {
@@ -120,4 +142,3 @@ margin: auto;
 width: 50%; 
 }
 </style>
-}

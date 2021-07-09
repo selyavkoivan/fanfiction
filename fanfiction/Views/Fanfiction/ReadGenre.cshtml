@@ -30,11 +30,11 @@
     <div class="border-dashed" style="text-align: left; width: 100%;  margin: 0 auto">
         @if(Model.lang == "ru")
         {
-            <p>@Model.genre.RuDescription</p>
+            <p style="white-space: pre-wrap">@Model.genre.RuDescription</p>
         }
         else
         {
-            <p>@Model.genre.EnDescription</p>
+            <p style="white-space: pre-wrap">@Model.genre.EnDescription</p>
         }
      
     </div>

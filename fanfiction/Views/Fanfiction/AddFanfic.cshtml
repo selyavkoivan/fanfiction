@@ -68,6 +68,8 @@
     </div>
     <h4 class="lang mt-3" key="Category-Name"></h4>
     <input asp-for="name" key="Fanfic-Name" id="name-text" class="lang" type="text" maxlength="50" required>
+    <h4 class="lang mt-3" key="Description"></h4>
+    <textarea asp-for="Description"  id="description-text" style="resize: none" maxlength="1000" rows="14"></textarea>
     @if (TempData["Fanfic-name"] != null)
     {
 

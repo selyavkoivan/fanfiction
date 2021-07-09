@@ -213,7 +213,12 @@ namespace fanfiction.Controllers
         }
         public async Task<IActionResult> ViewFanfic(int fanficId)
         {
-            return View(new FanficModel(await _context.GetFanficAsync(fanficId), Request.Cookies["lang"], (await _userManager.GetUserAsync(User)).Id));
+            return View(new FanficModel(
+                await _context.GetFanficAsync(fanficId), 
+                Request.Cookies["lang"], 
+                (await _userManager.GetUserAsync(User)).Id,
+                await _context.GetCommentsAsync(fanficId)
+            ));
         }
      
         public IActionResult AddChapter(int fanficId, int chapterNumber)
@@ -283,6 +288,14 @@ namespace fanfiction.Controllers
         public async Task<IActionResult> ReadFandom(int fandomId)
         {
             return View(new FandomModel {fandom = await _context.Fandoms.FindAsync(fandomId), lang = Request.Cookies["lang"]});
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddComment(FanficModel comment)
+        {
+            comment.urComment.AuthorId = (await _userManager.GetUserAsync(User)).Id;
+            await _context.Comments.AddAsync(comment.urComment);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("ViewFanfic", "Fanfiction", new{fanficId = comment.urComment.fanficId}) ;
         }
     }
 }

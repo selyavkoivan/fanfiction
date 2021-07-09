@@ -362,3 +362,9 @@ thead th
   overflow: hidden; 
   text-overflow: ellipsis;
 }
+.round {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+
+}

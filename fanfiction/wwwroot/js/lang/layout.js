@@ -31,6 +31,7 @@
             "Ru-version"                : "Русская версия",
             "Description"               : "Описание",
             "Fandom-adding"             : "Добавление фандома",
+            "Genre-adding"              : "Добавление жанра",
             "Genre-taken"               : "Жанр с таким названием уже существует",
             "Fanfic-taken"              : "Фанфик с таким названием уже существует",
             "Fandom-taken"              : "Фандом с таким названием уже существует",
@@ -50,6 +51,11 @@
             "Fanfic-non-exists"         : "Список фанфиков пуст",
             "Fandoms"                   : "Фандомы",
             "Genres"                    : "Жанры",
+            "Editing-fandom"            : "Изменение фандома",
+            "Editing-genre"             : "Изменение жанра",
+            "Send"                      : "Отправить",
+            "Comments"                  : "Комментарии",
+            "Add-comment"               : "Напишите свое мнение об этом",
     },
     "en": {
             "Sign-In"                   : "Sign In",
@@ -83,6 +89,7 @@
             "Ru-version"                : "Russian version",
             "Description"               : "Description",
             "Fandom-adding"             : "Adding a fandom",
+            "Genre-adding"              : "Adding a genre",
             "Fandom-taken"              : "Fandom with this name already exists",
             "Genre-taken"               : "Genre with this name already exists",
             "Fanfic-taken"              : "Fanfic with this name already exists",
@@ -102,6 +109,11 @@
             "Fanfic-non-exists"         : "List of fanfic is empty",
             "Fandoms"                   : "Fandoms",
             "Genres"                    : "Genres",
+            "Editing-fandom"            : "Editing a fandom",
+            "Editing-genre"             : "Editing a genre",
+            "Send"                      : "Send",
+            "Comments"                  : "Comments",
+            "Add-comment"               : "Write your opinion here",
     }
 }
 

@@ -6,8 +6,14 @@
  <div class="fanfiction-area">
      <form method="post" asp-controller="Fanfiction" asp-action="AddFandom">
          <input asp-for="FandomId" hidden/>
-         <h2 style="text-align: center" class="mb-3 lang" key="Fandom-adding"></h2>
-
+         @if(Model.FandomId == 0)
+         {
+             <h2 style="text-align: center" class="mb-3 lang" key="Fandom-adding"></h2>
+         }
+         else
+         {
+             <h2 style="text-align: center" class="mb-3 lang" key="Editing-fandom"></h2>
+         }
 
          <div style="width: 49%; display: inline-block; padding-right: 10px; vertical-align: top">
 

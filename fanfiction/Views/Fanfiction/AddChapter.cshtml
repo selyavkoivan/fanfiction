@@ -4,9 +4,9 @@
 
 <link rel="stylesheet" href="~/css/Fanfiction.css" />
 @model fanfiction.Models.Fanfiction.Chapter
- <div class="fanfiction-area">
+ <div class="fanfiction-area" style="margin: auto">
  <form method="post" asp-action="AddChapter" asp-controller="Fanfiction">
-<div style="width: 60%; margin: auto">
+<div style="width: 100%; margin: auto">
    
  
   <input asp-for="FanficId" value="@Model.FanficId" hidden />

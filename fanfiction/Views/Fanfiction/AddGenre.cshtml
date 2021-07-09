@@ -6,6 +6,15 @@
  <div class="fanfiction-area">
      <form method="post" asp-controller="Fanfiction" asp-action="AddGenre">
          <input asp-for="GenreId" hidden/>
+           @if(Model.GenreId == 0)
+                  {
+                      <h2 style="text-align: center" class="mb-3 lang" key="Genre-adding"></h2>
+                  }
+                  else
+                  {
+                      <h2 style="text-align: center" class="mb-3 lang" key="Editing-genre"></h2>
+                      
+                  }
          <h2 style="text-align: center" class="mb-3 lang" key="Genre-adding"></h2>
 
 

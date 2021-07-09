@@ -56,7 +56,11 @@ $(function() {
 
 function textTranslation(lang)
 {
-   
+    $('textarea.lang').each(function(index, item) {
+        $(this).attr("placeholder",
+            langArr[lang][$(this).attr('key')]
+        )
+    });
     $('input.lang').each(function(index, item) {
         $(this).attr("placeholder",
             langArr[lang][$(this).attr('key')]

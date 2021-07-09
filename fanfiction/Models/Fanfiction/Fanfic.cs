@@ -19,7 +19,8 @@ namespace fanfiction.Models.Fanfiction
         public string Name { get; set; }
         [Required]
         public string Lang { get; set; }
-        
+        [MaxLength(1000)]
+        public string Description { get; set; }
         
         [Required]
         public string ApplicationUserId { get; set; }
@@ -47,7 +48,7 @@ namespace fanfiction.Models.Fanfiction
         }
         public Fanfic(AddFanficData data, ApplicationDbContext context, string lang, ApplicationUser author)
         {
-            
+            Description = data.Description;
             Author = author;
             Name = data.name;
             Lang = data.lang;
@@ -59,6 +60,8 @@ namespace fanfiction.Models.Fanfiction
 
     public class FanficModel
     {
+        public Comment urComment {get; set;}
+        public List<Comment> Comments {get;set;}
         public bool isMine;
         public Fanfic fanfic { get; set; }
         public string lang { get; }
@@ -68,8 +71,10 @@ namespace fanfiction.Models.Fanfiction
             fanfic = new Fanfic();
         }
 
-        public FanficModel(Fanfic fanfic, string lang, string Id)
+        public FanficModel(Fanfic fanfic, string lang, string Id, List<Comment> comments)
         {
+            urComment = new Comment();
+            this.Comments = comments;
             this.fanfic = fanfic;
             this.lang = lang;
             if (fanfic.ApplicationUserId == Id) isMine = true;

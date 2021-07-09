@@ -30,11 +30,11 @@
     <div class="border-dashed" style="text-align: left; width: 100%;  margin: 0 auto">
         @if (Model.lang == "ru")
         {
-            <p>@Model.fandom.RuDescription</p>
+            <p style="white-space: pre-wrap">@Model.fandom.RuDescription</p>
         }
         else
         {
-            <p>@Model.fandom.EnDescription</p>
+            <p style="white-space: pre-wrap">@Model.fandom.EnDescription</p>
         }
 
     </div>

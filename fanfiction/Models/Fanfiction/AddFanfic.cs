@@ -11,7 +11,7 @@ namespace fanfiction.Models.Fanfiction
         public string fandomName { get; set; }
         public  string genreName { get; set; }
         public string lang { get; set; }
-
+        public string Description {get;set;}
         public AddFanficData()
         {
             Author = new ApplicationUser();

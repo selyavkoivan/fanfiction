@@ -35,10 +35,10 @@ namespace fanfiction.Data
         }
      
      
-
+        public  DbSet<ApplicationUser> Users { get; set; }
         public  DbSet<Fandom> Fandoms { get; set; }
 
-       
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Genre> Genres { get; set; }
@@ -103,6 +103,16 @@ namespace fanfiction.Data
             if(lang == "en") return Genres.First(f => f.EnName == name);
             else if(lang == "ru") return Genres.First(f => f.RuName == name);
             return Genres.First(f => f.RuName == name);
+        }
+        
+        public async Task<List<Comment>> GetCommentsAsync(int fanficId)
+        {
+            var comments = await Comments.Where(c => c.fanficId == fanficId).ToListAsync();
+            foreach(var it in comments)
+            {
+                it.GetAuthorData(this);
+            }
+            return comments;
         }
     }
    
