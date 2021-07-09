@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace fanfiction.Models.Fanfiction
 {
-    public class Genre
+    public class Genre : IDisposable
     {
         [Key]
         public int GenreId { get; set; }
@@ -20,6 +20,11 @@ namespace fanfiction.Models.Fanfiction
         public string EnName { get; set; }
         [MaxLength(1000)]
         public string EnDescription { get; set; }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
     public class GenreModel
     {

@@ -3,10 +3,16 @@
 }
 
 @model fanfiction.Models.Fanfiction.FandomModel
-<div style="text-align: center; vertical-align: center">
+<div style="width: 80%; text-align: center; vertical-align: center">
+     @Html.ActionLink(
+                 string.Empty,
+                 "AddFandom",
+                 "Fanfiction",
+                 new {fandomId = Model.fandom.FandomId},
+                 new { @class = "bi bi-pen-fill" })
     <h4 class="lang" key="Fandom"></h4>
     <h4 class="lang mt-2" key="Category-Name"></h4>
-    <div class="border-dashed" style="width: 80%; margin: 0 auto">
+    <div class="border-dashed" style="width: 100%; margin: 0 auto">
         @if (Model.lang == "ru")
         {
 
@@ -21,16 +27,17 @@
         }
     </div>
     <h4 class="lang mt-2" key="Description"></h4>
+    <div class="border-dashed" style="text-align: left; width: 100%;  margin: 0 auto">
+        @if (Model.lang == "ru")
+        {
+            <p>@Model.fandom.RuDescription</p>
+        }
+        else
+        {
+            <p>@Model.fandom.EnDescription</p>
+        }
+
+    </div>
 </div>
     
-<div class="border-dashed" style="width: 80%;  margin: 0 auto">
-    @if(Model.lang == "ru")
-    {
-        <p>@Model.fandom.RuDescription</p>
-    }
-    else
-    {
-        <p>@Model.fandom.EnDescription</p>
-    }
- 
-</div>
+

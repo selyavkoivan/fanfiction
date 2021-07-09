@@ -9,36 +9,39 @@
         <td colspan="2"><h2 class="lang" key="Genres-list"></h2></td>
         </thead>
         <tr>
+           
             <th class="p-2 lang" key="Category-Name"></th>
             <th colspan="3" class="p-2 lang" key="Description"></th>
         </tr>
-        @foreach (var g in Model.fandoms)
+        @foreach (var f in Model.fandoms)
         {
+            
             <tr>
+                  
                 @if(Model.lang == "ru")
                 {
                     <td style="width: 30%">
                         @Html.ActionLink(
-                            g.RuName,
+                            f.RuName,
                             "ReadFandom",
                             "Fanfiction",
-                            new {fandomId = g.FandomId })
+                            new {fandomId = f.FandomId })
 
                     </td>
-                    <td class="clip" colspan="3" style="width: 70%"><p class="clip">@g.RuDescription</p></td>
+                    <td class="clip" colspan="3" style="width: 70%"><p class="clip">@f.RuDescription</p></td>
                     
                 }
                 else
                 {
                     <td style="width: 30%">
                         @Html.ActionLink(
-                            g.EnName,
+                            f.EnName,
                             "ReadFandom",
                             "Fanfiction",
-                            new {fandomId = g.FandomId})
+                            new {fandomId = f.FandomId})
 
                     </td>
-                    <td class="clip" colspan="3" style="width: 70%"><p class="clip">@g.EnDescription</p></td>
+                    <td class="clip" colspan="3" style="width: 70%"><p class="clip">@f.EnDescription</p></td>
                     }
                 
         

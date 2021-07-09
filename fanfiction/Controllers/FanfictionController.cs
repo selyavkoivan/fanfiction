@@ -41,10 +41,10 @@ namespace fanfiction.Controllers
             if (await LogoutUser()) return RedirectToAction("SignIn", "Home");
             return View(new FanfictionModel(_context, Request.Cookies["lang"]));
         }
-        public async Task<ActionResult<IEnumerable<ApplicationUser>>> AddFandom()
+        public async Task<ActionResult<IEnumerable<ApplicationUser>>> AddFandom(int fandomId)
         {
             if (await LogoutUser()) return RedirectToAction("SignIn", "Home");
-            return View();
+            return View(await _context.Fandoms.FindAsync(fandomId));
         }
       
         
@@ -63,6 +63,14 @@ namespace fanfiction.Controllers
             if (TempData["Fandom-name-ru"] != null || TempData["Fandom-name-en"] != null) return false;
             return true;
         }
+       private async Task<bool> CheckFandomUpdate(Fandom fandom)
+       {
+           var lastVersion = await _context.Fandoms.AsNoTracking().FirstAsync(f => f.FandomId == fandom.FandomId);
+           if(lastVersion.EnName != fandom.EnName) TempData["Fandom-name-en"] = await GetFandomMsgEn(fandom.EnName);
+           if(lastVersion.RuName != fandom.RuName) TempData["Fandom-name-ru"] = await  GetFandomMsgRu(fandom.RuName);
+           if (TempData["Fandom-name-ru"] != null || TempData["Fandom-name-en"] != null) return false;
+           return true;
+       }
 
         private async Task<string> GetFandomMsgEn(string name)
         {
@@ -78,13 +86,31 @@ namespace fanfiction.Controllers
         public async Task<ActionResult> AddFandom(Fandom fandom)
         {
             
-         if (!await CheckFandom(fandom)) return View();
-            await _context.Fandoms.AddAsync(fandom);
-            await _context.SaveChangesAsync();
-            TempData["Adding-success"] = FanfictionErrors.getFandomSuccess(Request.Cookies["lang"]);
+          
+            if(fandom.FandomId != 0)
+            {
+                if (!await CheckFandomUpdate(fandom)) return View();
+                await UpdateFandomInDb(fandom);
+            }
+            else
+            {
+                if (!await CheckFandom(fandom)) return View();
+                await AddFandomToDb(fandom);
+            }
             return RedirectToAction("Fanfiction", "Fanfiction");
         }
-        
+        private async Task UpdateFandomInDb(Fandom fandom)
+        {
+            _context.Fandoms.Update(fandom);
+            await _context.SaveChangesAsync(); 
+            TempData["Adding-success"] = FanfictionErrors.getFandomEditSuccess(Request.Cookies["lang"]);
+        }
+        private async Task AddFandomToDb(Fandom fandom)
+        {
+            await _context.Fandoms.AddAsync(fandom);
+            await _context.SaveChangesAsync(); 
+            TempData["Adding-success"] = FanfictionErrors.getFandomSuccess(Request.Cookies["lang"]);
+        }
         
         private async Task<bool> CheckGenre(Genre genre)
         {
@@ -93,7 +119,16 @@ namespace fanfiction.Controllers
             if (TempData["Genre-name-ru"] != null || TempData["Genre-name-en"] != null) return false;
             return true;
         }
-
+        private async Task<bool> CheckGenreUpdate(Genre genre)
+        {
+            var lastVersion = await _context.Genres.AsNoTracking().FirstAsync(g => g.GenreId == genre.GenreId);
+            
+            if(lastVersion.EnName != genre.EnName) TempData["Genre-name-en"] = await GetGenreMsgEn(genre.EnName);
+            if(lastVersion.RuName != genre.RuName) TempData["Genre-name-ru"] = await  GetGenreMsgRu(genre.RuName);
+        
+            if (TempData["Genre-name-ru"] != null || TempData["Genre-name-en"] != null) return false;
+            return true;
+        }
         private async Task<string> GetGenreMsgEn(string name)
         {
             if (await _context.Genres.FirstOrDefaultAsync(f => f.EnName == name) != null) return "Error";
@@ -108,18 +143,41 @@ namespace fanfiction.Controllers
         public async Task<ActionResult> AddGenre(Genre genre)
         {
             
-            if (!await CheckGenre(genre)) return View();
-            await _context.Genres.AddAsync(genre);
-            await _context.SaveChangesAsync();
-            TempData["Adding-success"] = FanfictionErrors.getGenreSuccess(Request.Cookies["lang"]);
+          
+            if(genre.GenreId != 0)
+            {
+                if (!await CheckGenreUpdate(genre)) return View();
+                await UpdateGenreInDb(genre);
+            }
+            else
+            {
+                if (!await CheckGenre(genre)) return View();
+                await AddGenreToDb(genre); 
+            }
+        
+          
             return RedirectToAction("Fanfiction", "Fanfiction");
         }
-        public async Task<ActionResult<IEnumerable<ApplicationUser>>> AddGenre()
+        private async Task UpdateGenreInDb(Genre genre)
+        {
+            _context.Genres.Update(genre);
+            await _context.SaveChangesAsync(); 
+            TempData["Adding-success"] = FanfictionErrors.getGenreEditSuccess(Request.Cookies["lang"]);
+        }
+        private async Task AddGenreToDb(Genre genre)
+        {
+            await _context.Genres.AddAsync(genre);
+            await _context.SaveChangesAsync(); 
+            TempData["Adding-success"] = FanfictionErrors.getGenreSuccess(Request.Cookies["lang"]);
+        }
+        public async Task<ActionResult> AddGenre(int genreId)
         {
            
             if (await LogoutUser()) return RedirectToAction("SignIn", "Home");
-            return View();
+            return View(await _context.Genres.FindAsync(genreId));
+            
         }
+       
 
         public async Task<ActionResult<IEnumerable<ApplicationUser>>> AddFanfic()
         {

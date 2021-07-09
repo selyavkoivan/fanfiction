@@ -21,9 +21,9 @@
     </tr>
   </table>
   <h2 class="lang" key="Category-Name"></h2>
-  <textarea asp-for="Title" rows="2" required maxlength="250" class="mt-3 mb-3 fake_textarea" id='fake_textarea-title' aria-required="true" contenteditable></textarea>
+  <textarea value="@Model.Title" asp-for="Title" rows="2" required maxlength="250" class="mt-3 mb-3 fake_textarea" id='fake_textarea-title' aria-required="true" contenteditable></textarea>
   <h2 class="lang" key="Body"></h2>
-  <textarea asp-for="Text" rows="15" required  maxlength="100000" class="mt-3 mb-3 fake_textarea" id='fake_textarea-body' aria-required="true" contenteditable></textarea>
+  <textarea value="@Model.Text" asp-for="Text" rows="15" required  maxlength="100000" class="mt-3 mb-3 fake_textarea" id='fake_textarea-body' aria-required="true" contenteditable></textarea>
   <button  type="submit" class="fanfiction-button mb-5 PostField lang" key="Confirm" style="margin-left: auto"></button>
 </div>
 </form>

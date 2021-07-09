@@ -56,5 +56,32 @@
             }
             return null;
         }
+        public static string getFanficEditSuccess(string lang)
+        {
+            switch (lang)
+            {
+                case "ru": return $"Фанфик успешно изменен";
+                case "en": return $"Fanfic changed successfully ";
+            }
+            return null;
+        }
+        public static string getFandomEditSuccess(string lang)
+        {
+            switch (lang)
+            {
+                case "ru": return $"Фандом успешно изменен";
+                case "en": return $"Fandom changed successfully ";
+            }
+            return null;
+        }
+        public static string getGenreEditSuccess(string lang)
+        {
+            switch (lang)
+            {
+                case "ru": return $"Жанр успешно изменен";
+                case "en": return $"Genre changed successfully ";
+            }
+            return null;
+        }
     }
 }
