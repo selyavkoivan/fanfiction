@@ -87,7 +87,7 @@ namespace fanfiction
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=SignIn}/{id?}");
+                    pattern: "{controller=Fanfiction}/{action=Fanfiction}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

@@ -77,17 +77,25 @@
             </div>
         }
  
-
-        <a style="display: inline-block;" class="mt-1" onclick="change()">
-            @if (Model.isLiked)
-            {
-                <p id="like" class="red bi bi-heart-fill"> @Model.count</p>
-            }
-            else
-            {
+        @if (Model.isSignedIn)
+        {
+            <a style="display: inline-block;" class="mt-1" onclick="change()">
+                @if (Model.isLiked)
+                {
+                    <p id="like" class="red bi bi-heart-fill"> @Model.count</p>
+                }
+                else
+                {
+                    <p id="like" class="bi bi-heart-fill"> @Model.count</p>
+                }
+            </a>
+        }
+        else
+        {
+            <a style="display: inline-block;" class="mt-1">
                 <p id="like" class="bi bi-heart-fill"> @Model.count</p>
-            }
-        </a>
+            </a>
+        }
                                 
 
         <input asp-for="isLiked" hidden id="isLiked" value="@(Model.isLiked ? 1 : 0)"/>

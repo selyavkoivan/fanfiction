@@ -36,7 +36,7 @@ namespace fanfiction.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ApplicationUser>>> Profile()
         {
-            if (await LogoutUser()) return RedirectToAction("SignIn", "Home");
+            if (await LogoutUser() || !_signInManager.IsSignedIn(User)) return RedirectToAction("SignIn", "Home");
             return View( await GetUser());
 
         }
@@ -51,9 +51,14 @@ namespace fanfiction.Controllers
         public async Task<bool> LogoutUser()
         {
             ApplicationUser user = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
-            if (user == null) await _signInManager.SignOutAsync();
-            else if (user.Status) await _signInManager.SignOutAsync();
-            return (user == null || user.Status);
+            if (user == null)
+            {
+                await _signInManager.SignOutAsync();
+                return false;
+            }
+
+            if (user.Status) await _signInManager.SignOutAsync();
+            return (user.Status);
         }
 
       

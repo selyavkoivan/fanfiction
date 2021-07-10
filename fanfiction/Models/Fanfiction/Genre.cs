@@ -30,12 +30,14 @@ namespace fanfiction.Models.Fanfiction
     {
         public Genre genre;
         public string lang;
-        
+
+        public bool IsSignedIn { get; set; }
     }
     public class GenresModel
     {
         public List<Genre> genres;
         public string lang;
-        
+
+        public bool IsSignedIn { get; set; }
     }
 }

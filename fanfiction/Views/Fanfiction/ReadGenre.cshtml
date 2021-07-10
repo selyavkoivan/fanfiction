@@ -4,12 +4,15 @@
 
 @model fanfiction.Models.Fanfiction.GenreModel
 <div style="width: 80%; text-align: center; vertical-align: center">
-    @Html.ActionLink(
-             string.Empty,
-             "AddGenre",
-             "Fanfiction",
-             new {genreId = Model.genre.GenreId},
-             new { @class = "bi bi-pen-fill" })
+    @if (Model.IsSignedIn)
+    {
+        @Html.ActionLink(
+            string.Empty,
+            "AddGenre",
+            "Fanfiction",
+            new {genreId = Model.genre.GenreId},
+            new {@class = "bi bi-pen-fill"})
+    }
     <h4 class="lang" key="Genre"></h4>
     <h4 class="lang mt-2" key="Category-Name"></h4>
     <div class="border-dashed" style="width: 100%; margin: 0 auto">
@@ -28,7 +31,7 @@
     </div>
     <h4 class="lang mt-2" key="Description"></h4>
     <div class="border-dashed" style="text-align: left; width: 100%;  margin: 0 auto">
-        @if(Model.lang == "ru")
+        @if (Model.lang == "ru")
         {
             <p style="white-space: pre-wrap">@Model.genre.RuDescription</p>
         }
@@ -36,7 +39,7 @@
         {
             <p style="white-space: pre-wrap">@Model.genre.EnDescription</p>
         }
-     
+
     </div>
 </div>
     

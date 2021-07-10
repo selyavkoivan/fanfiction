@@ -41,12 +41,14 @@ namespace fanfiction.Models.Fanfiction
     }
     public class ChapterRead
     {
+        
         public readonly Chapter chapter;
         public bool isLast;
         public int count;
         public bool isLiked;
         public Fanfic fanfic;
         public string lang;
+        public bool isSignedIn;
         public ChapterRead(int fanficId, int chapterNumber, ApplicationDbContext context, string userId, string lang)
         {
             this.lang = lang;
@@ -57,12 +59,23 @@ namespace fanfiction.Models.Fanfiction
             else isLast = false;
             var likes = context.Likes.Where(l => l.chapterId == chapter.ChapterId).ToList();
             this.count = likes.Count;
-            if (likes.Count(l => l.userId == userId) == 0) isLiked = false;
-            else isLiked = true;
+            if (userId == string.Empty)
+            {
+                isLiked = false;
+                isSignedIn = false;
+            }
+            else
+            {
+                if (likes.Count(l => l.userId == userId) == 0) isLiked = false;
+                else isLiked = true;
+                isSignedIn = true;
+            }
+            
         }
         public ChapterRead()
         {
         }
 
+ 
     }
 }

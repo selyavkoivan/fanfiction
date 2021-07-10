@@ -67,6 +67,7 @@ namespace fanfiction.Models.Fanfiction
         public bool isMine;
         public Fanfic fanfic { get; set; }
         public string lang { get; }
+        public bool IsSignedIn;
 
         public FanficModel()
         {
@@ -80,13 +81,24 @@ namespace fanfiction.Models.Fanfiction
             this.Comments = comments;
             this.fanfic = fanfic;
             this.lang = lang;
-            if (fanfic.ApplicationUserId == Id) isMine = true;
-            else isMine = false;
+            if (Id == string.Empty)
+            {
+                isMine = false;
+                IsSignedIn = false;
+            }
+
+            else
+            {
+                if (fanfic.ApplicationUserId == Id) isMine = true;
+                else isMine = false;
+                IsSignedIn = true;
+
+            }
+            
         }
     }
     public class FanfictionModel
     {
-        
         public List<Fanfic> fanfic { get; }
         public string lang { get; }
 
@@ -97,6 +109,7 @@ namespace fanfiction.Models.Fanfiction
 
         public FanfictionModel(ApplicationDbContext context, string lang)
         {
+            
             fanfic = context.Fanfics.ToList();
             for (int i = 0; i < fanfic.Count; i++)
             {
@@ -104,6 +117,7 @@ namespace fanfiction.Models.Fanfiction
             }
             this.lang = lang;
         }
+
     }
 
 }

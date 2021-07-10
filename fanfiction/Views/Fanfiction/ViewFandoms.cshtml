@@ -47,7 +47,8 @@
         
             </tr>
         }   
-
+        @if (Model.IsSignedIn)
+        {
             <tr>
 
                 <th colspan="4" class="p-2">
@@ -59,6 +60,6 @@
 
                 </th>
             </tr>
-        
+        }
     </table>
 

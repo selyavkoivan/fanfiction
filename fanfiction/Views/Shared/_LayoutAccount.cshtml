@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <script src='~/lib/jquery/dist/jquery.js'></script>
 
 <meta charset="utf-8"/>
@@ -27,14 +28,12 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-   <script>
-   /* When the user clicks on the button, 
-   toggle between hiding and showing the dropdown content */
+<script>
+
    function myFunction() {
        document.getElementById("myDropdown").classList.toggle("show");
    }
    
-   // Close the dropdown if the user clicks outside of it
    window.onclick = function(event) {
      if (!event.target.matches('.dropbtn')) {
    
@@ -49,17 +48,19 @@
      }
    </script>                
 
+
 <body style="word-wrap: break-word" onload="changeThemeOnLoad()" class="page light-theme">
 <header>
     
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
     <div class="container navbar-collapse justify-content-start collapse d-sm-inline-flex">
     
-                    <ul class="navbar-nav" style="margin-left: 20%">
-                        <li>
-                            <a class="adapt text nav-link lang" key="Home" asp-controller="Fanfiction" asp-action="Fanfiction"></a>
-                        </li>
-                    </ul>
+        <ul class="navbar-nav" style="margin-left: 20%">
+            <li>
+                <a class="adapt text nav-link lang" key="Home" asp-controller="Fanfiction" asp-action="Fanfiction"></a>
+            </li>
+        </ul>
+       
                 </div>
         <div class="container navbar-collapse justify-content-end collapse d-sm-inline-flex">
 

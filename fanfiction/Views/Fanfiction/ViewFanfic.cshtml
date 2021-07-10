@@ -26,39 +26,43 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
       
-        @if(Model.rateModel.myRate != null)
+        @if (Model.IsSignedIn)
         {
-            <p class="m-0 lang" key="Your-rate"></p>
-            @for(int i = 0; i < 5; i++)
+            @if (Model.rateModel.myRate != null)
             {
-                if (Model.rateModel.myRate.rate > i)
+                <p class="m-0 lang" key="Your-rate"></p>
+                @for (int i = 0; i < 5; i++)
                 {
-                    <p style="display: inline-block; color: #FFD700 " class="bi bi-star-fill"></p>
-                }
-                else
-                {
-                    <p style="display: inline-block; color: black " class="bi bi-star-fill"></p>
-                }
-            }
-        }
-        else
-        {
-            <p class="m-0 lang" key="Set-rate"></p>
-            @for(int i = 0; i < 5; i++)
-            {
-                @Html.ActionLink(
-                    string.Empty,
-                    "SetRate",
-                    "Fanfiction",
-                    new
+                    if (Model.rateModel.myRate.rate > i)
                     {
-                        rateValue = i + 1   ,
-                        fanficId = Model.fanfic.FanficId
-                    },
-                    new { @class = "m-1 bi bi-star-fill rate-black" })  
+                        <p style="display: inline-block; color: #FFD700 " class="bi bi-star-fill"></p>
+                    }
+                    else
+                    {
+                        <p style="display: inline-block; color: black " class="bi bi-star-fill"></p>
+                    }
+                }
+            }
+            else
+            {
+                <p class="m-0 lang" key="Set-rate"></p>
+                @for (int i = 0; i < 5; i++)
+                {
+                    @Html.ActionLink(
+                        string.Empty,
+                        "SetRate",
+                        "Fanfiction",
+                        new
+                        {
+                            rateValue = i + 1,
+                            fanficId = Model.fanfic.FanficId
+                        },
+                        new {@class = "m-1 bi bi-star-fill rate-black"})
+                }
+
             }
         }
-    </div>
+        </div>
     <table class="profile-table data-table" id="profile-data-area">
         <tr>
             <th class="p-2 lang" key="Category-Name"></th>
@@ -157,11 +161,14 @@
         }
     </table>
     <h5 class="mt-2 lang" key="Comments"></h5>
-    <form asp-action="AddComment" asp-controller="Fanfiction" method="POST">
-        <input asp-for="urComment.fanficId" value="@Model.fanfic.FanficId" hidden/>
-        <textarea asp-for="urComment.Text" id="description-text" style="resize: none" maxlength="1000" rows="5"></textarea>
-        <button type="submit" class="lang border-dashed mb-3" key="Send"></button>
-    </form>
+    @if (Model.IsSignedIn)
+    {
+        <form asp-action="AddComment" asp-controller="Fanfiction" method="POST">
+            <input asp-for="urComment.fanficId" value="@Model.fanfic.FanficId" hidden/>
+            <textarea asp-for="urComment.Text" id="description-text" style="resize: none" maxlength="1000" rows="5"></textarea>
+            <button type="submit" class="lang border-dashed mb-3" key="Send"></button>
+        </form>
+    }
     @foreach (var c in Model.Comments)
     {
         <table style="width: 100%; table-layout: fixed">

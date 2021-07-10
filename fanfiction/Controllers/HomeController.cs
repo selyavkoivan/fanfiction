@@ -41,7 +41,7 @@ namespace fanfiction.Controllers
         public async Task<IActionResult> SignInAsync(string returnUrl = null)
         {
             await CreateRole();
-
+            if (!_signInManager.IsSignedIn(User)) TempData["n"] = 223;
             return View(new UserLog {ReturnUrl = returnUrl});
         }
         async Task CreateRole()
@@ -72,7 +72,7 @@ namespace fanfiction.Controllers
         public async Task<ActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("SignIn");
+            return RedirectToAction("Fanfiction", "Fanfiction");
         }
         
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using fanfiction.Models;
@@ -35,6 +36,8 @@ namespace fanfiction.Controllers
             this._userManager = userManager;
             this._signInManager = signInManager;
         }
+
+     
        [HttpGet]
         public async Task<ActionResult<IEnumerable<ApplicationUser>>> Fanfiction()
         {
@@ -43,7 +46,7 @@ namespace fanfiction.Controllers
         }
         public async Task<ActionResult<IEnumerable<ApplicationUser>>> AddFandom(int fandomId)
         {
-            if (await LogoutUser()) return RedirectToAction("SignIn", "Home");
+            if (await LogoutUser() || !_signInManager.IsSignedIn(User)) return RedirectToAction("SignIn", "Home");
             return View(await _context.Fandoms.FindAsync(fandomId));
         }
       
@@ -51,9 +54,14 @@ namespace fanfiction.Controllers
         public async Task<bool> LogoutUser()
         {
             ApplicationUser user = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
-            if (user == null) await _signInManager.SignOutAsync();
-            else if (user.Status) await _signInManager.SignOutAsync();
-            return (user == null || user.Status);
+            if (user == null)
+            {
+                await _signInManager.SignOutAsync();
+                return false;
+            }
+
+            if (user.Status) await _signInManager.SignOutAsync();
+            return (user.Status);
         }
         
        private async Task<bool> CheckFandom(Fandom fandom)
@@ -173,7 +181,7 @@ namespace fanfiction.Controllers
         public async Task<ActionResult> AddGenre(int genreId)
         {
            
-            if (await LogoutUser()) return RedirectToAction("SignIn", "Home");
+            if (await LogoutUser() || !_signInManager.IsSignedIn(User)) return RedirectToAction("SignIn", "Home");
             return View(await _context.Genres.FindAsync(genreId));
             
         }
@@ -181,7 +189,7 @@ namespace fanfiction.Controllers
 
         public async Task<ActionResult<IEnumerable<ApplicationUser>>> AddFanfic()
         {
-            if (await LogoutUser()) return RedirectToAction("SignIn", "Home");
+            if (await LogoutUser() || !_signInManager.IsSignedIn(User)) return RedirectToAction("SignIn", "Home");
        
             return View(new AddFanfic(await _userManager.GetUserAsync(User), await _context.Fandoms.ToListAsync(),
                 await _context.Genres.ToListAsync(), Request.Cookies["lang"]));
@@ -216,14 +224,16 @@ namespace fanfiction.Controllers
             return View(new FanficModel(
                 await _context.GetFanficAsync(fanficId), 
                 Request.Cookies["lang"], 
-                (await _userManager.GetUserAsync(User)).Id,
+                _signInManager.IsSignedIn(User) ? (await _userManager.GetUserAsync(User)).Id : string.Empty,
                 await _context.GetCommentsAsync(fanficId),
                 await _context.Rates.Where(r => r.fanficId == fanficId).ToListAsync()
             ));
         }
-     
-        public IActionResult AddChapter(int fanficId, int chapterNumber)
+
+      
+        public async Task<IActionResult> AddChapter(int fanficId, int chapterNumber)
         {
+            if (await LogoutUser() || !_signInManager.IsSignedIn(User)) return RedirectToAction("SignIn", "Home");
             return View(new Chapter(fanficId, chapterNumber));
         }
         [HttpPost]
@@ -235,17 +245,21 @@ namespace fanfiction.Controllers
         }
         public async Task<IActionResult> ReadChapter(int fanficId, int chapterNumber)
         {
-            return View(new ChapterRead(fanficId, chapterNumber, _context, 
-                (await _userManager.GetUserAsync(User)).Id,
+            return View(new ChapterRead(
+                fanficId, chapterNumber, _context, 
+                _signInManager.IsSignedIn(User) ? (await _userManager.GetUserAsync(User)).Id : string.Empty,
                 Request.Cookies["lang"]
                 ));
         }
-      
-        
+
+        public bool IsSignedIn { get; set; }
+
+
         [HttpPost]
         public async Task<IActionResult> SetLike(int chapterId)
         {
-            
+            if (await LogoutUser() || !_signInManager.IsSignedIn(User)) return RedirectToAction("SignIn", "Home");
+
            var like = new Like {chapter = await _context.Chapters.FindAsync(chapterId),user = await _userManager.GetUserAsync(User)};
           
            await _context.Likes.AddAsync(like);
@@ -256,6 +270,8 @@ namespace fanfiction.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteLike(int chapterId)
         {
+            if (await LogoutUser() || !_signInManager.IsSignedIn(User)) return RedirectToAction("SignIn", "Home");
+
             var userId = (await _userManager.GetUserAsync(User)).Id;
             var like = await _context.Likes.FirstAsync(l => l.chapterId == chapterId && l.userId == userId);
             _context.Likes.Remove(like);
@@ -269,7 +285,8 @@ namespace fanfiction.Controllers
             return View(new GenresModel
             {
                 genres = await _context.Genres.ToListAsync(),
-                lang = Request.Cookies["lang"]
+                lang = Request.Cookies["lang"],
+                IsSignedIn = _signInManager.IsSignedIn(User)
             });
         }
 
@@ -279,20 +296,32 @@ namespace fanfiction.Controllers
             return View(new FandomsModel
             {
                 fandoms = await _context.Fandoms.ToListAsync(),
-                lang = Request.Cookies["lang"]
+                lang = Request.Cookies["lang"],
+                IsSignedIn = _signInManager.IsSignedIn(User)
             });
         }
         public async Task<IActionResult> ReadGenre(int genreId)
         {
-            return View(new GenreModel {genre = await _context.Genres.FindAsync(genreId), lang = Request.Cookies["lang"]});
+            return View(new GenreModel 
+                {genre = await _context.Genres.FindAsync(genreId), 
+                    lang = Request.Cookies["lang"],
+                    IsSignedIn = _signInManager.IsSignedIn(User)
+                });
         }
         public async Task<IActionResult> ReadFandom(int fandomId)
         {
-            return View(new FandomModel {fandom = await _context.Fandoms.FindAsync(fandomId), lang = Request.Cookies["lang"]});
+            return View(new FandomModel
+            {
+                fandom = await _context.Fandoms.FindAsync(fandomId), 
+                lang = Request.Cookies["lang"],
+                IsSignedIn = _signInManager.IsSignedIn(User)
+            });
         }
         [HttpPost]
         public async Task<IActionResult> AddComment(FanficModel comment)
         {
+            if (await LogoutUser() || !_signInManager.IsSignedIn(User)) return RedirectToAction("SignIn", "Home");
+
             comment.urComment.AuthorId = (await _userManager.GetUserAsync(User)).Id;
             await _context.Comments.AddAsync(comment.urComment);
             await _context.SaveChangesAsync();
@@ -300,6 +329,8 @@ namespace fanfiction.Controllers
         }
         public async Task<IActionResult> SetRate(short rateValue, int fanficId)
         {
+            if (await LogoutUser() || !_signInManager.IsSignedIn(User)) return RedirectToAction("SignIn", "Home");
+
             var myRate = new Rate {Author = await _userManager.GetUserAsync(User), fanficId = fanficId, rate = rateValue};
             await _context.Rates.AddAsync(myRate);
             await _context.SaveChangesAsync();

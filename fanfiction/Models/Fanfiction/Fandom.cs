@@ -24,11 +24,13 @@ namespace fanfiction.Models.Fanfiction
     {
         public Fandom fandom;
         public string lang;
+        public bool IsSignedIn { get; set; }
     }
     public class FandomsModel
     {
         public List<Fandom> fandoms;
         public string lang;
 
+        public bool IsSignedIn { get; set; }
     }
 }
