@@ -50,6 +50,7 @@
     <div style="width: 20%; display: inline-block;  vertical-align: top">
         <h3 class="lang" key="Lang"></h3>
         <input id="lang" asp-for="lang" hidden/>
+        <input asp-for="Author.Id" value="@Model.Author.Id" hidden> 
         <select id="fandom-select" name="select-lang" required>
             @foreach (var it in Model.availableLangs)
             {

@@ -74,26 +74,36 @@ namespace fanfiction.Models.Fanfiction
             fanfic = new Fanfic();
         }
 
-        public FanficModel(Fanfic fanfic, string lang, string Id, List<Comment> comments, List<Rate> rates)
+        public FanficModel(Fanfic fanfic, string lang, string Id, List<Comment> comments, List<Rate> rates, bool isAdmin)
         {
             rateModel = new RateModel(rates, Id);
             urComment = new Comment();
             this.Comments = comments;
             this.fanfic = fanfic;
             this.lang = lang;
-            if (Id == string.Empty)
+            if (isAdmin)
             {
-                isMine = false;
-                IsSignedIn = false;
+                isMine = true;
+                IsSignedIn = true;
             }
-
             else
             {
-                if (fanfic.ApplicationUserId == Id) isMine = true;
-                else isMine = false;
-                IsSignedIn = true;
+                if (Id == string.Empty)
+                {
+                    isMine = false;
+                    IsSignedIn = false;
+                }
 
+                else
+                {
+                    if (fanfic.ApplicationUserId == Id) isMine = true;
+                    else isMine = false;
+                    IsSignedIn = true;
+
+                }     
             }
+
+           
             
         }
     }

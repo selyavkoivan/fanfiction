@@ -59,6 +59,7 @@
             "Set-rate"                  : "Поставь оценку",
             "Your-rate"                 : "Твоя оценка",
             "Average-rate"              : "Средняя оценка",
+            "Admin"                     : "Администратор",
     },
     "en": {
             "Sign-In"                   : "Sign In",
@@ -120,6 +121,7 @@
             "Set-rate"                  : "set your rate",
             "Your-rate"                 : "your rate",
             "Average-rate"              : "average rate",
+            "Admin"                     : "Admin",               
     }
 }
 

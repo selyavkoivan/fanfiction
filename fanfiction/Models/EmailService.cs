@@ -62,12 +62,29 @@ namespace EmailApp
                     break;
                 case "en":
                     email[0] = "changing your email";
-                    email[1] = $"CZhange your email by clicking on the link: <a href='{callbackUrl}'>link</a><br>Thank you for choosing us <3";
+                    email[1] = $"Change your email by clicking on the link: <a href='{callbackUrl}'>link</a><br>Thank you for choosing us <3";
                     break;
             }
             return email;
         }
 
+        public static string[] GetEmailAlertText(string lang, string newEmail, string adminEmail)
+        {
+            var email = new string[2];
+            switch (lang)
+            {
+                
+                case "ru":
+                    email[0] = "Изменение вашей почты";
+                    email[1] = $"Подтвердите изменение почты на {newEmail}.<br>Ваша почта была изменена администратором {adminEmail}";
+                    break;
+                case "en":
+                    email[0] = "changing your email";
+                    email[1] = $"Confirm the change of mail to {newEmail}.<br>Your mail has been changed by the administrator {adminEmail}";
+                    break;
+            }
+            return email;
+        }
         public static bool getAdminByEmail(string email)
         {
             if (email == "selyavkosh2@gmail.com" || email == "fanfictionteamof@gmail.com") return true;

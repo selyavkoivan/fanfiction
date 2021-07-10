@@ -45,14 +45,27 @@ namespace fanfiction.Models.User
     public class ProfileUser
     {
         public ApplicationUser user;
+        public bool userIsAdmin;
+        public ApplicationUser onPageUser;
+        public bool onPageUserIsAdmin;
         public string lang;
         public List<Fanfic> fanfiction;
-
-        public ProfileUser(ApplicationUser user, string lang, List<Fanfic> fanfiction)
+        public ProfileUser(ApplicationUser onPageUser, string lang, List<Fanfic> fanfiction)
         {
-            this.user = user;
+            
             this.lang = lang;
             this.fanfiction = fanfiction;
+            this.onPageUser = onPageUser;
+        }
+        public ProfileUser(ApplicationUser onPageUser, string lang, List<Fanfic> fanfiction, ApplicationUser user, 
+            bool userIsAdmin, bool onPageUserIsAdmin)
+        {
+            this.userIsAdmin = userIsAdmin;
+            this.onPageUserIsAdmin = onPageUserIsAdmin;
+            this.onPageUser = onPageUser;
+            this.lang = lang;
+            this.fanfiction = fanfiction;
+            this.user = user;
         }
     }
   

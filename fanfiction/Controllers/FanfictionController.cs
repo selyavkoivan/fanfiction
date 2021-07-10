@@ -187,11 +187,13 @@ namespace fanfiction.Controllers
         }
        
 
-        public async Task<ActionResult<IEnumerable<ApplicationUser>>> AddFanfic()
+       
+        public async Task<ActionResult<IEnumerable<ApplicationUser>>> AddFanfic(string userId)
         {
             if (await LogoutUser() || !_signInManager.IsSignedIn(User)) return RedirectToAction("SignIn", "Home");
-       
-            return View(new AddFanfic(await _userManager.GetUserAsync(User), await _context.Fandoms.ToListAsync(),
+            if(userId == null) return View(new AddFanfic(await _userManager.GetUserAsync(User), await _context.Fandoms.ToListAsync(),
+                await _context.Genres.ToListAsync(), Request.Cookies["lang"]));
+            return View(new AddFanfic(await _context.Users.FindAsync(userId), await _context.Fandoms.ToListAsync(),
                 await _context.Genres.ToListAsync(), Request.Cookies["lang"]));
         }
         private async Task<bool> CheckFanfic(string name)
@@ -211,22 +213,26 @@ namespace fanfiction.Controllers
         public async Task<ActionResult> AddFanfic(AddFanfic fanfic)
         {
          
-            if (!await CheckFanfic(fanfic.name)) return View(new AddFanfic(await _userManager.GetUserAsync(User), await _context.Fandoms.ToListAsync(),
+            if (!await CheckFanfic(fanfic.name)) return View(new AddFanfic(await _context.Users.FindAsync(fanfic.Author.Id), await _context.Fandoms.ToListAsync(),
                 await _context.Genres.ToListAsync(), Request.Cookies["lang"]));
 
-            await _context.Fanfics.AddAsync(new Fanfic(fanfic, _context,  Request.Cookies["lang"], await _userManager.GetUserAsync(User)));
+            await _context.Fanfics.AddAsync(new Fanfic(fanfic, _context,  Request.Cookies["lang"], await _context.Users.FindAsync(fanfic.Author.Id)));
             await _context.SaveChangesAsync();
             TempData["Adding-success"] = FanfictionErrors.getFanficSuccess(Request.Cookies["lang"]);
             return RedirectToAction("Fanfiction", "Fanfiction");
         }
         public async Task<IActionResult> ViewFanfic(int fanficId)
         {
+            var user = await _userManager.GetUserAsync(User);
+            bool status = false;
+            if(user != null) status = (await _userManager.GetRolesAsync(user)).FirstOrDefault(r => r == "Admin") != null;
             return View(new FanficModel(
                 await _context.GetFanficAsync(fanficId), 
                 Request.Cookies["lang"], 
                 _signInManager.IsSignedIn(User) ? (await _userManager.GetUserAsync(User)).Id : string.Empty,
                 await _context.GetCommentsAsync(fanficId),
-                await _context.Rates.Where(r => r.fanficId == fanficId).ToListAsync()
+                await _context.Rates.Where(r => r.fanficId == fanficId).ToListAsync(),
+                status
             ));
         }
 

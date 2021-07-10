@@ -17,53 +17,84 @@
 
     <div class="profile-area m-3">
         <div id="avatar-area" style="display: inline-block; text-align: center">
-            @if (Model.user.AvatarUrl == null)
+            @if (Model.onPageUser.AvatarUrl == null)
             {
                 <img class="avatar" style="display: inline-block; " src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Anonymous_emblem.svg/1200px-Anonymous_emblem.svg.png" alt="avatar"/>
             }
             else
             {
-                <img class="avatar" style="display: inline-block; " src="@Model.user.AvatarUrl" alt="avatar"/>
+                <img class="avatar" style="display: inline-block; " src="@Model.onPageUser.AvatarUrl" alt="avatar"/>
             }
-            <br>
-            <button onclick="showArea()" id="edit-photo" key="Upload" class="mt-3 p-1 bi bi-capslock lang"></button>
+            @if (Model.user != null && Model.user.Id == Model.onPageUser.Id)
+            {
+                <br>
+                <button onclick="showArea()" id="edit-photo" key="Upload" class="mt-3 p-1 bi bi-capslock lang"></button>
+            }
 
         </div>
-
-        
+ 
+        <input hidden id="userId" asp-for="onPageUser.Id" value="@Model.onPageUser.Id"/>
         <div class="ml-3 p-0" style="display: inline-block; width: 70% ; vertical-align: top ">
-            <form id="editable-form">
+            @if (Model.userIsAdmin && !Model.onPageUserIsAdmin)
+            {
+                <form id="editable-form">
+                    <table class="profile-table" id="profile-data-area" style="width: 100%">
+                        <tr class="p-0 m-0"><td class="lang" key="Name"></td>
+                            <td>
+
+
+
+                                <p class="m-0 p-0" style="border-width: 0; display: inline-block" href="#" id="username" data-type="text" data-placeholder="Required" data-placement="right" data-title="Enter username">@Model.onPageUser.UserName</p>
+
+                            </td></tr>
+                        <tr class="p-1"><td class="lang" key="Email"></td>
+                            <td>
+
+                                <p class="m-0 p-0" style="border-width: 0; display: inline-block" href="#" id="Email" data-type="text" data-placeholder="Required" data-placement="right" data-title="Enter email">@Model.onPageUser.Email</p>
+
+
+                            </td></tr>
+                    </table>
+                </form>
+            }
+            else
+            {
                 <table class="profile-table" id="profile-data-area" style="width: 100%">
                     <tr class="p-0 m-0"><td class="lang" key="Name"></td>
                         <td>
 
 
 
-                            <p class="m-0 p-0" style="border-width: 0; display: inline-block" href="#" id="username" data-type="text" data-placeholder="Required" data-placement="right" data-title="Enter username">@Model.user.UserName</p>
+                            <p class="m-0 p-0" style="border-width: 0; display: inline-block" id="username">@Model.onPageUser.UserName</p>
 
                         </td></tr>
                     <tr class="p-1"><td class="lang" key="Email"></td>
                         <td>
 
-                            <p class="m-0 p-0" style="border-width: 0; display: inline-block" href="#" id="Email" data-type="text" data-placeholder="Required" data-placement="right" data-title="Enter email">@Model.user.Email</p>
+                            <p class="m-0 p-0" style="border-width: 0; display: inline-block" id="Email" >@Model.onPageUser.Email</p>
 
 
                         </td></tr>
                 </table>
-            </form>
+            }
             <link rel="stylesheet" href="~/css/site.css"/>
-            <form class="hidden" id="drag-n-drop-avatar" action="/Ajax/UploadImages" method="post" onsubmit="return submitFilesForm(this);">
-                @Html.AntiForgeryToken() <!-- Prevent Cross Site Request Forgery -->
-                <input type="file" name="files" id="files-field" accept="image/*" onchange="submitFilesForm(this.form);" multiple/>
-                <label style="width: 100%; height: 100px; vertical-align: bottom" for="files-field" id="files-label"
+            @if (Model.user != null && Model.user.Id == Model.onPageUser.Id)
+            {
+                <form class="hidden" id="drag-n-drop-avatar" action="/Ajax/UploadImages" method="post" onsubmit="return submitFilesForm(this);">
+                    @Html.AntiForgeryToken() <!-- Prevent Cross Site Request Forgery -->
+                    <input type="file" name="files" id="files-field" accept="image/*" onchange="submitFilesForm(this.form);" multiple/>
+                    <label style="width: 100%; height: 100px; vertical-align: bottom" for="files-field" id="files-label"
                        ondragover="stopDefault(event);dragOver(this,  getDropData());"
                        ondragenter="stopDefault(event);dragOver(this, getDropData());"
                        ondragleave="stopDefault(event);dragLeave(this);"
                        ondrop="stopDefault(event);dragLeave(this);addFilesAndSubmit(event);"
                        class="lang" key="Drag-n-drop"></label>
-            </form>
-            <div style="text-align: left;"><div id="files-progress"></div></div>
-            <div class="modal-page" id="uploaded-files"></div>
+                </form>
+           
+            <div style="text-align: left;">
+                <div id="files-progress"></div></div>
+                <div class="modal-page" id="uploaded-files"></div>
+            }
             <body>
             @if (TempData["edit-error"] != null)
             {
@@ -78,7 +109,7 @@
        
            <table class="table_col mt-5" style="margin: auto; width: 90%;">
                <thead style="text-align: center">
-               <td colspan="4"><h2>Список фанфиков</h2></td>
+               <td colspan="4"><h2 class="lang" key="Fanfiction-list"></h2></td>
                </thead>
                <tr>
                    <th class="p-2 lang" key="Category-Name"></th>
@@ -126,16 +157,68 @@
                        <td>@f.Lang</td>
                        <td>@f.Chapters.Count</td>
                       </tr>
-               }      
+               } 
+               @if ((Model.userIsAdmin && !Model.onPageUserIsAdmin) || Model.user != null && Model.user.Id == Model.onPageUser.Id)
+               {
+                   <tr>
+
+                       <th colspan="5" class="p-2">
+                           @Html.ActionLink(
+                               Model.lang == "ru" ? "+ Добавить фанфик" : "+ Add fanfic",
+                               "AddFanfic",
+                               "Fanfiction",
+                               new
+                               {
+                                   userId = Model.onPageUser.Id
+                               })
+
+                       </th>
+                   </tr>
+               }
            </table>
        
        }
        else
        {
-          
+           <h3 style="margin-top: 40px; text-align: center" class="lang" key="Fanfic-non-exists"></h3>
+           @if ((Model.userIsAdmin && !Model.onPageUserIsAdmin) || Model.user != null && Model.user.Id == Model.onPageUser.Id)
+           {
+               <tr>
+
+                   <th colspan="5" class="p-2">
+                       @Html.ActionLink(
+                           Model.lang == "ru" ? "+ Добавить фанфик" : "+ Add fanfic",
+                           "AddFanfic",
+                           "Fanfiction",
+                           new
+                           {
+                               userId = Model.onPageUser.Id
+                           })
+
+                   </th>
+               </tr>
+           }
                    
        }
-            
+
+        @if (Model.user != null)
+        {
+            if (Model.userIsAdmin && !Model.onPageUserIsAdmin)
+            {
+                @Html.ActionLink(
+                    Model.lang == "ru" ? "Выдать права администратора" : "+Add admin rights",
+                    "AddAdminRights",
+                    "Profile",
+                    new
+                    {
+                        userId = Model.onPageUser.Id
+                    })
+            }
+            if (Model.userIsAdmin && Model.onPageUserIsAdmin)
+            {
+                <h6 style="text-align: center" class="lang" key="Admin"></h6>
+            }
+        }
     </div>
     
    
@@ -167,6 +250,7 @@ function  getDropData()
 (function($) {
 
     $(function() {
+        
         if ($('#editable-form').length) {
             $.fn.editable.defaults.mode = 'inline';
 
@@ -179,6 +263,7 @@ function  getDropData()
 
 
             $('#username').editable({
+            
                 validate: function(value) {
 
                     if ($.trim(value) === '')
@@ -188,7 +273,7 @@ function  getDropData()
                     }
                     else
                     {
-                        UpdateName($.trim(value))
+                        UpdateName($.trim(value), document.getElementById('userId').value)
                        
                     }
                 }
@@ -204,7 +289,7 @@ function  getDropData()
                     else
                     {
                         
-                        UpdateEmail($.trim(value))
+                        UpdateEmail($.trim(value), document.getElementById('userId').value)
                        
                     }
                 }
@@ -219,13 +304,15 @@ function  getDropData()
 
 
 
-function UpdateName(value) {
+function UpdateName(value, userId) {
      
     $.ajax({
         type: "POST",
         url: '@Url.Action("UpdateName", "Profile")',
         data: { 'newName': value,
-         'lang': localStorage.getItem("lang")} ,
+         'lang': localStorage.getItem("lang"),
+         'userId': userId
+         } ,
         success: function (data) {
 
             window.location.reload()
@@ -237,13 +324,14 @@ function UpdateName(value) {
     });
 
 }
-function UpdateEmail(value) {
+function UpdateEmail(value, userId) {
     
     $.ajax({
         type: "POST",
         url: '@Url.Action("UpdateEmail", "Profile")',
         data: { 'email': value,
-        'lang': localStorage.getItem("lang")
+        'lang': localStorage.getItem("lang"),
+        'userId': userId
         },
         success: function (data) {
 

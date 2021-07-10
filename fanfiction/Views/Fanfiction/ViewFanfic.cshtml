@@ -6,23 +6,23 @@
 <div class="area">
     <div style="text-align: center">
         <p class="m-0 lang" key="Average-rate"></p>
-        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @((Model.rateModel.average) * 100)%, black 0);
+        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(Model.rateModel.average, 2) * 100)%, black 0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
 
-        <p style="display: inline-block; background: linear-gradient(to right, #FFD700  @((Model.rateModel.average - 1) * 100)%, black 0);
+        <p style="display: inline-block; background: linear-gradient(to right, #FFD700  @(Math.Round(Model.rateModel.average - 1, 2) * 100)%, black 0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
 
-        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @((Model.rateModel.average - 2) * 100)%, black 0);
+        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(Model.rateModel.average - 2, 2) * 100)%, black 0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
 
-        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @((Model.rateModel.average - 3) * 100)%, black 0);
+        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(Model.rateModel.average - 3, 2) * 100)%, black 0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
 
-        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @((Model.rateModel.average - 4) * 100)%, black 0);
+        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(Model.rateModel.average - 4, 2) * 100)%, black 0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
       
@@ -174,7 +174,13 @@
         <table style="width: 100%; table-layout: fixed">
             <tr class="border-dashed">
 
-                <th class="clip p-2 m-2" style="width: 150px; vertical-align: top">@c.Author.UserName
+                <th class="clip p-2 m-2" style="width: 150px; vertical-align: top">
+                    @Html.ActionLink(
+                        $"{c.Author.UserName}",
+                        "Profile",
+                        "Profile",
+                        new {userId = c.Author.Id})
+                   
                     @if (c.Author.AvatarUrl != null)
                     {
                         <p style="text-align: center"><img src="@c.Author.AvatarUrl" alt="" class="round"></p>
