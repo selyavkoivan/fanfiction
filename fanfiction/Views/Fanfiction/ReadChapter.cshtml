@@ -6,6 +6,20 @@
 <input hidden value="@Model.chapter.ChapterId" id="Id">
 <div style="margin: 20px auto;text-align: center; vertical-align: center">
     <table style="margin: 0 auto; padding: 0">
+            @if (Model.editStatus)
+            {
+
+                @Html.ActionLink(
+                    string.Empty,
+                    "AddChapter",
+                    "Fanfiction",
+                    new
+                    {
+                        fanficId = Model.chapter.FanficId,
+                        chapterNumber = Model.chapter.ChapterNumber
+                    },
+                    new {@class = "bi bi-pen-fill"})
+            }
         @if (Model.lang == "ru")
         {
             <tr>
@@ -14,7 +28,7 @@
                         @Html.ActionLink(
                             Model.fanfic.fandom.RuName,
                             "ReadFandom",
-                            "Fanfiction", 
+                            "Fanfiction",
                             new {fandomId = Model.fanfic.fandom.FandomId})
                     </h6></th>
                 <th>
@@ -32,15 +46,15 @@
                     <h6> @Html.ActionLink(
                              Model.fanfic.fandom.EnName,
                              "ReadFandom",
-                             "Fanfiction", 
+                             "Fanfiction",
                              new {fandomId = Model.fanfic.fandom.FandomId})</h6></th>
                 <th>
                     <h6>
-                         @Html.ActionLink(
-                             Model.fanfic.genre.EnName,
-                             "ReadGenre",
-                             "Fanfiction",
-                             new {genreId = Model.fanfic.genre.GenreId})
+                        @Html.ActionLink(
+                            Model.fanfic.genre.EnName,
+                            "ReadGenre",
+                            "Fanfiction",
+                            new {genreId = Model.fanfic.genre.GenreId})
                     </h6></th>
             </tr>
         }
@@ -53,7 +67,7 @@
                     "Fanfiction",
                     new {fanficId = Model.fanfic.FanficId})
             </h3>
-            </th>
+        </th>
         <tr>
             <th>
                 <h4 class="lang" key="Chapter-number"></h4></th>
@@ -76,7 +90,7 @@
                     new {@class = "fanfiction-button"})
             </div>
         }
- 
+    
         @if (Model.isSignedIn)
         {
             <a style="display: inline-block;" class="mt-1" onclick="change()">

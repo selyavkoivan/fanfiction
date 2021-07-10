@@ -53,7 +53,7 @@ function submitFilesForm(form) {
                    
                     document.getElementById("uploaded-files").appendChild(img);
                 }
-               // location.reload()
+                location.reload()
             }
             else if(x.status == 500) {
                 alert(x.responseText); // do something with the server error

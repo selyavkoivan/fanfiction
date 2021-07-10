@@ -26,8 +26,9 @@
             <th class="p-2 lang" key="Genre"></th>
             <th class="p-2 lang" key="Lang"></th>
             <th class="p-2 lang" key="Chapter-count"></th>
+            <th class="p-2 lang" key="Author"></th>
         </tr>
-        @foreach (var f in Model.fanfic)
+        @foreach (var f in Model.fanfiction)
         {
             <tr>
                 <td>
@@ -66,7 +67,14 @@
                 }
                 <td>@f.Lang</td>
                 <td>@f.Chapters.Count</td>
-                
+                <td>
+                   x
+                    @Html.ActionLink(
+                        $"{f.Author.UserName}",
+                        "Profile",
+                        "Profile",
+                        new {userId = f.Author.Id})
+                </td>
                
             </tr>
         }      

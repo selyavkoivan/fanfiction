@@ -1,68 +1,81 @@
 ﻿@{
     Layout =  "~/Views/Shared/_LayoutAccount.cshtml";
 }
+@using Microsoft.AspNetCore.Mvc.Rendering
 @model fanfiction.Models.Fanfiction.FanficModel
 
 <div class="area">
-    <div style="text-align: center">
-        <p class="m-0 lang" key="Average-rate"></p>
-        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(Model.rateModel.average, 2) * 100)%, black 0);
+<div style="text-align: center">
+    @if (Model.isMine)
+    {
+        @Html.ActionLink(
+            string.Empty,
+            "AddFanfic",
+            "Fanfiction",
+            new
+            {
+                fanficId = Model.fanfic.FanficId
+            },
+            new {@class = "bi bi-pen-fill"})
+    }
+    <p class="m-0 lang" key="Average-rate"></p>
+    <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(Model.rateModel.average, 2) * 100)%, black 0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
 
-        <p style="display: inline-block; background: linear-gradient(to right, #FFD700  @(Math.Round(Model.rateModel.average - 1, 2) * 100)%, black 0);
+    <p style="display: inline-block; background: linear-gradient(to right, #FFD700  @(Math.Round(Model.rateModel.average - 1, 2) * 100)%, black 0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
 
-        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(Model.rateModel.average - 2, 2) * 100)%, black 0);
+    <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(Model.rateModel.average - 2, 2) * 100)%, black 0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
 
-        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(Model.rateModel.average - 3, 2) * 100)%, black 0);
+    <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(Model.rateModel.average - 3, 2) * 100)%, black 0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
 
-        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(Model.rateModel.average - 4, 2) * 100)%, black 0);
+    <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(Model.rateModel.average - 4, 2) * 100)%, black 0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
-      
-        @if (Model.IsSignedIn)
+
+    @if (Model.IsSignedIn)
+    {
+        @if (Model.rateModel.myRate != null)
         {
-            @if (Model.rateModel.myRate != null)
+            <p class="m-0 lang" key="Your-rate"></p>
+            @for (int i = 0; i < 5; i++)
             {
-                <p class="m-0 lang" key="Your-rate"></p>
-                @for (int i = 0; i < 5; i++)
+                if (Model.rateModel.myRate.rate > i)
                 {
-                    if (Model.rateModel.myRate.rate > i)
-                    {
-                        <p style="display: inline-block; color: #FFD700 " class="bi bi-star-fill"></p>
-                    }
-                    else
-                    {
-                        <p style="display: inline-block; color: black " class="bi bi-star-fill"></p>
-                    }
+                    <p style="display: inline-block; color: #FFD700 " class="bi bi-star-fill"></p>
                 }
-            }
-            else
-            {
-                <p class="m-0 lang" key="Set-rate"></p>
-                @for (int i = 0; i < 5; i++)
+                else
                 {
-                    @Html.ActionLink(
-                        string.Empty,
-                        "SetRate",
-                        "Fanfiction",
-                        new
-                        {
-                            rateValue = i + 1,
-                            fanficId = Model.fanfic.FanficId
-                        },
-                        new {@class = "m-1 bi bi-star-fill rate-black"})
+                    <p style="display: inline-block; color: black " class="bi bi-star-fill"></p>
                 }
-
             }
         }
-        </div>
+        else
+        {
+            <p class="m-0 lang" key="Set-rate"></p>
+            @for (int i = 0; i < 5; i++)
+            {
+                @Html.ActionLink(
+                    string.Empty,
+                    "SetRate",
+                    "Fanfiction",
+                    new
+                    {
+                        rateValue = i + 1,
+                        fanficId = Model.fanfic.FanficId
+                    },
+                    new {@class = "m-1 bi bi-star-fill rate-black"})
+            }
+
+        }
+    }
+</div>
     <table class="profile-table data-table" id="profile-data-area">
         <tr>
             <th class="p-2 lang" key="Category-Name"></th>
@@ -114,6 +127,10 @@
         <tr>
             <th class="p-2 lang" key="Lang"></th>
             <td class="lang" key="@Model.fanfic.Lang"></td>
+            
+        </tr>
+        <tr>
+            <th class="p-2 lang" key="Author"></th>
         </tr>
     </table>
     <h4 class="mt-2 lang" key="Description"></h4>
@@ -134,7 +151,13 @@
         @foreach (var c in Model.fanfic.Chapters)
         {
             <tr>
-                <td>@c.ChapterNumber</td>
+                <td>
+                    @Html.ActionLink(
+                        c.ChapterNumber.ToString(),
+                        "ReadChapter",
+                        "Fanfiction",
+                        new {fanficId = c.FanficId, chapterNumber = c.ChapterNumber})
+                </td>
                 <td colspan="3">
                     @Html.ActionLink(
                         c.Title,
@@ -160,6 +183,7 @@
             </tr>
         }
     </table>
+    
     <h5 class="mt-2 lang" key="Comments"></h5>
     @if (Model.IsSignedIn)
     {

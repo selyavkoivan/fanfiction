@@ -53,6 +53,7 @@ namespace fanfiction.Data
                 f.fandom = await Fandoms.FindAsync(f.FandomId);
                 f.genre = await Genres.FindAsync(f.GenreId);
                 f.Chapters = await Chapters.Where(c => c.FanficId == f.FanficId).ToListAsync();
+              
             }
             return fanfiction;
 
@@ -64,6 +65,7 @@ namespace fanfiction.Data
             fanfic.genre = await Genres.FindAsync(fanfic.GenreId);
             fanfic.fandom = await Fandoms.FindAsync(fanfic.FandomId);
             fanfic.Chapters = await Chapters.Where(c => c.FanficId == fanfic.FanficId).ToListAsync();
+            fanfic.Author = await Users.FindAsync(fanfic.ApplicationUserId);
             return fanfic;
         }
         public Fanfic GetAllFanficData(Fanfic fanfic)
@@ -71,6 +73,7 @@ namespace fanfiction.Data
             fanfic.genre = Genres.Find(fanfic.GenreId);
             fanfic.fandom = Fandoms.Find(fanfic.FandomId);
             fanfic.Chapters = Chapters.Where(c => c.FanficId == fanfic.FanficId).ToList();
+            fanfic.Author = Users.Find(fanfic.ApplicationUserId);
             return fanfic;
         }
         public async Task<Fanfic> GetFanficAsync(int fanficId)

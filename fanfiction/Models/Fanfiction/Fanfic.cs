@@ -93,37 +93,35 @@ namespace fanfiction.Models.Fanfiction
                     isMine = false;
                     IsSignedIn = false;
                 }
-
                 else
                 {
-                    if (fanfic.ApplicationUserId == Id) isMine = true;
-                    else isMine = false;
+                    isMine = fanfic.ApplicationUserId == Id;
                     IsSignedIn = true;
-
                 }     
             }
-
+            
            
             
         }
+        
     }
     public class FanfictionModel
     {
-        public List<Fanfic> fanfic { get; }
+        public List<Fanfic> fanfiction { get; }
         public string lang { get; }
 
         public FanfictionModel()
         {
-            fanfic = new List<Fanfic>();
+            fanfiction = new List<Fanfic>();
         }
 
         public FanfictionModel(ApplicationDbContext context, string lang)
         {
             
-            fanfic = context.Fanfics.ToList();
-            for (int i = 0; i < fanfic.Count; i++)
+            fanfiction = context.Fanfics.ToList();
+            for (int i = 0; i < fanfiction.Count; i++)
             {
-                fanfic[i] = context.GetAllFanficData(fanfic[i]);
+                fanfiction[i] = context.GetAllFanficData(fanfiction[i]);
             }
             this.lang = lang;
         }

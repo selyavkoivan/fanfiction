@@ -8,7 +8,10 @@
  <form method="post" asp-action="AddChapter" asp-controller="Fanfiction">
 <div style="width: 100%; margin: auto">
    
- 
+
+      <input asp-for="ChapterId" hidden />
+  
+  
   <input asp-for="FanficId" value="@Model.FanficId" hidden />
   <input asp-for="ChapterNumber" value="@Model.ChapterNumber" hidden/>
   <table>
