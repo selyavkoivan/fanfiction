@@ -61,6 +61,8 @@
             "Average-rate"              : "Средняя оценка",
             "Admin"                     : "Администратор",
             "Author"                    : "Автор",
+            "Genres-list"               : "Список жанров",
+            "Fandoms-list"              : "Список фандомов",
     },
     "en": {
             "Sign-In"                   : "Sign In",
@@ -124,6 +126,8 @@
             "Average-rate"              : "average rate",
             "Admin"                     : "Admin",     
             "Author"                    : "Author",
+            "Genres-list"               : "List of genres",
+            "Fandoms-list"              : "List of fandoms",
     }
 }
 

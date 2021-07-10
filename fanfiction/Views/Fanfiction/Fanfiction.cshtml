@@ -3,89 +3,135 @@
 }
 @using fanfiction.Models.Fanfiction
 @model FanfictionModel 
- <div class="fanfiction-area">
- @if (TempData["Adding-success"] != null)
-        {
+<div >
+    @if (TempData["Adding-success"] != null)
+    {
        
-            <div id="alert" class="alert alert-success alert-dismissible m-0 mt-1" style="width: 100%">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <p class="lang m-0">@TempData["Adding-success"]</p>
-            </div>
+        <div id="alert" class="alert alert-success alert-dismissible m-0 mt-1" style="width: 100%">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p class="lang m-0">@TempData["Adding-success"]</p>
+        </div>
        
-        }
-<h2 class="lang" key="Fanfiction"></h2>
-@if (Model != null)
-{
-    <table class="table_col mt-5" style="margin: auto; width: 90%;">
-        <thead style="text-align: center">
-        <td colspan="4"><h2 class="lang" key="Fanfiction-list"></h2></td>
-        </thead>
-        <tr>
-            <th class="p-2 lang" key="Category-Name"></th>
-            <th class="p-2 lang" key="Fandom"></th>
-            <th class="p-2 lang" key="Genre"></th>
-            <th class="p-2 lang" key="Lang"></th>
-            <th class="p-2 lang" key="Chapter-count"></th>
-            <th class="p-2 lang" key="Author"></th>
-        </tr>
-        @foreach (var f in Model.fanfiction)
-        {
-            <tr>
-                <td>
-                    @Html.ActionLink($"{f.Name}", "ViewFanfic", "Fanfiction", new {fanficId = f.FanficId})
-                </td>
-                @if (Model.lang == "ru")
-                {
-                    <td> @Html.ActionLink(
-                            f.fandom.RuName,
-                            "ReadFandom",
-                            "Fanfiction",
-                            new {fandomId = f.fandom.FandomId })
-                    </td>
-                    <td>@Html.ActionLink(
-                            f.genre.RuName, 
-                            "ReadGenre", 
-                            "Fanfiction",
-                            new {genreId = f.genre.GenreId })
-                    </td>
-                }
-                else
-                {
-                    
-                    <td> @Html.ActionLink(
-                             f.fandom.EnName,
-                             "ReadFandom",
-                             "Fanfiction",
-                             new {fandomId = f.fandom.FandomId })
-                    </td>
-                    <td>@Html.ActionLink(
-                            f.genre.EnName,
-                            "ReadGenre",
-                            "Fanfiction",
-                            new {genreId = f.genre.GenreId })
-                    </td>
-                }
-                <td>@f.Lang</td>
-                <td>@f.Chapters.Count</td>
-                <td>
-                   x
-                    @Html.ActionLink(
-                        $"{f.Author.UserName}",
-                        "Profile",
-                        "Profile",
-                        new {userId = f.Author.Id})
-                </td>
-               
+    }
+    <h2 class="lang" key="Fanfiction"></h2>
+    <div>
+        <input hidden value="0" id="countOfNotSortRows" />
+        <select style="display: inline-block; width: 30%" id="fandom-select" name="select-lang" required>
+            <option class="p-2 lang" key="Category-Name"></option>
+            <option class="p-2 lang" key="Fandom"></option>
+            <option class="p-2 lang" key="Genre"></option>
+            <option class="p-2 lang" key="Lang"></option>
+            <option class="p-2 lang" key="Chapter-count"></option>
+            <option class="p-2 lang" key="Author"></option>
+            <option class="p-2 lang" key="Average-rate"></option>
+        </select>
+        <input style="display: inline-block; width: 30%" id="filterInput" onkeyup="filter()">
+    </div>
+    @if (Model != null)
+    {
+        <h2 class="table_col mt-5 lang"  style="text-align: center; margin: auto; width: 100%;"></h2>
+    
+        <table class="table_col mt-5 lang sort"  id="filter" style="margin: auto; width: 100%;">
+            <thead>
+        
+            <tr style="font-weight: bold">
+                <td class="p-2 lang" key="Category-Name"></td>
+                <td class="p-2 lang" key="Fandom"></td>
+                <td class="p-2 lang" key="Genre"></td>
+                <td class="p-2 lang" key="Lang"></td>
+                <td class="p-2 lang" key="Chapter-count"></td>
+                <td class="p-2 lang" key="Author"></td>
+                <td class="p-2 lang" key="Average-rate"></td>
             </tr>
-        }      
-    </table>
-}
-else
-{
-    <p class="lang" key="Fanfic-non-exists"></p>
-}
+            </thead>   
+            <tbody>
+            @foreach (var f in Model.fanfiction)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink($"{f.fanfic.Name}", "ViewFanfic", "Fanfiction", new {fanficId = f.fanfic.FanficId})
+                    </td>
+                    @if (Model.lang == "ru")
+                    {
+                        <td> @Html.ActionLink(
+                                 f.fanfic.fandom.RuName,
+                                 "ReadFandom",
+                                 "Fanfiction",
+                                 new {fandomId = f.fanfic.fandom.FandomId })
+                        </td>
+                        <td>@Html.ActionLink(
+                                f.fanfic.genre.RuName, 
+                                "ReadGenre", 
+                                "Fanfiction",
+                                new {genreId = f.fanfic.genre.GenreId })
+                        </td>
+                    }
+                    else
+                    {
+                    
+                        <td> @Html.ActionLink(
+                                 f.fanfic.fandom.EnName,
+                                 "ReadFandom",
+                                 "Fanfiction",
+                                 new {fandomId = f.fanfic.fandom.FandomId })
+                        </td>
+                        <td>@Html.ActionLink(
+                                f.fanfic.genre.EnName,
+                                "ReadGenre",
+                                "Fanfiction",
+                                new {genreId = f.fanfic.genre.GenreId })
+                        </td>
+                    }
+                    <td>@f.fanfic.Lang</td>
+                    <td>@f.fanfic.Chapters.Count</td>
+                    <td>
+                        @Html.ActionLink(
+                            $"{f.fanfic.Author.UserName}",
+                            "Profile",
+                            "Profile",
+                            new {userId = f.fanfic.Author.Id})
+                    </td>
+                    <td  style="table-layout: fixed; font-size: 15px; width: 150px">
+                        <p hidden >@(f.rateModel.average*100)</p>
+                        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(f.rateModel.average, 2) * 100)%, black 0);
+                                -webkit-background-clip: text;
+                                -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+
+                        <p style="display: inline-block; background: linear-gradient(to right, #FFD700  @(Math.Round(f.rateModel.average - 1, 2) * 100)%, black 0);
+                                -webkit-background-clip: text;
+                                -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+
+                        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(f.rateModel.average - 2, 2) * 100)%, black 0);
+                                -webkit-background-clip: text;
+                                -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+
+                        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(f.rateModel.average - 3, 2) * 100)%, black 0);
+                                -webkit-background-clip: text;
+                                -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+
+                        <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(f.rateModel.average - 4, 2) * 100)%, black 0);
+                                -webkit-background-clip: text;
+                                -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+                    </td>
+                </tr>
+            }   
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="lang" key="Fanfic-non-exists"></p>
+    }
 
 </div>
+
+<script>
+document.querySelector("#fandom-select").addEventListener('change', function (e) {
+  document.getElementById("filterInput").value = ''
+  filter()
+})
+
+</script>
 
 <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
 

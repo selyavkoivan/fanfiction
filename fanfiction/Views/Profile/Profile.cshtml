@@ -104,60 +104,104 @@
                 </div>}
             </body>
         </div>
-       @if (Model.fanfiction.Count != 0)
+        
+       @if (Model.fanfiction.fanfiction.Count != 0)
        {
        
-           <table class="table_col mt-5" style="margin: auto; width: 90%;">
-               <thead style="text-align: center">
-               <td colspan="4"><h2 class="lang" key="Fanfiction-list"></h2></td>
-               </thead>
-               <tr>
-                   <th class="p-2 lang" key="Category-Name"></th>
-                   <th class="p-2 lang" key="Fandom"></th>
-                   <th class="p-2 lang" key="Genre"></th>
-                   <th class="p-2 lang" key="Lang"></th>
-                   <th class="p-2 lang" key="Chapter-count"></th>
+                <h3 style="margin-top: 40px; text-align: center" class="lang" key="Fanfiction-list"></h3>
+           @if ((Model.userIsAdmin && !Model.onPageUserIsAdmin) || Model.user != null && Model.user.Id == Model.onPageUser.Id)
+           {
+               <input hidden value="1" id="countOfNotSortRows"/>
+           }
+           else
+           {
+               <input hidden value="0" id="countOfNotSortRows"/>
+           }
+           <select style="display: inline-block; width: 30%" id="fandom-select" name="select-lang" required>
+               <option class="p-2 lang" key="Category-Name"></option>
+                          <option class="p-2 lang" key="Fandom"></option>
+                          <option class="p-2 lang" key="Genre"></option>
+                          <option class="p-2 lang" key="Lang"></option>
+                          <option class="p-2 lang" key="Chapter-count"></option>
+               <option class="p-2 lang" key="Average-rate"></option>
+           </select>
+           <input style="display: inline-block; width: 30%" id="filterInput" onkeyup="filter()">
+           <table class="sort table_col mt-5" id="filter" style="margin: auto; width: 90%;">
+            
+               <thead onselectstart="return false" onmousedown="return false">
+               <tr style="font-weight: bold">
+                   <td class="p-2 lang" key="Category-Name"></td>
+                   <td class="p-2 lang" key="Fandom"></td>
+                   <td class="p-2 lang" key="Genre"></td>
+                   <td class="p-2 lang" key="Lang"></td>
+                   <td class="p-2 lang" key="Chapter-count"></td>
+                   <td class="p-2 lang" key="Average-rate"></td>
                </tr>
-               @foreach (var f in Model.fanfiction)
+               </thead>
+               <tbody>
+               @foreach (var f in Model.fanfiction.fanfiction)
                {
                    <tr>
                        <td>
-                           @Html.ActionLink($"{f.Name}", "ViewFanfic", "Fanfiction", new {fanficId = f.FanficId})
+                           @Html.ActionLink($"{f.fanfic.Name}", "ViewFanfic", "Fanfiction", new {fanficId = f.fanfic.FanficId})
                        </td>
                        @if (Model.lang == "ru")
                        {
                            <td> @Html.ActionLink(
-                                    f.fandom.RuName,
+                                    f.fanfic.fandom.RuName,
                                     "ReadFandom",
                                     "Fanfiction",
-                            new {fandomId = f.fandom.FandomId })
+                            new {fandomId = f.fanfic.fandom.FandomId })
                             </td>
                            <td>@Html.ActionLink(
-                                   f.genre.RuName,
+                                   f.fanfic.genre.RuName,
                                    "ReadGenre",
                                    "Fanfiction",
-                                   new {genreId = f.genre.GenreId })
+                                   new {genreId = f.fanfic.genre.GenreId })
                                </td>
                        }
                        else
                        {
                            <td> @Html.ActionLink(
-                                    f.fandom.EnName,
+                                    f.fanfic.fandom.EnName,
                                     "ReadFandom",
                                     "Fanfiction",
-                                    new {fandomId = f.fandom.FandomId })
+                                    new {fandomId = f.fanfic.fandom.FandomId })
                            </td>
                            <td>@Html.ActionLink(
-                                   f.genre.EnName,
+                                   f.fanfic.genre.EnName,
                                    "ReadGenre",
                                    "Fanfiction",
-                                   new {genreId = f.genre.GenreId })
+                                   new {genreId = f.fanfic.genre.GenreId })
                            </td>
                        }
-                       <td>@f.Lang</td>
-                       <td>@f.Chapters.Count</td>
+                       <td>@f.fanfic.Lang</td>
+                       <td>@f.fanfic.Chapters.Count</td>
+                       <td  style="table-layout: fixed; font-size: 15px; width: 170px">
+                                               <p hidden >@(f.rateModel.average*100)</p>
+                                               <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(f.rateModel.average, 2) * 100)%, black 0);
+                                                       -webkit-background-clip: text;
+                                                       -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+                       
+                                               <p style="display: inline-block; background: linear-gradient(to right, #FFD700  @(Math.Round(f.rateModel.average - 1, 2) * 100)%, black 0);
+                                                       -webkit-background-clip: text;
+                                                       -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+                       
+                                               <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(f.rateModel.average - 2, 2) * 100)%, black 0);
+                                                       -webkit-background-clip: text;
+                                                       -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+                       
+                                               <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(f.rateModel.average - 3, 2) * 100)%, black 0);
+                                                       -webkit-background-clip: text;
+                                                       -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+                       
+                                               <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(f.rateModel.average - 4, 2) * 100)%, black 0);
+                                                       -webkit-background-clip: text;
+                                                       -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
+                                           </td>
                       </tr>
-               } 
+               }
+               </tbody>
                @if ((Model.userIsAdmin && !Model.onPageUserIsAdmin) || Model.user != null && Model.user.Id == Model.onPageUser.Id)
                {
                    <tr>
@@ -241,6 +285,15 @@
 <script src="~/js/clickToEdit.js">
 </script>
 <script>
+
+
+document.querySelector("#fandom-select").addEventListener('change', function (e) {
+  document.getElementById("filterInput").value = ''
+  filter()
+})
+
+
+
 function  getDropData()
 {
     if (localStorage.key('lang') === "en") return langArr.en.Drop
@@ -344,6 +397,8 @@ function UpdateEmail(value, userId) {
     });
 
 }
+
+
 
 </script>
 

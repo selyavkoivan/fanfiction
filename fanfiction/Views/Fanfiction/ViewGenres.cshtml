@@ -3,15 +3,28 @@
 }
 @model fanfiction.Models.Fanfiction.GenresModel
 
-
-    <table class="table_col mt-5" style="table-layout: fixed; margin-left: 10%; width: 100%;">
-        <thead style="text-align: center">
-        <td colspan="2"><h2 class="lang" key="Genres-list"></h2></td>
-        </thead>
-        <tr>
-            <th class="p-2 lang" key="Category-Name"></th>
-            <th colspan="3" class="p-2 lang" key="Description"></th>
+<h2 class="table_col mt-5 lang" style="table-layout: fixed; margin-left: 10%; width: 100%;" key="Genres-list"></h2>
+ @if (Model.IsSignedIn)
+    {
+        <input hidden value="1" id="countOfNotSortRows"/>
+    }
+    else
+    {
+        <input hidden value="0" id="countOfNotSortRows"/>
+    }
+    <select style="display: inline-block; width: 30%" id="fandom-select" name="select-lang" required>
+        <option class="p-2 lang" key="Category-Name"></option>
+        <option class="p-2 lang" key="Description"></option>
+        </select>
+        <input style="display: inline-block; width: 30%" id="filterInput" onkeyup="filter()">
+    <table class="table_col mt-5 sort" id="filter" style="table-layout: fixed; margin-left: 10%; width: 100%;">
+        <thead onselectstart="return false" onmousedown="return false">
+        <tr style="font-weight: bold">
+            <td class="p-2 lang" key="Category-Name"></td>
+            <td colspan="3" class="p-2 lang" key="Description"></td>
         </tr>
+        </thead>
+        <tbody>
         @foreach (var g in Model.genres)
         {
             <tr>
@@ -19,11 +32,11 @@
                 {
                     <td class="clip">
                         <span class="clip" style="width: 30%">
-                        @Html.ActionLink(
-                            g.RuName,
-                            "ReadGenre",
-                            "Fanfiction",
-                            new {genreId = g.GenreId})
+                            @Html.ActionLink(
+                                g.RuName,
+                                "ReadGenre",
+                                "Fanfiction",
+                                new {genreId = g.GenreId})
                         </span>
                     </td>
                     <td style="width: 70%" class="clip" colspan="3">
@@ -44,11 +57,12 @@
 
                     </td>
                     <td colspan="3" style="width: 70%"><p class="clip">@g.EnDescription</p></td>
-                    }
+                }
                 
         
             </tr>
         }   
+        </tbody>
         @if (Model.IsSignedIn)
         {
             <tr>
@@ -65,3 +79,10 @@
             }
     </table>
 
+<script>
+document.querySelector("#fandom-select").addEventListener('change', function (e) {
+  document.getElementById("filterInput").value = ''
+  filter()
+})
+
+</script>

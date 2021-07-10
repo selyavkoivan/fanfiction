@@ -38,7 +38,6 @@
     <p style="display: inline-block; background: linear-gradient(to right, #FFD700 @(Math.Round(Model.rateModel.average - 4, 2) * 100)%, black 0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent" class="bi bi-star-fill"></p>
-
     @if (Model.IsSignedIn)
     {
         @if (Model.rateModel.myRate != null)
@@ -134,20 +133,33 @@
         </tr>
     </table>
     <h4 class="mt-2 lang" key="Description"></h4>
-    <div class="border-dashed" style="text-align: left; width: 100%;  margin: 0 auto">
-        <p style="white-space: pre-wrap">@Model.fanfic.Description</p>
+<div class="border-dashed" style="text-align: left; width: 100%;  margin: 0 auto">
+    <p style="white-space: pre-wrap">@Model.fanfic.Description</p>
 
 
-    </div>
-    <table class="table_col mt-5" style="margin: auto; width: 90%;">
-        <thead style="text-align: center">
-        <td colspan="4">
-            <h2 class="lang" key="Chapter-list"></h2></td>
-        </thead>
+</div>
+<h2 class="lang" key="Chapter-list" style="margin: auto; width: 90%; text-align: center"></h2>
+    @if (Model.isMine)
+    {
+        <input hidden value="1" id="countOfNotSortRows"/>
+    }
+    else
+    {
+        <input hidden value="0" id="countOfNotSortRows"/>
+    }
+    <select style="display: inline-block; width: 30%" id="fandom-select" name="select-lang" required>
+        <option class="p-2 lang">№</option>
+        <option class="p-2 lang" key="Category-Name"></option>
+        </select>
+        <input style="display: inline-block; width: 30%" id="filterInput" onkeyup="filter()">
+    <table class="sort table_col mt-5" id="filter" style="margin: auto; width: 90%;">
+        <thead style="font-weight: bold">
         <tr>
-            <th class="p-2">№</th>
-            <th colspan="3" class="p-2 lang" key="Category-Name"></th>
+            <td class="p-2">№</td>
+            <td colspan="3" class="p-2 lang" key="Category-Name"></td>
         </tr>
+        </thead>
+        <tbody>
         @foreach (var c in Model.fanfic.Chapters)
         {
             <tr>
@@ -168,6 +180,7 @@
                 </td>
             </tr>
         }
+        </tbody>
         @if (Model.isMine)
         {
             <tr>
@@ -193,21 +206,21 @@
             <button type="submit" class="lang border-dashed mb-3" key="Send"></button>
         </form>
     }
-    @foreach (var c in Model.Comments)
+    @for (int i = Model.Comments.Count - 1; i >= 0; i--)
     {
         <table style="width: 100%; table-layout: fixed">
             <tr class="border-dashed">
 
                 <th class="clip p-2 m-2" style="width: 150px; vertical-align: top">
                     @Html.ActionLink(
-                        $"{c.Author.UserName}",
+                        $"{ Model.Comments[i].Author.UserName}",
                         "Profile",
                         "Profile",
-                        new {userId = c.Author.Id})
+                        new {userId = Model.Comments[i].Author.Id})
                    
-                    @if (c.Author.AvatarUrl != null)
+                    @if (Model.Comments[i].Author.AvatarUrl != null)
                     {
-                        <p style="text-align: center"><img src="@c.Author.AvatarUrl" alt="" class="round"></p>
+                        <p style="text-align: center"><img src="@Model.Comments[i].Author.AvatarUrl" alt="" class="round"></p>
                     }
                     else
                     {
@@ -216,7 +229,7 @@
                         </p>
                     }
                 </th>
-                <td class="border-dashed" style="white-space: pre-wrap">@c.Text</td>
+                <td class="border-dashed" style="white-space: pre-wrap">@Model.Comments[i].Text</td>
 
 
             </tr>
@@ -245,3 +258,10 @@ display: inline-block;
 color: #FFD700 
 }
 </style>
+<script>
+document.querySelector("#fandom-select").addEventListener('change', function (e) {
+  document.getElementById("filterInput").value = ''
+  filter()
+})
+
+</script>

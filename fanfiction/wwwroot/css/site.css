@@ -217,23 +217,23 @@ thead th
 
 /* Control the left side */
 .left {
-  left: 0;
   padding: 20px;
-  height: auto;
-  margin-left: 10%;
+  left: 0;
+  height: 100%;
+  margin-left: 0;
   width: 20%;
-  position: fixed;
-  overflow-x: hidden;
+
 
 }
 
 /* Control the right side */
 .right {
-  padding: 20px;
+  vertical-align: top;
   right: 0;
-  height: auto;
+  padding: 20px;
+  height: 100%;
   width: 70%;
-  position: fixed;
+  
 }
 .body {
   height: 100%;
@@ -243,6 +243,7 @@ thead th
   left: 0;
   margin: auto;
 }
+.light-theme #filterInput,
 .light-theme #fandom-select,
 .light-theme #name-text
 {
@@ -252,6 +253,7 @@ thead th
   background: #eae9f2;
   color: #222226;
 }
+.dark-theme #filterInput,
 .dark-theme #fandom-select,
 .dark-theme #name-text
 {

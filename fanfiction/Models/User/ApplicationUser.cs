@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using fanfiction.Data;
 using fanfiction.Models.Fanfiction;
 using fanfiction.Models.User.Inretfaces;
 
@@ -49,23 +50,22 @@ namespace fanfiction.Models.User
         public ApplicationUser onPageUser;
         public bool onPageUserIsAdmin;
         public string lang;
-        public List<Fanfic> fanfiction;
+        public FanfictionModel fanfiction;
         public ProfileUser(ApplicationUser onPageUser, string lang, List<Fanfic> fanfiction)
         {
-            
             this.lang = lang;
-            this.fanfiction = fanfiction;
+           
             this.onPageUser = onPageUser;
         }
-        public ProfileUser(ApplicationUser onPageUser, string lang, List<Fanfic> fanfiction, ApplicationUser user, 
+        public ProfileUser(ApplicationUser onPageUser, string lang, ApplicationDbContext context, ApplicationUser user, 
             bool userIsAdmin, bool onPageUserIsAdmin)
         {
             this.userIsAdmin = userIsAdmin;
             this.onPageUserIsAdmin = onPageUserIsAdmin;
             this.onPageUser = onPageUser;
             this.lang = lang;
-            this.fanfiction = fanfiction;
             this.user = user;
+            this.fanfiction = new FanfictionModel(context, onPageUser.Id);
         }
     }
   

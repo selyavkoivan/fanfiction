@@ -61,7 +61,7 @@ namespace fanfiction.Models.Fanfiction
     public class FanficModel
     {
         public Rate urRate  {get; set;}
-        public RateModel rateModel {get;}
+        public RateModel rateModel { get; set; }
         public Comment urComment {get; set;}
         public List<Comment> Comments {get;}
         public bool isMine;
@@ -72,6 +72,7 @@ namespace fanfiction.Models.Fanfiction
         public FanficModel()
         {
             fanfic = new Fanfic();
+            rateModel = new RateModel();
         }
 
         public FanficModel(Fanfic fanfic, string lang, string Id, List<Comment> comments, List<Rate> rates, bool isAdmin)
@@ -107,21 +108,57 @@ namespace fanfiction.Models.Fanfiction
     }
     public class FanfictionModel
     {
-        public List<Fanfic> fanfiction { get; }
+        public List<FanficModel> fanfiction { get; }
         public string lang { get; }
 
         public FanfictionModel()
         {
-            fanfiction = new List<Fanfic>();
+            fanfiction = new List<FanficModel>();
         }
 
         public FanfictionModel(ApplicationDbContext context, string lang)
         {
             
-            fanfiction = context.Fanfics.ToList();
+            fanfiction = new List<FanficModel>();
+            var list = context.Fanfics.ToList();
+            var rates = context.Rates.ToList();
+            foreach (var l in list)
+            {
+                var model = new RateModel();
+                model.Rates = rates.Where(r => r.fanficId == l.FanficId).ToList();
+                if(model.Rates.Count != 0) model.average = model.Rates.Average(r => r.rate);
+
+                    fanfiction.Add(new FanficModel {
+                    fanfic =  l, rateModel = model                    
+                });
+            }
+
             for (int i = 0; i < fanfiction.Count; i++)
             {
-                fanfiction[i] = context.GetAllFanficData(fanfiction[i]);
+                fanfiction[i].fanfic = context.GetAllFanficData(fanfiction[i].fanfic);
+            }
+            this.lang = lang;
+        }
+        public FanfictionModel(ApplicationDbContext context, string lang, string userId)
+        {
+            
+            fanfiction = new List<FanficModel>();
+            var list = context.Fanfics.Where(f => f.ApplicationUserId == userId).ToList();
+            var rates = context.Rates.ToList();
+            foreach (var l in list)
+            {
+                var model = new RateModel();
+                model.Rates = rates.Where(r => r.fanficId == l.FanficId).ToList();
+                if(model.Rates.Count != 0) model.average = model.Rates.Average(r => r.rate);
+
+                fanfiction.Add(new FanficModel {
+                    fanfic =  l, rateModel = model                    
+                });
+            }
+
+            for (int i = 0; i < fanfiction.Count; i++)
+            {
+                fanfiction[i].fanfic = context.GetAllFanficData(fanfiction[i].fanfic);
             }
             this.lang = lang;
         }

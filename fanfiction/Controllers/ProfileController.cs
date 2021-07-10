@@ -49,7 +49,7 @@ namespace fanfiction.Controllers
             var user = await _userManager.GetUserAsync(User);
             var fanfics = await _context.GetMyFanfiction(user.Id);
             var adminStatus = (await _userManager.GetRolesAsync(user)).FirstOrDefault(r => r == "Admin") != null;
-            return new ProfileUser(user,  Request.Cookies["lang"], fanfics, 
+            return new ProfileUser(user,  Request.Cookies["lang"], _context, 
                 user, adminStatus, adminStatus);
         }
         private async Task<ProfileUser> GetUser(string userId)
@@ -63,10 +63,10 @@ namespace fanfiction.Controllers
             {
                 var adminStatus = (await _userManager.GetRolesAsync(me)).FirstOrDefault(r => r == "Admin") != null;
 
-                return new ProfileUser(user,  Request.Cookies["lang"], fanfics, me, adminStatus, onPageUserIsAdmin);
+                return new ProfileUser(user,  Request.Cookies["lang"], _context, me, adminStatus, onPageUserIsAdmin);
             }
            
-            return new ProfileUser(user,  Request.Cookies["lang"], fanfics,
+            return new ProfileUser(user,  Request.Cookies["lang"], _context,
                 me, false, onPageUserIsAdmin);
         }
 

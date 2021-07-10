@@ -6,7 +6,7 @@
  <div class="fanfiction-area">
      <form method="post" asp-controller="Fanfiction" asp-action="AddFandom">
          <input asp-for="FandomId" hidden/>
-         @if(Model.FandomId == 0)
+         @if(Model == null)
          {
              <h2 style="text-align: center" class="mb-3 lang" key="Fandom-adding"></h2>
          }

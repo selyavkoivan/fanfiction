@@ -47,6 +47,11 @@ namespace fanfiction.Models.Fanfiction
 
 
         }
+
+        public RateModel()
+        {
+            Rates = new List<Rate>();
+        }
     }
     
 
