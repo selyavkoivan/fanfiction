@@ -15,12 +15,13 @@
         <button onclick="SetDate()" key="Sign-In" class="mt-3 btn btn-dark lang adapt"></button>
     </div>
 </form>
+<h2>@TempData["SignInError"]</h2>
 <body>
     @if (TempData["SignInError"] != null)
     {
-<div class="alert alert-danger alert-dismissible" style="position: fixed; bottom: 40px; width: 100%">
+<div class="alert alert-danger alert-dismissible" style="margin-top: 20px; width: 100%">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    @TempData["SignInError"].ToString()
+    @TempData["SignInError"]
 </div>}
 </body>
 

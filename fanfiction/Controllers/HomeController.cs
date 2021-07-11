@@ -69,11 +69,7 @@ namespace fanfiction.Controllers
 
 
 
-        public async Task<ActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Fanfiction", "Fanfiction");
-        }
+      
         
 
         [HttpPost]
@@ -143,8 +139,10 @@ namespace fanfiction.Controllers
         {
             var user = await _userManager.FindByEmailAsync(userLog.Email);
             var msg = await Task.Run(() => Checker.checkLogin(user, userLog.lang));
+            if(user != null && !user.Status) msg = Request.Cookies["lang"] == "ru" ? "Аккаунт заблокирован" : "Account blocked";
             if (msg == string.Empty)
             {
+          
                 var result = await _signInManager.PasswordSignInAsync(user.UserName, userLog.Password, false, false);
                 if (result.Succeeded)
                 {

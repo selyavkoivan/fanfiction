@@ -31,7 +31,11 @@ namespace fanfiction.Controllers
             this._userManager = userManager;
             this._signInManager = signInManager;
         }
-    
+        public async Task<ActionResult> Logout()
+        {
+            if(_signInManager.IsSignedIn(User)) await _signInManager.SignOutAsync();
+            return RedirectToAction("Fanfiction", "Fanfiction");
+        }
        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ApplicationUser>>> Profile(string userId)
@@ -189,6 +193,34 @@ namespace fanfiction.Controllers
                 admin = await _userManager.GetUserAsync(User),
                 lang = Request.Cookies["lang"],
                 users = await _context.Users.ToListAsync()
+            });
+        }
+        
+    
+        public async Task<ActionResult> Block(string userId)
+        {
+            if (await LogoutUser()) return RedirectToAction("Fanfiction", "Fanfiction");
+        
+                var user = await _userManager.FindByIdAsync(userId);
+                user.Status = true;
+                await _userManager.UpdateAsync(user);
+                
+                return RedirectToAction("Profile", "Profile", new
+                {
+                    userId = userId
+                });
+        }
+        public async Task<ActionResult> UnBlock(string userId)
+        {
+            if (await LogoutUser()) return RedirectToAction("Fanfiction", "Fanfiction");
+        
+            var user = await _userManager.FindByIdAsync(userId);
+            user.Status = false;
+            await _userManager.UpdateAsync(user);
+                
+            return RedirectToAction("Profile", "Profile", new
+            {
+                userId = userId
             });
         }
     }

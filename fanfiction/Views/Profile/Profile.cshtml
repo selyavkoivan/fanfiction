@@ -260,18 +260,44 @@
 
         @if (Model.user != null)
         {
-            if (Model.userIsAdmin && !Model.onPageUserIsAdmin)
+            @if (Model.userIsAdmin && !Model.onPageUserIsAdmin)
             {
-                @Html.ActionLink(
-                    Model.lang == "ru" ? "Выдать права администратора" : "+Add admin rights",
-                    "AddAdminRights",
-                    "Profile",
-                    new
+                <div style="text-align: center">
+                    @Html.ActionLink(
+                        Model.lang == "ru" ? "Выдать права администратора" : "+Add admin rights",
+                        "AddAdminRights",
+                        "Profile",
+                        new
+                        {
+                            userId = Model.onPageUser.Id
+                        })
+                    <br>
+                    @if (Model.onPageUser.Status)
                     {
-                        userId = Model.onPageUser.Id
-                    })
+                        @Html.ActionLink(
+                            Model.lang == "ru" ? "Разблокировать" : "unBlock",
+                            "UnBlock",
+                            "Profile",
+                            new
+                            {
+                                userId = Model.onPageUser.Id
+                            })
+                    }
+                    else
+                    {
+                        @Html.ActionLink(
+                            Model.lang == "ru" ? "Заблокировать" : "Block",
+                            "Block",
+                            "Profile",
+                            new
+                            {
+                                userId = Model.onPageUser.Id
+                            })
+                    }
+                </div>
             }
-            if (Model.userIsAdmin)
+        
+            @if (Model.userIsAdmin)
             {
                 <h5 style="text-align: center;">
                 @Html.ActionLink(
@@ -279,9 +305,9 @@
                     "UserList",
                     "Profile",
                     new{})
-    </h5>
+                </h5>
             }
-            if (Model.userIsAdmin && Model.onPageUserIsAdmin)
+            @if (Model.userIsAdmin && Model.onPageUserIsAdmin)
             {
                 <h6 style="text-align: center" class="lang" key="Admin"></h6>
             }
