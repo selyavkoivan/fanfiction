@@ -51,6 +51,8 @@ namespace fanfiction.Models.Fanfiction
         public string lang;
         public bool isSignedIn;
         public bool editStatus;
+        public bool isMarked;
+        public string userId;
         public ChapterRead(int fanficId, int chapterNumber, ApplicationDbContext context, string userId, string lang, bool adminStatus)
         {
             
@@ -58,7 +60,7 @@ namespace fanfiction.Models.Fanfiction
             fanfic = context.GetFanfic(fanficId);
             
             chapter = context.Chapters.AsNoTracking().First(c => c.FanficId == fanficId && c.ChapterNumber == chapterNumber);
-            int count = context.Chapters.AsNoTracking().Count(c => c.FanficId == chapter.FanficId);
+            var count = context.Chapters.AsNoTracking().Count(c => c.FanficId == chapter.FanficId);
             if (count == chapter.ChapterNumber) isLast = true;
             else isLast = false;
             var likes = context.Likes.Where(l => l.chapterId == chapter.ChapterId).ToList();
@@ -67,12 +69,15 @@ namespace fanfiction.Models.Fanfiction
             {
                 isLiked = false;
                 isSignedIn = false;
+                isMarked = false;
             }
             else
             {
+                this.userId = userId;
+                if (context.Marks.Any(m => m.chapterId == chapter.ChapterId && m.AuthorId == userId)) isMarked = true;
                 if (fanfic.Author.Id == userId || adminStatus) editStatus = true; 
-                if (likes.Count(l => l.userId == userId) == 0) isLiked = false;
-                else isLiked = true;
+                if (likes.Any(l => l.userId == userId)) isLiked = true;
+                else isLiked = false;
                 isSignedIn = true;
             }
             

@@ -1,0 +1,88 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+
+
+@model fanfiction.Models.Fanfiction.MarkModel 
+
+
+<div style="text-align: center">
+    <h4 class="lang" key="Name"></h4>
+    <h5>@Model.user.UserName</h5>
+    <h4 class="lang" key="Email"></h4>
+    <h5>@Model.user.Email</h5>
+    
+     <table class="sort table_col mt-5" id="filter" style="margin: auto; width: 90%;">
+            <thead  onselectstart="return false" onmousedown="return false" style="font-weight: bold">
+            <tr>
+                <td class="p-2">№</td>
+                <td class="p-2 lang" key="Category-Name"></td>
+                <td class="p-2 lang" key="Fandom"></td>
+                <td class="p-2 lang" key="Genre"></td>
+                <td class="p-2 lang" key="Author"></td>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var m in Model.marks)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(
+                            m.chapter.ChapterNumber.ToString(),
+                            "ReadChapter",
+                            "Fanfiction",
+                            new {fanficId = m.chapter.FanficId, chapterNumber = m.chapter.ChapterNumber})
+                    </td>
+                    <td>
+                        @Html.ActionLink(
+                            m.chapter.Title,
+                            "ReadChapter",
+                            "Fanfiction",
+                            new {fanficId = m.chapter.FanficId, chapterNumber = m.chapter.ChapterNumber})
+    
+                    </td>
+                     @if (Model.lang == "ru")
+                       {
+                           <td>
+                                @Html.ActionLink(
+                                         m.chapter.fanfic.fandom.RuName,
+                                         "ReadFandom",
+                                         "Fanfiction",
+                                         new {fandomId = m.chapter.fanfic.FandomId})
+                           </td>
+                           <td>@Html.ActionLink(
+                                   m.chapter.fanfic.genre.RuName,
+                                   "ReadGenre",
+                                   "Fanfiction",
+                                   new {genreId = m.chapter.fanfic.GenreId })
+                               </td>
+                       }
+                       else
+                       {
+                           <td> @Html.ActionLink(
+                                    m.chapter.fanfic.fandom.EnName,
+                                    "ReadFandom",
+                                    "Fanfiction",
+                                    new {fandomId = m.chapter.fanfic.FandomId })
+                           </td>
+                           <td>@Html.ActionLink(
+                                   m.chapter.fanfic.genre.EnName,
+                                   "ReadGenre",
+                                   "Fanfiction",
+                                   new {genreId = m.chapter.fanfic.GenreId })
+                           </td>
+                       }
+                     <td>
+                                             @Html.ActionLink(
+                                                 $"{m.chapter.fanfic.Author.UserName}",
+                                                 "Profile",
+                                                 "Profile",
+                                                 new {userId = m.chapter.fanfic.ApplicationUserId})
+                                         </td>
+                </tr>
+            }
+            </tbody>
+           
+        </table>
+</div>

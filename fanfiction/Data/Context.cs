@@ -33,7 +33,7 @@ namespace fanfiction.Data
             }
 
         }
-     
+        public DbSet<Mark> Marks { get; set; }
         public DbSet<Rate> Rates { get; set; }
         public  DbSet<ApplicationUser> Users { get; set; }
         public  DbSet<Fandom> Fandoms { get; set; }

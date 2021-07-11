@@ -18,7 +18,7 @@
         </select>
         <input style="display: inline-block; width: 30%" id="filterInput" onkeyup="filter()">
     <table class="table_col mt-5 sort" id="filter" style="table-layout: fixed; margin-left: 10%; width: 100%;">
-        <thead>
+        <thead onselectstart="return false" onmousedown="return false">
         <tr style="font-weight: bold">
            
             <td class="p-2 lang" key="Category-Name"></td>

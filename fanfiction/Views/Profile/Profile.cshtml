@@ -34,77 +34,86 @@
         </div>
  
         <input hidden id="userId" asp-for="onPageUser.Id" value="@Model.onPageUser.Id"/>
-        <div class="ml-3 p-0" style="display: inline-block; width: 70% ; vertical-align: top ">
-            @if (Model.userIsAdmin && !Model.onPageUserIsAdmin)
-            {
-                <form id="editable-form">
-                    <table class="profile-table" id="profile-data-area" style="width: 100%">
-                        <tr class="p-0 m-0"><td class="lang" key="Name"></td>
-                            <td>
-
-
-
-                                <p class="m-0 p-0" style="border-width: 0; display: inline-block" href="#" id="username" data-type="text" data-placeholder="Required" data-placement="right" data-title="Enter username">@Model.onPageUser.UserName</p>
-
-                            </td></tr>
-                        <tr class="p-1"><td class="lang" key="Email"></td>
-                            <td>
-
-                                <p class="m-0 p-0" style="border-width: 0; display: inline-block" href="#" id="Email" data-type="text" data-placeholder="Required" data-placement="right" data-title="Enter email">@Model.onPageUser.Email</p>
-
-
-                            </td></tr>
-                    </table>
-                </form>
-            }
-            else
-            {
+    <div class="ml-3 p-0" style="display: inline-block; width: 70% ; vertical-align: top ">
+        @if (Model.userIsAdmin && !Model.onPageUserIsAdmin)
+        {
+            <form id="editable-form">
                 <table class="profile-table" id="profile-data-area" style="width: 100%">
                     <tr class="p-0 m-0"><td class="lang" key="Name"></td>
                         <td>
 
 
 
-                            <p class="m-0 p-0" style="border-width: 0; display: inline-block" id="username">@Model.onPageUser.UserName</p>
+                            <p class="m-0 p-0" style="border-width: 0; display: inline-block" href="#" id="username" data-type="text" data-placeholder="Required" data-placement="right" data-title="Enter username">@Model.onPageUser.UserName</p>
 
                         </td></tr>
                     <tr class="p-1"><td class="lang" key="Email"></td>
                         <td>
 
-                            <p class="m-0 p-0" style="border-width: 0; display: inline-block" id="Email" >@Model.onPageUser.Email</p>
+                            <p class="m-0 p-0" style="border-width: 0; display: inline-block" href="#" id="Email" data-type="text" data-placeholder="Required" data-placement="right" data-title="Enter email">@Model.onPageUser.Email</p>
 
 
                         </td></tr>
                 </table>
-            }
-            <link rel="stylesheet" href="~/css/site.css"/>
-            @if (Model.user != null && Model.user.Id == Model.onPageUser.Id)
-            {
-                <form class="hidden" id="drag-n-drop-avatar" action="/Ajax/UploadImages" method="post" onsubmit="return submitFilesForm(this);">
-                    @Html.AntiForgeryToken() <!-- Prevent Cross Site Request Forgery -->
-                    <input type="file" name="files" id="files-field" accept="image/*" onchange="submitFilesForm(this.form);" multiple/>
-                    <label style="width: 100%; height: 100px; vertical-align: bottom" for="files-field" id="files-label"
+            </form>
+        }
+        else
+        {
+            <table class="profile-table" id="profile-data-area" style="width: 100%">
+                <tr class="p-0 m-0"><td class="lang" key="Name"></td>
+                    <td>
+
+
+
+                        <p class="m-0 p-0" style="border-width: 0; display: inline-block" id="username">@Model.onPageUser.UserName</p>
+
+                    </td></tr>
+                <tr class="p-1"><td class="lang" key="Email"></td>
+                    <td>
+
+                        <p class="m-0 p-0" style="border-width: 0; display: inline-block" id="Email" >@Model.onPageUser.Email</p>
+
+
+                    </td></tr>
+            </table>
+        }
+        <link rel="stylesheet" href="~/css/site.css"/>
+        @if (Model.user != null && Model.user.Id == Model.onPageUser.Id)
+        {
+            <form class="hidden" id="drag-n-drop-avatar" action="/Ajax/UploadImages" method="post" onsubmit="return submitFilesForm(this);">
+                @Html.AntiForgeryToken() <!-- Prevent Cross Site Request Forgery -->
+                <input type="file" name="files" id="files-field" accept="image/*" onchange="submitFilesForm(this.form);" multiple/>
+                <label style="width: 100%; height: 100px; vertical-align: bottom" for="files-field" id="files-label"
                        ondragover="stopDefault(event);dragOver(this,  getDropData());"
                        ondragenter="stopDefault(event);dragOver(this, getDropData());"
                        ondragleave="stopDefault(event);dragLeave(this);"
                        ondrop="stopDefault(event);dragLeave(this);addFilesAndSubmit(event);"
                        class="lang" key="Drag-n-drop"></label>
-                </form>
+            </form>
            
             <div style="text-align: left;">
                 <div id="files-progress"></div></div>
-                <div class="modal-page" id="uploaded-files"></div>
-            }
-            <body>
-            @if (TempData["edit-error"] != null)
-            {
-                <div class="mt-3 alert alert-danger alert-dismissible" style="width: 100%">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    @TempData["edit-error"].ToString()
-                </div>}
-            </body>
-        </div>
-        
+            <div class="modal-page" id="uploaded-files"></div>
+        }
+        <body>
+        @if (TempData["edit-error"] != null)
+        {
+            <div class="mt-3 alert alert-danger alert-dismissible" style="width: 100%">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                @TempData["edit-error"].ToString()
+            </div>}
+        </body>
+    </div>
+    <h5  style="margin-top:50px;text-align: center">
+         @if (Model.user != null && Model.user.Id == Model.onPageUser.Id)
+         {
+             @Html.ActionLink(
+                 Model.lang == "ru" ? "Нажмите для просмотра закладок" : "Click to view my marks",
+                 "Marks",
+                 "Profile",
+                 new {})   
+         }
+    </h5>
        @if (Model.fanfiction.fanfiction.Count != 0)
        {
        
@@ -119,10 +128,10 @@
            }
            <select style="display: inline-block; width: 30%" id="fandom-select" name="select-lang" required>
                <option class="p-2 lang" key="Category-Name"></option>
-                          <option class="p-2 lang" key="Fandom"></option>
-                          <option class="p-2 lang" key="Genre"></option>
-                          <option class="p-2 lang" key="Lang"></option>
-                          <option class="p-2 lang" key="Chapter-count"></option>
+               <option class="p-2 lang" key="Fandom"></option>
+               <option class="p-2 lang" key="Genre"></option>
+               <option class="p-2 lang" key="Lang"></option>
+               <option class="p-2 lang" key="Chapter-count"></option>
                <option class="p-2 lang" key="Average-rate"></option>
            </select>
            <input style="display: inline-block; width: 30%" id="filterInput" onkeyup="filter()">

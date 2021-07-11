@@ -172,5 +172,11 @@ namespace fanfiction.Controllers
             await _userManager.AddToRoleAsync(user, "Admin");
             return RedirectToAction("Profile", "Profile", new {userId});
         }
+
+        public async Task<IActionResult> Marks()
+        {
+            if (!_signInManager.IsSignedIn(User) || await LogoutUser()) return RedirectToAction("Fanfiction", "Fanfiction");
+            return View(new MarkModel(await _userManager.GetUserAsync(User), _context, Request.Cookies["lang"]));
+        }
     }
 }

@@ -398,6 +398,44 @@ namespace fanfiction.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("ViewFanfic", "Fanfiction", new{fanficId = fanficId}) ;
         }
+        public async Task<IActionResult> AddMark(string userId, int chapterId, int fanficId)
+        {
+            if (await LogoutUser() || !_signInManager.IsSignedIn(User)) return RedirectToAction("SignIn", "Home");
+            await deleteFanficMark(userId, fanficId);
+            await _context.Marks.AddAsync(new Mark{AuthorId = userId, chapterId = chapterId});
+            await _context.SaveChangesAsync();
+            var chapter = await _context.Chapters.FindAsync(chapterId);
+            return RedirectToAction("ReadChapter", "Fanfiction", 
+                new
+                {
+                     fanficId= chapter.FanficId,
+                     chapterNumber = chapter.ChapterNumber
+                }) ;
+
+        }
+
+        private async Task deleteFanficMark(string userId, int fanficId)
+        {
+            var marks = await _context.Marks.Where(m => m.AuthorId == userId).Include(m => m.chapter).ToListAsync();
+            var mark = marks.FirstOrDefault(m => m.chapter.FanficId == fanficId);
+            _context.Marks.Remove(mark);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<IActionResult> DeleteMark(string userId, int chapterId)
+        {
+            if (await LogoutUser() || !_signInManager.IsSignedIn(User)) return RedirectToAction("SignIn", "Home");
+            var MarkedChapter = await _context.Marks.FirstAsync(m => m.AuthorId == userId && m.chapterId == chapterId);
+            _context.Marks.Remove(MarkedChapter);
+            await _context.SaveChangesAsync();
+            var chapter = await _context.Chapters.FindAsync(chapterId);
+            return RedirectToAction("ReadChapter", "Fanfiction", 
+                new
+                {
+                    fanficId = chapter.FanficId,
+                    chapterNumber = chapter.ChapterNumber
+                }) ;
+
+        }
         
     }
 }

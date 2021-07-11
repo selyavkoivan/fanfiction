@@ -112,3 +112,4 @@ C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\F
 C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Fanfiction\ViewGenres.cshtml.g.cs
 C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Fanfiction\ReadFandom.cshtml.g.cs
 C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Fanfiction\ViewFandoms.cshtml.g.cs
+C:\Users\User\RiderProjects\fanfiction\fanfiction\obj\Debug\net5.0\Razor\Views\Profile\Marks.cshtml.g.cs
