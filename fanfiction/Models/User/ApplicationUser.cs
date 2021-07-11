@@ -65,8 +65,15 @@ namespace fanfiction.Models.User
             this.onPageUser = onPageUser;
             this.lang = lang;
             this.user = user;
-            this.fanfiction = new FanfictionModel(context, onPageUser.Id);
+            this.fanfiction = new FanfictionModel(context, string.Empty, onPageUser.Id);
         }
+        
     }
-  
+    public class Users
+    {
+        public List<ApplicationUser> users;
+        public ApplicationUser admin;
+        public string lang;
+    }
+
 }

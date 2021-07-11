@@ -117,7 +117,9 @@
        @if (Model.fanfiction.fanfiction.Count != 0)
        {
        
-                <h3 style="margin-top: 40px; text-align: center" class="lang" key="Fanfiction-list"></h3>
+           <h3 style="margin-top: 40px; text-align: center" class="lang" key="Fanfiction-list"></h3>
+           <div style="margin-left: 20px">
+           <h4 style="margin-top: 40px" class="lang" key="Sorting"></h4>
            @if ((Model.userIsAdmin && !Model.onPageUserIsAdmin) || Model.user != null && Model.user.Id == Model.onPageUser.Id)
            {
                <input hidden value="1" id="countOfNotSortRows"/>
@@ -134,7 +136,9 @@
                <option class="p-2 lang" key="Chapter-count"></option>
                <option class="p-2 lang" key="Average-rate"></option>
            </select>
+           
            <input style="display: inline-block; width: 30%" id="filterInput" onkeyup="filter()">
+           </div>
            <table class="sort table_col mt-5" id="filter" style="margin: auto; width: 90%;">
             
                <thead onselectstart="return false" onmousedown="return false">
@@ -267,10 +271,21 @@
                         userId = Model.onPageUser.Id
                     })
             }
+            if (Model.userIsAdmin)
+            {
+                <h5 style="text-align: center;">
+                @Html.ActionLink(
+                    Model.lang == "ru" ? "нажмите для просмотра списка пользователей" : "Click to see list of users",
+                    "UserList",
+                    "Profile",
+                    new{})
+    </h5>
+            }
             if (Model.userIsAdmin && Model.onPageUserIsAdmin)
             {
                 <h6 style="text-align: center" class="lang" key="Admin"></h6>
             }
+            <br><br><br><br>
         }
     </div>
     

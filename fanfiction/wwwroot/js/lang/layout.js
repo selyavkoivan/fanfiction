@@ -63,6 +63,8 @@
             "Author"                    : "Автор",
             "Genres-list"               : "Список жанров",
             "Fandoms-list"              : "Список фандомов",
+            "Sorting"                   : "Выберите столбец для фильтрации",
+            "Status"                    : "Статус блокировки",
     },
     "en": {
             "Sign-In"                   : "Sign In",
@@ -128,6 +130,8 @@
             "Author"                    : "Author",
             "Genres-list"               : "List of genres",
             "Fandoms-list"              : "List of fandoms",
+            "Sorting"                   : "Select column for filtering",
+            "Status"                    : "Block status",
     }
 }
 

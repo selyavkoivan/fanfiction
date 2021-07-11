@@ -28,8 +28,8 @@ namespace fanfiction.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(
-                   "Server=(local);Database=fanfictionOffTeam;Trusted_Connection=True;MultipleActiveResultSets=true");
+               optionsBuilder.UseSqlServer(
+                   "Data Source=tcp:fanfictiondbserver.database.windows.net,1433;Initial Catalog=fanfiction_db;User Id=selyavkoivan@fanfictiondbserver;Password=QwERt801l");
             }
 
         }

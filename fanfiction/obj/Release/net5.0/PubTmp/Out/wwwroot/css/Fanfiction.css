@@ -1,0 +1,70 @@
+﻿
+.dark-theme #side-bar
+{
+    text-align: center;
+    margit: 40px 10px 10px 10px;
+    height: 100%;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #333336;
+}
+
+.light-theme #side-bar
+{
+    text-align: center;
+    margit: 40px 10px 10px 10px;
+    padding:40px 10px 10px 10px;
+    height: 100%;
+
+    border-radius: 5px;
+    background-color: #f2f2f2;
+}
+ .dark-theme .side-bar-button
+ {
+     padding: 10px;
+     width: 80%;
+     border-radius: 5px;
+     border-left: none;
+     border-right: none;
+     border-color: #f2f2f2;
+     background-color: #333336;
+     color: #f2f2f2;
+ }
+.light-theme .side-bar-button
+{
+    padding: 10px;
+    width: 80%;
+    border-radius: 5px;
+
+    border-left: none;
+    border-right: none;
+    border-color: #333336;
+    background-color: #f2f2f2;
+    color: #333336;
+}
+
+.fanfiction-area {
+    width: 85%;
+    
+}
+.dark-theme .fanfiction-button
+{
+    padding: 10px;
+    border-radius: 5px;
+    border-left: none;
+    border-right: none;
+    border-color: #eae9f2;
+    background-color: #222226;
+    color: #eae9f2;
+}
+.light-theme .fanfiction-button
+{
+    padding: 10px;
+    border-radius: 5px;
+
+    border-left: none;
+    border-right: none;
+    border-color: #333336;
+    background-color: #eae9f2;
+    color: #333336;
+}

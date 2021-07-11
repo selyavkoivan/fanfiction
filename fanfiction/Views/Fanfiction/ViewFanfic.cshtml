@@ -130,6 +130,7 @@
         </tr>
         <tr>
             <th class="p-2 lang" key="Author"></th>
+            <td class="p-2">@Model.fanfic.Author.UserName</td>
         </tr>
     </table>
     <h4 class="mt-2 lang" key="Description"></h4>
@@ -139,6 +140,7 @@
 
 </div>
 <h2 class="lang" key="Chapter-list" style="margin: auto; width: 90%; text-align: center"></h2>
+ <h4 style="margin-top: 40px" class="lang" key="Sorting"></h4>
     @if (Model.isMine)
     {
         <input hidden value="1" id="countOfNotSortRows"/>

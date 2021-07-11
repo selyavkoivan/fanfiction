@@ -11,16 +11,16 @@ namespace fanfiction.Models.Fanfiction
     {
         [Key]
         public int CommentId { get; set; }
-        [Required]
+        
         [MaxLength(1000)]
         public string Text { get; set; }
-        [Required]
+        
         public ApplicationUser Author { get; set; }
-        [Required]
+        
         public string AuthorId { get; set; }
-        [Required]
+        
         public Fanfic fanfic { get; set; }
-        [Required]
+        
         public int fanficId { get; set; }
         
         public void GetAuthorData(ApplicationDbContext context)

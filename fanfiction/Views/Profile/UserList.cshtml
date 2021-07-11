@@ -1,0 +1,66 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+
+
+@model fanfiction.Models.User.Users
+
+
+<div style="text-align: center">
+    <h4 class="lang" key="Name"></h4>
+    <h5>@Model.admin.UserName</h5>
+    <h4 class="lang" key="Email"></h4>
+    <h5>@Model.admin.Email</h5>
+    
+      <h4 style="margin-top: 40px" class="lang" key="Sorting"></h4>
+
+    <input hidden value="0" id="countOfNotSortRows"/>
+    <select style="display: inline-block; width: 30%" id="fandom-select" name="select-lang" required>
+                   <option class="p-2 lang" key="Name"></option>
+                   <option class="p-2 lang" key="Email"></option>
+                   <option class="p-2 lang" key="Status"></option>
+    </select>
+               
+               <input style="display: inline-block; width: 30%" id="filterInput" onkeyup="filter()">
+    
+    
+    <table class="sort table_col mt-5" id="filter" style="margin: auto; width: 90%;">
+            <thead  onselectstart="return false" onmousedown="return false" style="font-weight: bold">
+            <tr>
+                <td class="p-2 lang" key="Name"></td>
+                <td class="p-2 lang" key="Email"></td>
+                <td class="p-2 lang" key="Status"></td>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var u in Model.users)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(
+                            $"{u.UserName}",
+                            "Profile",
+                            "Profile",
+                            new {userId = u.Id})
+                    </td>
+                    <td>
+                        @Html.ActionLink(
+                            $"{u.Email}",
+                            "Profile",
+                            "Profile",
+                            new {userId = u.Id})
+                    </td>
+                    <td>
+                                            @Html.ActionLink(
+                                                u.Status.ToString(),
+                                            "Profile",
+                                            "Profile",
+                                            new {userId = u.Id})
+                                        </td>
+                </tr>
+            }
+            </tbody>
+           
+        </table>
+</div>

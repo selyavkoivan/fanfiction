@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+        <UserSecretsId>b47e461d-77b0-436b-a99b-4a342383ce7a</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -22,11 +23,6 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="MimeKit" Version="2.13.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Migrations" />
-      <Folder Include="Migrations\" />
     </ItemGroup>
 
     <ItemGroup>

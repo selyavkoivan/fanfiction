@@ -241,8 +241,8 @@ namespace fanfiction.Controllers
 
             await _context.Fanfics.AddAsync(new Fanfic(fanfic, _context,  Request.Cookies["lang"], await _context.Users.FindAsync(fanfic.Author.Id)));
             await _context.SaveChangesAsync();
-            TempData["Adding-success"] = FanfictionErrors.getFanficSuccess(Request.Cookies["lang"]);
-            return RedirectToAction("Fanfiction", "Fanfiction");
+            var id = (await _context.Fanfics.FirstAsync(f => f.Name == fanfic.name)).FanficId;
+            return RedirectToAction("ViewFanfic", "Fanfiction", new {fanficId = id});
         }
         public async Task<bool> UpdateFanfic(AddFanfic fanfic)
         {

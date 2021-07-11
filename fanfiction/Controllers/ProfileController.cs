@@ -15,6 +15,7 @@ using EmailApp;
 using fanfiction.Data;
 using fanfiction.Models.Fanfiction;
 using fanfiction.Models.Settings;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace fanfiction.Controllers
@@ -177,6 +178,18 @@ namespace fanfiction.Controllers
         {
             if (!_signInManager.IsSignedIn(User) || await LogoutUser()) return RedirectToAction("Fanfiction", "Fanfiction");
             return View(new MarkModel(await _userManager.GetUserAsync(User), _context, Request.Cookies["lang"]));
+        }
+
+        public async Task<IActionResult> UserList()
+        {
+            if (!_signInManager.IsSignedIn(User) || await LogoutUser()) return RedirectToAction("Fanfiction", "Fanfiction");
+
+            return View(new Users
+            {
+                admin = await _userManager.GetUserAsync(User),
+                lang = Request.Cookies["lang"],
+                users = await _context.Users.ToListAsync()
+            });
         }
     }
 }

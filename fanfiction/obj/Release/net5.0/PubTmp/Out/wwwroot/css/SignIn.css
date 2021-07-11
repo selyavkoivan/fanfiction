@@ -1,0 +1,101 @@
+﻿.backBlock {
+    /*display: inline-block;*/
+    border-radius: 20px;
+    border-color: #0a0910;
+}
+button.adapt,
+input.adapt{
+    width: 40%;
+}
+p.adapt{
+    font-size: 2em;
+    margin-left: auto;
+    margin-right: auto;
+}
+p.adapt-confirm {
+    font-size: 1em;
+}
+p.adapt-confirm-plus {
+    font-size: 1.5em;
+}
+button.adapt,
+a.adapt,
+input.adapt{
+    font-size: 1em;
+}
+
+
+.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+@media ( max-width: 1200px)
+{
+    .container {
+        max-width: 970px
+    }
+    p.adapt {
+        font-size: 3em;
+        width: 85%;
+    }
+    p.adapt-confirm {
+        font-size: 2em;
+    }
+    p.adapt-confirm-plus {
+        font-size: 3em;
+    }
+    button.adapt,
+    a.adapt,
+    input.adapt{
+        font-size: 1.5em;
+        width: 55%;
+    }
+
+}
+@media ( max-width: 992px)
+{
+    .container {
+        max-width: 750px
+    }
+    p.adapt{
+        font-size: 5em;
+        width: 90%;
+    }
+    p.adapt-confirm {
+        font-size: 3.5em;
+    }
+    p.adapt-confirm-plus {
+        font-size: 5.5em;
+    }
+    button.adapt,
+    a.adapt,
+    input.adapt{
+        font-size: 2.5em;
+        width: 80%;
+    }
+}
+@media ( max-width: 767px)
+{
+    .container {
+        padding: 0;
+        margin: 0;
+        max-width: none;
+    }
+    p.adapt{
+        font-size: 7em;
+    }
+    p.adapt-confirm {
+        font-size: 5em;
+    }
+    p.adapt-confirm-plus {
+        font-size: 7em;
+    }
+    button.adapt,
+    a.adapt,
+    input.adapt{
+        font-size: 3.5em;
+        width: 100%;
+    }
+    
+}

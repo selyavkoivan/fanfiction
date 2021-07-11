@@ -13,13 +13,13 @@ namespace fanfiction.Models.Fanfiction
     {
         [Key]
         public int MarkId { get; set; }
-        [Required]
+        
         public ApplicationUser Author { get; set; }
-        [Required]
+        
         public string AuthorId { get; set; }
-        [Required]
+        
         public Chapter chapter { get; set; }
-        [Required]
+        
         public int chapterId { get; set; }
 
         
